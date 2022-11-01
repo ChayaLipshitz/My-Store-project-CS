@@ -1,9 +1,9 @@
 ﻿using Dal.DO;
-using System;
+
 
 namespace DalList;
 
-static internal class DataSource
+static public class DataSource
 {
     static readonly Random random = new Random();
     static internal Product[] ProductsArr = new Product[50];
@@ -15,7 +15,7 @@ static internal class DataSource
     {
         s_Initialize();
     }
-    static internal class Config
+    static public class Config
     {
         static internal int product_index = 0;
         static internal int order_index = 0;
@@ -24,8 +24,8 @@ static internal class DataSource
         static private int product_ID = 1;
         static private int orderItem_ID = 1;
         static public int Order_ID { get { return order_ID++; } }
-        static public int Product_ID { get { return order_ID++; } }
-        static public int OrderItem_ID { get { return order_ID++; } }
+        static public int Product_ID { get { return product_ID++; } }
+        static public int OrderItem_ID { get { return orderItem_ID++; } }
 
     }
     static private void CreateProductsArr()
