@@ -22,7 +22,8 @@ class Program
     private static Product UpdateProductFromUser(Product p )
     {
         Console.WriteLine("enter the product name:\n");
-        string name = Console.ReadLine() ?? p.Product_Name;
+        string newName = Console.ReadLine();
+        string name = newName ==""? p.Product_Name:newName;
         Console.WriteLine("enter the product price:\n");
         string priceStr = Console.ReadLine();
         double price = priceStr != "" ? Convert.ToDouble(priceStr) : p.Product_Price;
@@ -132,7 +133,8 @@ class Program
     private static Order UpdateOrderFromUser(Order o)
     {
         Console.WriteLine("enter the customer name:\n");
-        string name = Console.ReadLine() ?? o.Customer_Name;
+        string newName = Console.ReadLine();
+        string name = newName == "" ? o.Customer_Name : newName;
         Console.WriteLine("enter the customer Email:\n");
         string Email = Console.ReadLine()??o.Customer_Email;
         Console.WriteLine($"choose customer address\n");
@@ -175,7 +177,7 @@ class Program
                     int id = Convert.ToInt32(Console.ReadLine());
                     try
                     {
-                        Console.WriteLine((dalOrder.read_order(id)).ToString());
+                        Console.WriteLine((dalOrder.read_order(id)));
                     }
                     catch (Exception e)
                     {
@@ -186,7 +188,7 @@ class Program
                     Order[] orders = dalOrder.all_orders();
                     foreach (Order o in orders)
                     {
-                        Console.WriteLine(o.ToString() + "\n");
+                        Console.WriteLine(o + "\n");
                     }
                     break;
                 case INNER_CHOICE.UPDATE:
@@ -195,7 +197,7 @@ class Program
                         Console.WriteLine("enter the id of the order to update:\n");
                         id = Convert.ToInt32(Console.ReadLine());
                         Order old_order = dalOrder.read_order(id);
-                        Console.WriteLine(old_order.ToString());
+                        Console.WriteLine(old_order);
                         Order o = UpdateOrderFromUser(old_order);
                         o.Order_ID = id;
                         dalOrder.updateOrder(o);
@@ -225,7 +227,7 @@ class Program
                         OrderItem[] orderItems = dalOrder.products_in_order(id);
                         foreach (OrderItem oi in orderItems)
                         {
-                            Console.WriteLine(oi.ToString() + "\n");
+                            Console.WriteLine(oi + "\n");
                         }
                     }
                     catch (Exception e)
@@ -292,7 +294,7 @@ class Program
                     int id = Convert.ToInt32(Console.ReadLine());
                     try
                     {
-                        Console.WriteLine((dalOrderItem.read_order_item(id)).ToString());
+                        Console.WriteLine((dalOrderItem.read_order_item(id)));
                     }
                     catch (Exception e)
                     {
@@ -303,17 +305,16 @@ class Program
                     OrderItem[] orderItems = dalOrderItem.all_order_items();
                     foreach (OrderItem oi in orderItems)
                     {
-                        Console.WriteLine(oi.ToString() + "\n");
+                        Console.WriteLine(oi + "\n");
                     }
                     break;
                 case INNER_CHOICE.UPDATE:
-
                     try
                     {
                         Console.WriteLine("enter the id of the orderItem to update:\n");
                         id = Convert.ToInt32(Console.ReadLine());
                         OrderItem old_oi = dalOrderItem.read_order_item(id);
-                        Console.WriteLine(old_oi.ToString());
+                        Console.WriteLine(old_oi);
                         OrderItem oi = UpdateOrderItemFromUser(old_oi);
                         oi.OrderItem_ID = id;
                         dalOrderItem.updateOrderItem(oi);
@@ -343,7 +344,7 @@ class Program
                     try
                     {
                         OrderItem oi = dalOrderItem.Read_item_by_product_order(order_id, product_id);
-                        Console.WriteLine(oi.ToString());
+                        Console.WriteLine(oi);
                     }
                     catch (Exception e)
                     {

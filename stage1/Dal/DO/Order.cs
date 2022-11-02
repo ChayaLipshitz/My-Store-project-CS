@@ -12,7 +12,7 @@ public struct Order
     public DateTime Order_Date { get; set; }
     public DateTime Ship_Date { get; set; }
     public DateTime Delivery_Date { get; set; }
-    public string ToString()
+    public override string ToString()
     {
         return $"Order id: {Order_ID}\n" +
             $"Customer name: {Customer_Name}\n" +
