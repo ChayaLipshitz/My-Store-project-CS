@@ -22,7 +22,8 @@ public enum INNER_CHOICE
     READ_ALL, 
     UPDATE, 
     DELETE,
-    ITEMS_IN_ORDER
+    ITEMS_IN_ORDER,
+    ITEM_BY_ORDER_PRODUCT=6
 }
 
 

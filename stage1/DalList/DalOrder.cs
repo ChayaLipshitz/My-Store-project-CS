@@ -51,6 +51,7 @@ namespace Dal
                     return;
                 }
             }
+            throw new Exception("the order id does not exist!\n");
 
         }
         public void updateOrder(Order order)
@@ -89,5 +90,6 @@ namespace Dal
             }
             return items_in_order;
         }
+        
     }
 }

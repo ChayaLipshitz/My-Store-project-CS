@@ -195,12 +195,25 @@ class Program
             }       
          }
     }
+    private static OrderItem CreateOrderItemFromUser()
+    {
+         Console.WriteLine("enter the product id:\n");
+        int product_id = Convert.ToInt32(Console.ReadLine());
+    Console.WriteLine("enter the order id:\n");
+        int order_id = Convert.ToInt32(Console.ReadLine());
+    Console.WriteLine("enter the amount of items");
+        int num_items = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine("enter the price of item");
+        double price= Convert.ToDouble(Console.ReadLine());
+        OrderItem oi = new OrderItem(order_id,product_id, price,  num_items);
+        return oi;
+    }
     private static void OrderItemMenu()
     {
         int inner_choice = -1;
         while (inner_choice != 0)
         {
-            Console.WriteLine("enter 0 to a new choice\nenter 1 for creating a new order\nenter 2 for presenting a certain order\nenter 3 for presenting all the orders\nenter 4 for updating a order\nenter 5 for deleting a order\nenter 6 for all the items in a certain order\n ");
+            Console.WriteLine("enter 0 to a new choice\nenter 1 for creating a new orderItem\nenter 2 for presenting an certain orderItem\nenter 3 for presenting all the orderItems\nenter 4 for updating an orderItem\nenter 5 for deleting an orderItem\nenter 6 for reading an item by order id and product id\n ");
             inner_choice = Convert.ToInt32(Console.ReadLine());
             switch ((INNER_CHOICE)inner_choice)
             {
@@ -209,7 +222,7 @@ class Program
                 case INNER_CHOICE.CREATE:
                     try
                     {
-                        dalOrder.create_order(CreateOrderFromUser());
+                        dalOrderItem.create_order_item(CreateOrderItemFromUser());
                     }
                     catch (Exception e)
                     {
@@ -217,11 +230,11 @@ class Program
                     }
                     break;
                 case INNER_CHOICE.READ:
-                    Console.WriteLine("enter the order id:\n");
+                    Console.WriteLine("enter the orderItem id:\n");
                     int id = Convert.ToInt32(Console.ReadLine());
                     try
                     {
-                        Console.WriteLine((dalOrder.read_order(id)).ToString());
+                        Console.WriteLine((dalOrderItem.read_order_item(id)).ToString());
                     }
                     catch (Exception e)
                     {
@@ -229,21 +242,23 @@ class Program
                     }
                     break;
                 case INNER_CHOICE.READ_ALL:
-                    Order[] orders = dalOrder.all_orders();
-                    foreach (Order o in orders)
+                    OrderItem[] orderItems = dalOrderItem.all_order_items();
+                    foreach (OrderItem oi in orderItems)
                     {
-                        Console.WriteLine(o.ToString() + "\n");
+                        Console.WriteLine(oi.ToString() + "\n");
                     }
                     break;
                 case INNER_CHOICE.UPDATE:
 
                     try
                     {
-                        Console.WriteLine("enter the id of the order to update:\n");
+                        Console.WriteLine("enter the id of the orderItem to update:\n");
                         id = Convert.ToInt32(Console.ReadLine());
-                        Order o = CreateOrderFromUser();
-                        o.Order_ID = id;
-                        dalOrder.updateOrder(o);
+                        OrderItem old_oi= dalOrderItem.read_order_item(id);
+                        Console.WriteLine(old_oi.ToString());
+                        OrderItem oi = CreateOrderItemFromUser();
+                        oi.OrderItem_ID = id;
+                        dalOrderItem.updateOrderItem(oi);
                     }
                     catch (Exception e)
                     {
@@ -251,27 +266,26 @@ class Program
                     }
                     break;
                 case INNER_CHOICE.DELETE:
-                    Console.WriteLine("enter the id of the order to delete:\n");
+                    Console.WriteLine("enter the id of the orderItem to delete:\n");
                     try
                     {
                         id = Convert.ToInt32(Console.ReadLine());
-                        dalOrder.delete_order(id);
+                        dalOrderItem.delete_order_item(id);
                     }
                     catch (Exception e)
                     {
                         Console.WriteLine(e.Message);
                     }
                     break;
-                case INNER_CHOICE.ITEMS_IN_ORDER:
+                case INNER_CHOICE.ITEM_BY_ORDER_PRODUCT:
                     Console.WriteLine("enter an order ID:\n");
-                    id = Convert.ToInt32(Console.ReadLine());
+                    int order_id = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine("enter a product ID:\n");
+                    int product_id = Convert.ToInt32(Console.ReadLine());
                     try
                     {
-                        OrderItem[] orderItems = dalOrder.products_in_order(id);
-                        foreach (OrderItem oi in orderItems)
-                        {
-                            Console.WriteLine(oi.ToString() + "\n");
-                        }
+                        OrderItem oi = dalOrderItem.Read_item_by_product_order(order_id, product_id);
+                        Console.WriteLine(oi.ToString());
                     }
                     catch (Exception e)
                     {

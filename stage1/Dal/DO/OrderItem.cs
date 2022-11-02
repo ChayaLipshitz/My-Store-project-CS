@@ -16,7 +16,14 @@ namespace Dal.DO;
             $"Product price: {Product_Price}\n" +
             $"Product amount: {Product_Amount}\n\n";
     }
-
+    public OrderItem( int OrderID,int ProductID, double ProductPrice,int ProductAmount)
+    {
+        OrderItem_ID = -1;
+        Product_ID = ProductID;
+        Order_ID = OrderID;
+        Product_Price = ProductPrice;
+        Product_Amount = ProductAmount;
+    }
 
 }
 

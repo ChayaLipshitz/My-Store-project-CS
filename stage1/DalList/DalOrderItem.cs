@@ -35,9 +35,9 @@ namespace Dal
         public OrderItem[] all_order_items()
         {
             OrderItem[] orderItems = new OrderItem[DataSource.Config.orderItem_index];
-            for(int i = 0; i < DataSource.Config.orderItem_index; i++)
+            for (int i = 0; i < DataSource.Config.orderItem_index; i++)
             {
-                orderItems[i]= DataSource.OrderItemsArr[i];
+                orderItems[i] = DataSource.OrderItemsArr[i];
             }
             return orderItems;
         }
@@ -55,6 +55,7 @@ namespace Dal
                     return;
                 }
             }
+            throw new Exception("the order id does not exist!\n");
 
         }
         public void updateOrderItem(OrderItem order_item)
@@ -75,6 +76,18 @@ namespace Dal
             {
                 DataSource.OrderItemsArr[index] = order_item;
             }
+        }
+
+        public OrderItem Read_item_by_product_order(int order_id, int product_id)
+        {
+            foreach (OrderItem oi in DataSource.OrderItemsArr)
+            {
+                if (oi.Order_ID == order_id && oi.Product_ID == product_id)
+                {
+                    return oi;
+                }
+            }
+            throw new Exception("the order item does not exist!\n");
         }
     }
 }

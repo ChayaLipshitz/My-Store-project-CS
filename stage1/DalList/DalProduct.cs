@@ -51,6 +51,7 @@ namespace Dal
                     return;
                 }
             }
+            throw new Exception("the order id does not exist!\n");
         }
         public void updateProduct(Product product)
         {
@@ -68,6 +69,7 @@ namespace Dal
             }
             else
             {
+               
                 DataSource.ProductsArr[index] = product;
             }
         }
