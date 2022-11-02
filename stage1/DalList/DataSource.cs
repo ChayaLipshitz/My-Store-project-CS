@@ -6,7 +6,8 @@ namespace Dal;
 
 static public class DataSource
 {
-    static readonly Random random = new Random();
+
+    static readonly Random rand = new Random();
     static internal Product[] ProductsArr = new Product[50];
     static internal Order[] OrdersArr = new Order[100];
     static internal OrderItem[] OrderItemsArr = new OrderItem[200];

@@ -43,7 +43,18 @@ namespace Dal
         }
         public void delete_order_item(int ID)
         {
-
+            for (int i = 0; i < DataSource.Config.orderItem_index; i++)
+            {
+                if (DataSource.OrderItemsArr[i].OrderItem_ID == ID)
+                {
+                    for (int j = i; j < DataSource.Config.orderItem_index; j++)
+                    {
+                        DataSource.OrderItemsArr[j] = DataSource.OrderItemsArr[j + 1];
+                    }
+                    DataSource.Config.orderItem_index--;
+                    return;
+                }
+            }
 
         }
         public void updateOrderItem(OrderItem order_item)

@@ -43,7 +43,18 @@ namespace Dal
         }
         public void delete_product(int ID)
         {
-
+            for(int i = 0; i < DataSource.Config.product_index; i++)
+            {
+                if(DataSource.ProductsArr[i].Product_ID == ID)
+                {
+                    for(int j = i; j< DataSource.Config.product_index; j++)
+                    {
+                        DataSource.ProductsArr[j] = DataSource.ProductsArr[j+1];
+                    }
+                    DataSource.Config.product_index--;
+                    return;
+                }
+            }
         }
         public void updateProduct(Product product)
         {
@@ -66,4 +77,4 @@ namespace Dal
         }
     }
 }
-}
+
