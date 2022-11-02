@@ -1,11 +1,202 @@
 ﻿
 using Dal.DO;
+namespace Dal;
+class Program
+{
+    private static readonly DalProduct dalProduct = new DalProduct();
+    private static readonly DalOrder dalOrder = new DalOrder();
+    private static readonly DalOrderItem dalOrderItem = new DalOrderItem();
 
-    int out_choice, inner_choice;
-do
+    private static Product CreateProductFromUser()
     {
-    Console.WriteLine("enter 0 to stop the program\nenter 1 for product\nenter 2 for order\nenter 3 for order item\n");
-        out_choice = Convert.ToInt32( Console.ReadLine());
+        Console.WriteLine("enter the product name:\n");
+        string name = Console.ReadLine();
+        Console.WriteLine("enter the product price:\n");
+        double price = Convert.ToDouble(Console.ReadLine());
+        Console.WriteLine($"choose category: enter {(int)eCategory.FROZEN} for FROZEN, {(int)eCategory.FRUITS} for FRUITS, {(int)eCategory.SNACKS} for SNACKS:\n");
+        eCategory category = (eCategory)Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine("enter the amount you have from this product in stock\n");
+        int instock = Convert.ToInt32(Console.ReadLine());
+        Product product = new Product(name, price, category, instock);
+        return product;
+    }
+    private static Product CreateOrderFromUser()
+    {
+        Console.WriteLine("enter the customer name:\n");
+        string name = Console.ReadLine();
+        Console.WriteLine("enter the customer Email:\n");
+        string Email = Console.ReadLine();
+        Console.WriteLine($"choose customer address\n");
+        string address = Console.ReadLine();
+        Console.WriteLine("enter the amount you have from this product in stock\n");
+        int instock = Convert.ToInt32(Console.ReadLine());
+
+        return product;
+    }
+    private static void ProductMenu()
+    {
+        int inner_choice = -1;
+        while (inner_choice != 0)
+        {
+            Console.WriteLine("enter 0 to a new choice\nenter 1 for creating a new product\nenter 2 for presenting a certain product\nenter 3 for presenting all the products\nenter 4 for updating a product\nenter 5 for deleting a product\n ");
+            inner_choice = Convert.ToInt32(Console.ReadLine());
+            switch ((INNER_CHOICE)inner_choice)
+            {
+                case INNER_CHOICE.EXIT:
+                    return;
+                case INNER_CHOICE.CREATE:
+                    try
+                    {
+                        dalProduct.create_product(CreateProductFromUser());
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                    break;
+                case INNER_CHOICE.READ:
+                    Console.WriteLine("enter the product id:\n");
+                    int id = Convert.ToInt32(Console.ReadLine());
+                    try
+                    {
+                        Console.WriteLine((dalProduct.read_product(id)).ToString());
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                    break;
+                case INNER_CHOICE.READ_ALL:
+                    Product[] products = dalProduct.all_products();
+                    foreach (Product p in products)
+                    {
+                        Console.WriteLine(p.ToString() + "\n");
+                    }
+                    break;
+                case INNER_CHOICE.UPDATE:
+
+                    try
+                    {
+                        Console.WriteLine("enter the id of the product to update:\n");
+                        id = Convert.ToInt32(Console.ReadLine());
+                        Product p = CreateProductFromUser();
+                        p.Product_ID = id;
+                        dalProduct.updateProduct(p);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                    break;
+                case INNER_CHOICE.DELETE:
+                    Console.WriteLine("enter the id of the product to delete:\n");
+                    try
+                    {
+                        id = Convert.ToInt32(Console.ReadLine());
+                        dalProduct.delete_product(id);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                    break;
+            }
+
+        }
+    }
+    private static void OrderMenue()
+    {
+        int inner_choice = -1;
+        while (inner_choice != 0)
+        {
+            Console.WriteLine("enter 0 to a new choice\nenter 1 for creating a new order\nenter 2 for presenting a certain order\nenter 3 for presenting all the orders\nenter 4 for updating a order\nenter 5 for deleting a order\nenter 6 for all the items in a certain order\n ");
+            inner_choice = Convert.ToInt32(Console.ReadLine());
+            switch ((INNER_CHOICE)inner_choice)
+            {
+                case INNER_CHOICE.EXIT:
+                    return;
+                case INNER_CHOICE.CREATE:
+                    try
+                    {
+                        dalOrder.create_order(CreateOrderFromUser());
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                    break;
+                case INNER_CHOICE.READ:
+                    Console.WriteLine("enter the product id:\n");
+                    int id = Convert.ToInt32(Console.ReadLine());
+                    try
+                    {
+                        Console.WriteLine((dalProduct.read_product(id)).ToString());
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                    break;
+                case INNER_CHOICE.READ_ALL:
+                    Product[] products = dalProduct.all_products();
+                    foreach (Product p in products)
+                    {
+                        Console.WriteLine(p.ToString() + "\n");
+                    }
+                    break;
+                case INNER_CHOICE.UPDATE:
+
+                    try
+                    {
+                        Console.WriteLine("enter the id of the product to update:\n");
+                        id = Convert.ToInt32(Console.ReadLine());
+                        Product p = CreateProductFromUser();
+                        p.Product_ID = id;
+                        dalProduct.updateProduct(p);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                    break;
+                case INNER_CHOICE.DELETE:
+                    Console.WriteLine("enter the id of the product to delete:\n");
+                    try
+                    {
+                        id = Convert.ToInt32(Console.ReadLine());
+                        dalProduct.delete_product(id);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                    break;
+            }
+
+        }
+    }
+    private static void OrderItemMenue()
+    {
+        int inner_choice;
+
+    }
+    public static void Main()
+    {
+        int out_choice;
+
+
+        do
+        {
+            Console.WriteLine("enter 0 to stop the program\nenter 1 for product\nenter 2 for order\nenter 3 for order item\n");
+            out_choice = Convert.ToInt32(Console.ReadLine());
+<<<<<<< HEAD
+            switch ((OUT_CHOICE)out_choice)
+            {
+                case OUT_CHOICE.EXIT:
+                    break;
+                case OUT_CHOICE.PRODUCT:
+                    ProductMenu();
+=======
     switch ((Out_choice)out_choice)
     {
         case Out_choice.EXIT  :
@@ -13,27 +204,28 @@ do
         case 1:
             Console.WriteLine("enter 0 to a new choice\nenter 1 for creating a new product\nenter 2 for presenting a certain product\nenter 3 for presenting all the products\nenter 4 for updating a product\nenter 5 for deleting a product\n ");
             inner_choice = Convert.ToInt32(Console.ReadLine());
-            break;
-        case 2:
-            break;
-        case 3:
-            break;
+>>>>>>> ac2b145c8aff9709016b0e53dd957a3cc7b8a00a
+                    break;
+                case OUT_CHOICE.ORDER:
+
+                    break;
+                case OUT_CHOICE.ORDER_ITEM:
+                    break;
+            }
+
+        } while (out_choice != 0);
+
+
+
+
+
+
+
+
+
+
     }
-
-    } while (out_choice != 0) ; 
-
-
-
-
-
-
-
-
-
-
-
-
-
+}
 
 
 

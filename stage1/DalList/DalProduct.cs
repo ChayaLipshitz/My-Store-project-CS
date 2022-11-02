@@ -4,7 +4,7 @@ using Dal.DO;
 
 namespace Dal
 {
-    internal class DalProduct
+    public class DalProduct
     {
         public int create_product(Product product)
         {
