@@ -7,7 +7,7 @@ public enum eCategory
     SNACKS,
     FROZEN
 }
-public enum Out_choice
+public enum OUT_CHOICE
 {
     EXIT,
     PRODUCT,
@@ -21,7 +21,8 @@ public enum INNER_CHOICE
     READ, 
     READ_ALL, 
     UPDATE, 
-    DELETE
+    DELETE,
+    ITEMS_IN_ORDER
 }
 
 

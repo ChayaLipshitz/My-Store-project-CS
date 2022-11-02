@@ -72,9 +72,22 @@ namespace Dal
                 DataSource.OrdersArr[index] = order;
             }
         }
-       // public Product[] products_in_order(int ID)
-       // {
-            
-        //}
+        public OrderItem[] products_in_order(int ID)
+        {
+            int sum_items=0,index=0;
+          foreach(OrderItem oi in DataSource.OrderItemsArr)
+            {
+                if (oi.Order_ID == ID)
+                {
+                    sum_items++;
+                }
+            }
+            OrderItem[] items_in_order = new OrderItem[sum_items];
+            foreach (OrderItem oi in DataSource.OrderItemsArr)
+            {
+                items_in_order[index++] = oi;
+            }
+            return items_in_order;
+        }
     }
 }

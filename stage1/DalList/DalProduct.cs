@@ -15,10 +15,6 @@ namespace Dal
             product.Product_ID = DataSource.Config.Product_ID;
             DataSource.ProductsArr[DataSource.Config.product_index++] = product;
             return product.Product_ID;
-            //product.Product_Name = Product_Name;
-            //product.Product_Price = Product_Price;
-            //product.Product_Category = Product_Category;
-            //product.Product_Instock = Product_Instock;
         }
         public Product read_product(int ID)
         {

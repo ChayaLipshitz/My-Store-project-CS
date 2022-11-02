@@ -7,7 +7,7 @@ using Dal.DO;
 
 namespace Dal
 {
-    internal class DalOrderItem
+    public class DalOrderItem
     {
         public int create_order_item(OrderItem order_item)
         {
