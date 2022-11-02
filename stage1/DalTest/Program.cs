@@ -6,12 +6,13 @@ do
     {
     Console.WriteLine("enter 0 to stop the program\nenter 1 for product\nenter 2 for order\nenter 3 for order item\n");
         out_choice = Convert.ToInt32( Console.ReadLine());
-    switch (out_choice)
+    switch ((Out_choice)out_choice)
     {
-        case 0:
+        case Out_choice.EXIT  :
             break;
         case 1:
             Console.WriteLine("enter 0 to a new choice\nenter 1 for creating a new product\nenter 2 for presenting a certain product\nenter 3 for presenting all the products\nenter 4 for updating a product\nenter 5 for deleting a product\n ");
+            inner_choice = Convert.ToInt32(Console.ReadLine());
             break;
         case 2:
             break;
