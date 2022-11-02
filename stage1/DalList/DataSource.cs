@@ -4,7 +4,7 @@
 namespace Dal;
 
 
-static public class DataSource
+public class DataSource
 {
 
     static readonly Random rand = new Random();
@@ -12,7 +12,7 @@ static public class DataSource
     static internal Order[] OrdersArr = new Order[100];
     static internal OrderItem[] OrderItemsArr = new OrderItem[200];
 
-    static int num_orders = 50;
+    //static int num_orders = 50;
     static DataSource()
     {
         s_Initialize();

@@ -17,7 +17,7 @@ namespace Dal.DO;
         Product_Name = name;
         Product_Price = price;
     }
-    public string ToString()
+    public override string ToString()
     {
         return $"product id: {Product_ID}\n" +
                     $"product name: {Product_Name}\n" +
