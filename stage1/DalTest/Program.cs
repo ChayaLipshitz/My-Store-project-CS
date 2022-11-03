@@ -122,12 +122,14 @@ class Program
         Console.WriteLine($"choose customer address\n");
         string address = Console.ReadLine();
         Console.WriteLine("enter the order date");
-        DateTime Order_Date = Convert.ToDateTime(Console.ReadLine());
+        string order_dateSTR = Console.ReadLine();
+        DateTime Order_date;
+        if (!DateTime.TryParse(order_dateSTR, out Order_date)) throw new Exception("the date is not in the correct format");
         Console.WriteLine("enter the ship date");
         DateTime Ship_Date = Convert.ToDateTime(Console.ReadLine());
         Console.WriteLine("enter the delivery date");
         DateTime Delivery_Date = Convert.ToDateTime(Console.ReadLine());
-        Order order = new Order(name, Email, address, Order_Date, Ship_Date, Delivery_Date);
+        Order order = new Order(name, Email, address, Order_date, Ship_Date, Delivery_Date);
         return order;
     }
     private static Order UpdateOrderFromUser(Order o)
@@ -138,7 +140,7 @@ class Program
         Console.WriteLine("enter the customer Email:\n");
         string EmailStr = Console.ReadLine();
         string Email=EmailStr == ""?o.Customer_Email : EmailStr;
-        Console.WriteLine($"choose customer address\n");
+        Console.WriteLine("enter the customer address\n");
         string addressStr = Console.ReadLine();
         string address = addressStr == "" ? o.Customer_Address : addressStr;
         Console.WriteLine("enter the order date");
