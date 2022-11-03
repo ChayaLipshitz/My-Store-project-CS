@@ -136,9 +136,11 @@ class Program
         string newName = Console.ReadLine();
         string name = newName == "" ? o.Customer_Name : newName;
         Console.WriteLine("enter the customer Email:\n");
-        string Email = Console.ReadLine()??o.Customer_Email;
+        string EmailStr = Console.ReadLine();
+        string Email=EmailStr == ""?o.Customer_Email : EmailStr;
         Console.WriteLine($"choose customer address\n");
-        string address = Console.ReadLine()??o.Customer_Address;
+        string addressStr = Console.ReadLine();
+        string address = addressStr == "" ? o.Customer_Address : addressStr;
         Console.WriteLine("enter the order date");
         string OrderDateSTR = Console.ReadLine();
         DateTime Order_Date = OrderDateSTR != "" ? Convert.ToDateTime(OrderDateSTR) : o.Order_Date;
