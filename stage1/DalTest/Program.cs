@@ -359,8 +359,6 @@ class Program
     public static void Main()
     {
         int out_choice;
-
-
         do
         {
             Console.WriteLine("enter 0 to stop the program\nenter 1 for product\nenter 2 for order\nenter 3 for order item\n");

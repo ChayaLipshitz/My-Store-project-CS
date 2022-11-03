@@ -75,7 +75,7 @@ namespace Dal
         }
         public OrderItem[] products_in_order(int ID)
         {
-            int sum_items=0,index=0;
+            int sum_items=0,idx=0;
           foreach(OrderItem oi in DataSource.OrderItemsArr)
             {
                 if (oi.Order_ID == ID)
@@ -86,7 +86,10 @@ namespace Dal
             OrderItem[] items_in_order = new OrderItem[sum_items];
             foreach (OrderItem oi in DataSource.OrderItemsArr)
             {
-                items_in_order[index++] = oi;
+                if (oi.Order_ID == ID)
+                {
+                    items_in_order[idx++] = oi;
+                }
             }
             return items_in_order;
         }
