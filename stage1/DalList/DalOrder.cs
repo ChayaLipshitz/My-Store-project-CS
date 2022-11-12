@@ -3,9 +3,8 @@ using Dal.DO;
 namespace Dal
 {
     public class DalOrder
-       
     {
-        public int create_order(Order order)
+        public int  CreateOrder(Order order)
         {
             if (DataSource.Config.order_index > 49)
             {
@@ -15,7 +14,7 @@ namespace Dal
             DataSource.OrdersArr[DataSource.Config.order_index++] = order;
             return order.Order_ID;
         }
-        public Order read_order(int ID)
+        public Order ReadOrder(int ID)
         {
 
             for (int i = 0; i < DataSource.Config.order_index; i++)
@@ -28,7 +27,7 @@ namespace Dal
             }
             throw new Exception("order id does not exist!");
         }
-        public Order[] all_orders()
+        public Order[] AllOrders()
         {
             Order[] orders= new Order[DataSource.Config.order_index];
             for(int i = 0; i < DataSource.Config.order_index; i++)
@@ -37,7 +36,7 @@ namespace Dal
             }
             return orders;    
         }
-        public void delete_order(int ID)
+        public void DeleteOrder(int ID)
         {
             for (int i = 0; i < DataSource.Config.order_index; i++)
             {
@@ -54,7 +53,7 @@ namespace Dal
             throw new Exception("the order id does not exist!\n");
 
         }
-        public void updateOrder(Order order)
+        public void UpdateOrder(Order order)
         {
             int index=-1;
             for(int i=0; i<DataSource.Config.order_index; i++)
@@ -73,7 +72,7 @@ namespace Dal
                 DataSource.OrdersArr[index] = order;
             }
         }
-        public OrderItem[] products_in_order(int ID)
+        public OrderItem[] ProductsInOrder(int ID)
         {
             int sum_items=0,idx=0;
           foreach(OrderItem oi in DataSource.OrderItemsArr)
@@ -82,7 +81,7 @@ namespace Dal
                 {
                     sum_items++;
                 }
-            }
+          }
             OrderItem[] items_in_order = new OrderItem[sum_items];
             foreach (OrderItem oi in DataSource.OrderItemsArr)
             {

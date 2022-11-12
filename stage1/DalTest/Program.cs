@@ -169,7 +169,7 @@ class Program
                 case INNER_CHOICE.CREATE:
                     try
                     {
-                        dalOrder.create_order(CreateOrderFromUser());
+                        dalOrder.CreateOrder(CreateOrderFromUser());
                     }
                     catch (Exception e)
                     {
@@ -181,7 +181,7 @@ class Program
                     int id = Convert.ToInt32(Console.ReadLine());
                     try
                     {
-                        Console.WriteLine((dalOrder.read_order(id)));
+                        Console.WriteLine((dalOrder.ReadOrder(id)));
                     }
                     catch (Exception e)
                     {
@@ -189,7 +189,7 @@ class Program
                     }
                     break;
                 case INNER_CHOICE.READ_ALL:
-                    Order[] orders = dalOrder.all_orders();
+                    Order[] orders = dalOrder.AllOrders();
                     foreach (Order o in orders)
                     {
                         Console.WriteLine(o + "\n");
@@ -200,11 +200,11 @@ class Program
                     {
                         Console.WriteLine("enter the id of the order to update:\n");
                         id = Convert.ToInt32(Console.ReadLine());
-                        Order old_order = dalOrder.read_order(id);
+                        Order old_order = dalOrder.ReadOrder(id);
                         Console.WriteLine(old_order);
                         Order o = UpdateOrderFromUser(old_order);
                         o.Order_ID = id;
-                        dalOrder.updateOrder(o);
+                        dalOrder.UpdateOrder(o);
                     }
                     catch (Exception e)
                     {
@@ -216,7 +216,7 @@ class Program
                     try
                     {
                         id = Convert.ToInt32(Console.ReadLine());
-                        dalOrder.delete_order(id);
+                        dalOrder.DeleteOrder(id);
                     }
                     catch (Exception e)
                     {
@@ -228,7 +228,7 @@ class Program
                     id = Convert.ToInt32(Console.ReadLine());
                     try
                     {
-                        OrderItem[] orderItems = dalOrder.products_in_order(id);
+                        OrderItem[] orderItems = dalOrder.ProductsInOrder(id);
                         foreach (OrderItem oi in orderItems)
                         {
                             Console.WriteLine(oi + "\n");
