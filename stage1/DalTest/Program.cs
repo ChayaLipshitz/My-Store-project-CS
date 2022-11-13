@@ -2,7 +2,7 @@
 namespace Dal;
 class Program
 {
-    private static readonly DataSource ds = new();
+    private static readonly DataSource ds = new DataSource();
     private static readonly DalProduct dalProduct = new();
     private static readonly DalOrder dalOrder = new();
     private static readonly DalOrderItem dalOrderItem = new();
