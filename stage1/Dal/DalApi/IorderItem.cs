@@ -8,17 +8,13 @@ using Dal.DO;
 
 namespace DalApi
 {
-    public class IorderItem : Icrud<OrderItem>
+    public interface IorderItem : Icrud<OrderItem>
     {
-        public int Create(OrderItem obj)
-        {
-            throw new NotImplementedException();
-        }
+        public int Create(OrderItem obj);
 
-        public void Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
+
+        public void Delete(int id);
+       
 
         public OrderItem Read(int id)
         {
