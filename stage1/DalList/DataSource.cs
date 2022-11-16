@@ -1,9 +1,5 @@
 ﻿using Dal.DO;
-
-
 namespace Dal;
-
-
 public class DataSource
 {
 
@@ -11,8 +7,6 @@ public class DataSource
     static internal List<Product> ProductsList = new List<Product>();
     static internal List<Order> OrdersList = new List<Order>();
     static internal List<OrderItem> OrderItemsList = new List<OrderItem>();
-
-    //static int num_orders = 50;
     static DataSource()
     {
         s_Initialize();
@@ -26,8 +20,9 @@ public class DataSource
         static public int Product_ID { get { return product_ID++; } }
         static public int OrderItem_ID { get { return orderItem_ID++; } }
 
+
     }
-    static private void CreateProductsArr()
+    static private void CreateProductsList()
     {
         string[] productsName = { "apples", "doritos", "potatos" };
         for (int i = 0; i < 10;i++)
@@ -44,7 +39,7 @@ public class DataSource
             ProductsList.Add(product);
         }
     }
-    static private void CreateOrdersArr()
+    static private void CreateOrdersList()
     {
         string[] customers_Name = { "aaa", "bbb", "ccc" };
         string[] Customer_Email = { "d", "e", "f" };
@@ -70,31 +65,26 @@ public class DataSource
         }
     }
 
-    static private void CreateOrderItemsArr()
+    static private void CreateOrderItemsList()
     {
         for (int i = 0; i < 10; i++)
         {
             OrderItem orderItem = new OrderItem();
-            int price = (int)rand.NextInt64(1, 100);
-            int amount = (int)rand.NextInt64(1, 20);
-            orderItem.Product_Price = price;
-            orderItem.Product_Amount = amount;
+            orderItem.Product_Price = (int)rand.NextInt64(1, 100);
+            orderItem.Product_Amount = (int)rand.NextInt64(1, 20);
             orderItem.OrderItem_ID = Config.OrderItem_ID;
-            int productIndex = (int)rand.NextInt64(Config.product_index);
+            int productIndex = (int)rand.NextInt64(ProductsList.Count());
             int orderIndex = (int)rand.NextInt64(OrdersList.Count());
-            orderItem.Product_ID = ProductsArr[productIndex].Product_ID;
-            orderItem.Order_ID = OrdersArr[orderIndex].Order_ID;
+            orderItem.Product_ID = ProductsList[productIndex].Product_ID;
+            orderItem.Order_ID = OrdersList[orderIndex].Order_ID;
+            OrderItemsList.Add(orderItem);
         }
     }
     static private void s_Initialize()
     {
-        CreateProductsArr();
-        CreateOrdersArr();
-        CreateOrderItemsArr();
+        CreateProductsList();
+        CreateOrdersList();
+        CreateOrderItemsList();
     }
 }
 
-/////////////////////////////////////////////////////////////////////////////
-/// <summary>
-/// =======================================================================
-/// </summary>

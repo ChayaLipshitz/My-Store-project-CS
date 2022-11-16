@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace DalApi;
 
-internal class NotExistExceptions : Exception
+public class NotExistExceptions : Exception
 {
     public override string Message => "object does not exist";
 
 }
 
-internal class DuplicateIdExceptions : Exception
+public class DuplicateIdExceptions : Exception
 {
     public override string Message => "ID already exists";
 

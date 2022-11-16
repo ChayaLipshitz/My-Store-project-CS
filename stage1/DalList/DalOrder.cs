@@ -6,87 +6,65 @@ namespace Dal
     public class DalOrder : Iorder
     {
 
-        public  Order[] AllOrders()
+        public  List<Order> AllOrders()
         {
-            Order[] orders = new Order[DataSource.Config.order_index];
-            for (int i = 0; i < DataSource.Config.order_index; i++)
-            {
-                orders[i] = DataSource.OrdersArr[i];
-            }
-            return orders;
+            return DataSource.OrdersList;
         }
 
-        public OrderItem[] ProductsInOrder(int ID)
+        public List<OrderItem> ProductsInOrder(int ID)
         {
-            int sum_items = 0, idx = 0;
-            foreach (OrderItem oi in DataSource.OrderItemsArr)
+            List<OrderItem> orderItem = new List<OrderItem>();
+            foreach (OrderItem oi in DataSource.OrderItemsList)
             {
                 if (oi.Order_ID == ID)
                 {
-                    sum_items++;
+                    orderItem.Add(oi);
                 }
             }
-            OrderItem[] items_in_order = new OrderItem[sum_items];
-            foreach (OrderItem oi in DataSource.OrderItemsArr)
-            {
-                if (oi.Order_ID == ID)
-                {
-                    items_in_order[idx++] = oi;
-                }
-            }
-            return items_in_order;
+            return orderItem;
         }
         public int Create(Order order)
-        {
-            if (DataSource.Config.order_index > 49)
-            {
-                throw new Exception("no place for a new order");
-            }
+        {            
             order.Order_ID = DataSource.Config.Order_ID;
-            DataSource.OrdersArr[DataSource.Config.order_index++] = order;
+            DataSource.OrdersList.Add(order);
             return order.Order_ID;
         }
         public Order Read(int ID)
         {
-            for (int i = 0; i < DataSource.Config.order_index; i++)
+            foreach (Order order in DataSource.OrdersList)
             {
-                if (DataSource.OrdersArr[i].Order_ID == ID)
+                if (order.Order_ID == ID)
                 {
-                    return DataSource.OrdersArr[i];
+                    return order;
                 }
-
             }
-            throw new Exception("order id does not exist!");
+            throw new NotExistExceptions();
         }
 
-        public  bool Update(Order order)
-        {
-            for (int i = 0; i < DataSource.Config.order_index; i++)
+        public  bool Update(Order new_order)
+        {            
+            for (int i = 0; i < DataSource.OrdersList.Count(); i++)
             {
-                if (DataSource.OrdersArr[i].Order_ID == order.Order_ID)
+                if (DataSource.OrdersList[i].Order_ID == new_order.Order_ID)
                 {
-                    DataSource.OrdersArr[i] = order;
+                    DataSource.OrdersList[i] = new_order;
                     return true;
                 }
             }
-            throw new Exception("the order does not exist!");
+            throw new NotExistExceptions();
         }
 
         public void Delete(int ID)
         {
-            for (int i = 0; i < DataSource.Config.order_index; i++)
+            foreach(Order order in DataSource.OrdersList)
             {
-                if (DataSource.OrdersArr[i].Order_ID == ID)
+                if (order.Order_ID == ID)
                 {
-                    for (int j = i; j < DataSource.Config.order_index; j++)
-                    {
-                        DataSource.OrdersArr[j] = DataSource.OrdersArr[j + 1];
-                    }
-                    DataSource.Config.order_index--;
+                    DataSource.OrdersList.Remove(order);
                     return;
                 }
             }
-            throw new Exception("the order id does not exist!\n");
+            throw new NotExistExceptions();
 
         }
     }

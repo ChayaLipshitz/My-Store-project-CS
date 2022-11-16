@@ -3,8 +3,6 @@ using DalApi;
 namespace Dal;
 class Program
 {
-    //private static readonly IDal idal = new DalOrder();
-
     private static readonly DataSource ds = new DataSource();
     private static readonly DalProduct dalProduct = new();
     private static readonly DalOrder dalOrder = new();
@@ -78,7 +76,7 @@ class Program
                     }
                     break;
                 case INNER_CHOICE.READ_ALL:
-                    Product[] products = dalProduct.all_products();
+                    List<Product> products = dalProduct.all_products();
                     foreach (Product p in products)
                     {
                         Console.WriteLine(p.ToString() + "\n");
@@ -192,7 +190,7 @@ class Program
                     }
                     break;
                 case INNER_CHOICE.READ_ALL:
-                    Order[] orders = dalOrder.AllOrders();
+                    List<Order> orders = dalOrder.AllOrders();
                     foreach (Order o in orders)
                     {
                         Console.WriteLine(o + "\n");
@@ -231,7 +229,7 @@ class Program
                     id = Convert.ToInt32(Console.ReadLine());
                     try
                     {
-                        OrderItem[] orderItems = dalOrder.ProductsInOrder(id);
+                        List<OrderItem> orderItems = dalOrder.ProductsInOrder(id);
                         foreach (OrderItem oi in orderItems)
                         {
                             Console.WriteLine(oi + "\n");
@@ -309,7 +307,7 @@ class Program
                     }
                     break;
                 case INNER_CHOICE.READ_ALL:
-                    OrderItem[] orderItems = dalOrderItem.all_order_items();
+                    List<OrderItem> orderItems = dalOrderItem.all_order_items();
                     foreach (OrderItem oi in orderItems)
                     {
                         Console.WriteLine(oi + "\n");

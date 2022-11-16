@@ -1,6 +1,4 @@
-﻿
-
-using Dal.DO;
+﻿using Dal.DO;
 using DalApi;
 
 namespace Dal
@@ -9,62 +7,49 @@ namespace Dal
     {
         public int Create(Product product)
         {
-            if (DataSource.Config.product_index > 49)
-            {
-                throw new Exception("no place for a new product");
-            }
+           
             product.Product_ID = DataSource.Config.Product_ID;
-            DataSource.ProductsArr[DataSource.Config.product_index++] = product;
+            DataSource.ProductsList.Add(product);
             return product.Product_ID;
         }
         public Product Read(int ID)
         {
-           for (int i=0;i< DataSource.Config.product_index; i++)
+            foreach(Product p in DataSource.ProductsList)
             {
-                if (DataSource.ProductsArr[i].Product_ID == ID)
+                if (p.Product_ID == ID)
                 {
-                    return DataSource.ProductsArr[i];
+                    return p;
                 }
-                
-            }
-            throw new Exception("product id does not exist!");
+            }    
+            throw new NotExistExceptions();
         }
         public bool Update(Product product)
         {
-            for (int i = 0; i < DataSource.Config.product_index; i++)
+            for (int i = 0; i < DataSource.ProductsList.Count(); i++)
             {
-                if (DataSource.ProductsArr[i].Product_ID == product.Product_ID)
+                if (DataSource.ProductsList[i].Product_ID == product.Product_ID)
                 {
-                    DataSource.ProductsArr[i] = product;
+                    DataSource.ProductsList[i] = product;
                     return true;
                 }
             }
-                throw new Exception("the product does not exist!");
+                throw new NotExistExceptions();
         }
         public void Delete(int ID)
         {
-            for (int i = 0; i < DataSource.Config.product_index; i++)
+            foreach(Product p in DataSource.ProductsList)
             {
-                if (DataSource.ProductsArr[i].Product_ID == ID)
+                if (p.Product_ID == ID)
                 {
-                    for (int j = i; j < DataSource.Config.product_index; j++)
-                    {
-                        DataSource.ProductsArr[j] = DataSource.ProductsArr[j + 1];
-                    }
-                    DataSource.Config.product_index--;
+                    DataSource.ProductsList.Remove(p);
                     return;
                 }
             }
-            throw new Exception("the order id does not exist!\n");
+            throw new NotExistExceptions();
         }
-        public Product[] all_products()
-        {
-            Product[] allProducts = new Product[DataSource.Config.product_index];
-            for (int i = 0; i < DataSource.Config.product_index; i++)
-            {
-                allProducts[i] = DataSource.ProductsArr[i];
-            }
-            return allProducts;
+        public List<Product> all_products()
+        {            
+            return DataSource.ProductsList;
         }
     }
 }

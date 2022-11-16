@@ -10,7 +10,7 @@ namespace DalApi
 {
     public interface Iorder : Icrud<Order>
     {
-        public Order[] AllOrders();
-        public OrderItem[] ProductsInOrder(int ID);
+        public List<Order> AllOrders();
+        public List<OrderItem> ProductsInOrder(int ID);
     }
 }
