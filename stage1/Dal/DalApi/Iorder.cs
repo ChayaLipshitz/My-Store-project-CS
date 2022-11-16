@@ -8,11 +8,9 @@ using Dal.DO;
 
 namespace DalApi
 {
-    public interface Iorder: Icrud<Order>
+    public interface Iorder : Icrud<Order>
     {
-        int Create(Order obj);
-        Order Read(int id);
-        bool Update(Order obj);
-        void Delete(int id);
+        public Order[] AllOrders();
+        public OrderItem[] ProductsInOrder(int ID);
     }
 }

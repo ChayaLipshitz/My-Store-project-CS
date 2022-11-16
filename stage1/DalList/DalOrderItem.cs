@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dal.DO;
+using DalApi;
 
 namespace Dal
 {
-    public class DalOrderItem
+    public class DalOrderItem:IorderItem
     {
-        public int create_order_item(OrderItem order_item)
+        public int Create(OrderItem order_item)
         {
             if (DataSource.Config.orderItem_index > 49)
             {
@@ -19,7 +20,7 @@ namespace Dal
             DataSource.OrderItemsArr[DataSource.Config.orderItem_index++] = order_item;
             return order_item.OrderItem_ID;
         }
-        public OrderItem read_order_item(int ID)
+        public OrderItem Read(int ID)
         {
             for (int i = 0; i < DataSource.Config.orderItem_index; i++)
             {
@@ -32,16 +33,7 @@ namespace Dal
             throw new Exception("order_item id does not exist!");
 
         }
-        public OrderItem[] all_order_items()
-        {
-            OrderItem[] orderItems = new OrderItem[DataSource.Config.orderItem_index];
-            for (int i = 0; i < DataSource.Config.orderItem_index; i++)
-            {
-                orderItems[i] = DataSource.OrderItemsArr[i];
-            }
-            return orderItems;
-        }
-        public void delete_order_item(int ID)
+        public void Delete(int ID)
         {
             for (int i = 0; i < DataSource.Config.orderItem_index; i++)
             {
@@ -58,26 +50,19 @@ namespace Dal
             throw new Exception("the order id does not exist!\n");
 
         }
-        public void updateOrderItem(OrderItem order_item)
+        public bool Update(OrderItem order_item)
         {
-            int index = -1;
             for (int i = 0; i < DataSource.Config.orderItem_index; i++)
             {
                 if (DataSource.OrderItemsArr[i].OrderItem_ID == order_item.OrderItem_ID)
                 {
-                    index = i;
+                    DataSource.OrderItemsArr[i] = order_item;
+                    return true;
                 }
             }
-            if (index == -1)
-            {
                 throw new Exception("the order_item does not exist!");
-            }
-            else
-            {
-                DataSource.OrderItemsArr[index] = order_item;
-            }
+            
         }
-
         public OrderItem Read_item_by_product_order(int order_id, int product_id)
         {
             foreach (OrderItem oi in DataSource.OrderItemsArr)
@@ -88,6 +73,16 @@ namespace Dal
                 }
             }
             throw new Exception("the order item does not exist!\n");
+        }
+
+        public OrderItem[] all_order_items()
+        {
+            OrderItem[] orderItems = new OrderItem[DataSource.Config.orderItem_index];
+            for (int i = 0; i < DataSource.Config.orderItem_index; i++)
+            {
+                orderItems[i] = DataSource.OrderItemsArr[i];
+            }
+            return orderItems;
         }
     }
 }

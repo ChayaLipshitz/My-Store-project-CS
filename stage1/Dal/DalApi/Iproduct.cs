@@ -10,16 +10,7 @@ namespace DalApi
 {
     public interface Iproduct : Icrud<Product>
     {
-        public int Create(Product obj);
 
-
-        public void Delete(int id);
-
-
-        public Product Read(int id);
-
-
-        public bool Update(Product obj);
-      
+        public Product[] all_products();
     }
 }

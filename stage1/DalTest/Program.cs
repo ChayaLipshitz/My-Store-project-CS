@@ -1,7 +1,10 @@
 ﻿using Dal.DO;
+using DalApi;
 namespace Dal;
 class Program
 {
+    //private static readonly IDal idal = new DalOrder();
+
     private static readonly DataSource ds = new DataSource();
     private static readonly DalProduct dalProduct = new();
     private static readonly DalOrder dalOrder = new();
@@ -55,7 +58,7 @@ class Program
                 case INNER_CHOICE.CREATE:
                     try
                     {
-                        dalProduct.create_product(CreateProductFromUser());
+                        dalProduct.Create(CreateProductFromUser());
                     }
                     catch (Exception e)
                     {
@@ -67,7 +70,7 @@ class Program
                     int id = Convert.ToInt32(Console.ReadLine());
                     try
                     {
-                        Console.WriteLine((dalProduct.read_product(id)));
+                        Console.WriteLine((dalProduct.Read(id)));
                     }
                     catch (Exception e)
                     {
@@ -87,11 +90,11 @@ class Program
                     {
                         Console.WriteLine("enter the id of the product to update:\n");
                         id = Convert.ToInt32(Console.ReadLine());
-                        Product old_p = dalProduct.read_product(id);
+                        Product old_p = dalProduct.Read(id);
                         Console.WriteLine(old_p.ToString());
                         Product p = UpdateProductFromUser(old_p);
                         p.Product_ID = id;
-                        dalProduct.updateProduct(p);
+                        dalProduct.Update(p);
                     }
                     catch (Exception e)
                     {
@@ -103,7 +106,7 @@ class Program
                     try
                     {
                         id = Convert.ToInt32(Console.ReadLine());
-                        dalProduct.delete_product(id);
+                        dalProduct.Delete(id);
                     }
                     catch (Exception e)
                     {
@@ -169,7 +172,7 @@ class Program
                 case INNER_CHOICE.CREATE:
                     try
                     {
-                        dalOrder.CreateOrder(CreateOrderFromUser());
+                        dalOrder.Create(CreateOrderFromUser());
                     }
                     catch (Exception e)
                     {
@@ -181,7 +184,7 @@ class Program
                     int id = Convert.ToInt32(Console.ReadLine());
                     try
                     {
-                        Console.WriteLine((dalOrder.ReadOrder(id)));
+                        Console.WriteLine((dalOrder.Read(id)));
                     }
                     catch (Exception e)
                     {
@@ -200,11 +203,11 @@ class Program
                     {
                         Console.WriteLine("enter the id of the order to update:\n");
                         id = Convert.ToInt32(Console.ReadLine());
-                        Order old_order = dalOrder.ReadOrder(id);
+                        Order old_order = dalOrder.Read(id);
                         Console.WriteLine(old_order);
                         Order o = UpdateOrderFromUser(old_order);
                         o.Order_ID = id;
-                        dalOrder.UpdateOrder(o);
+                        dalOrder.Update(o);
                     }
                     catch (Exception e)
                     {
@@ -216,7 +219,7 @@ class Program
                     try
                     {
                         id = Convert.ToInt32(Console.ReadLine());
-                        dalOrder.DeleteOrder(id);
+                        dalOrder.Delete(id);
                     }
                     catch (Exception e)
                     {
@@ -286,7 +289,7 @@ class Program
                 case INNER_CHOICE.CREATE:
                     try
                     {
-                        dalOrderItem.create_order_item(CreateOrderItemFromUser());
+                        dalOrderItem.Create(CreateOrderItemFromUser());
                     }
                     catch (Exception e)
                     {
@@ -298,7 +301,7 @@ class Program
                     int id = Convert.ToInt32(Console.ReadLine());
                     try
                     {
-                        Console.WriteLine((dalOrderItem.read_order_item(id)));
+                        Console.WriteLine((dalOrderItem.Read(id)));
                     }
                     catch (Exception e)
                     {
@@ -317,11 +320,11 @@ class Program
                     {
                         Console.WriteLine("enter the id of the orderItem to update:\n");
                         id = Convert.ToInt32(Console.ReadLine());
-                        OrderItem old_oi = dalOrderItem.read_order_item(id);
+                        OrderItem old_oi = dalOrderItem.Read(id);
                         Console.WriteLine(old_oi);
                         OrderItem oi = UpdateOrderItemFromUser(old_oi);
                         oi.OrderItem_ID = id;
-                        dalOrderItem.updateOrderItem(oi);
+                        dalOrderItem.Update(oi);
                     }
                     catch (Exception e)
                     {
@@ -333,7 +336,7 @@ class Program
                     try
                     {
                         id = Convert.ToInt32(Console.ReadLine());
-                        dalOrderItem.delete_order_item(id);
+                        dalOrderItem.Delete(id);
                     }
                     catch (Exception e)
                     {

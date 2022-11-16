@@ -1,10 +1,42 @@
 ﻿
 using Dal.DO;
+using DalApi;
 namespace Dal
 {
-    public class DalOrder
+    public class DalOrder : Iorder
     {
-        public int  CreateOrder(Order order)
+
+        public  Order[] AllOrders()
+        {
+            Order[] orders = new Order[DataSource.Config.order_index];
+            for (int i = 0; i < DataSource.Config.order_index; i++)
+            {
+                orders[i] = DataSource.OrdersArr[i];
+            }
+            return orders;
+        }
+
+        public OrderItem[] ProductsInOrder(int ID)
+        {
+            int sum_items = 0, idx = 0;
+            foreach (OrderItem oi in DataSource.OrderItemsArr)
+            {
+                if (oi.Order_ID == ID)
+                {
+                    sum_items++;
+                }
+            }
+            OrderItem[] items_in_order = new OrderItem[sum_items];
+            foreach (OrderItem oi in DataSource.OrderItemsArr)
+            {
+                if (oi.Order_ID == ID)
+                {
+                    items_in_order[idx++] = oi;
+                }
+            }
+            return items_in_order;
+        }
+        public int Create(Order order)
         {
             if (DataSource.Config.order_index > 49)
             {
@@ -14,9 +46,8 @@ namespace Dal
             DataSource.OrdersArr[DataSource.Config.order_index++] = order;
             return order.Order_ID;
         }
-        public Order ReadOrder(int ID)
+        public Order Read(int ID)
         {
-
             for (int i = 0; i < DataSource.Config.order_index; i++)
             {
                 if (DataSource.OrdersArr[i].Order_ID == ID)
@@ -27,16 +58,21 @@ namespace Dal
             }
             throw new Exception("order id does not exist!");
         }
-        public Order[] AllOrders()
+
+        public  bool Update(Order order)
         {
-            Order[] orders= new Order[DataSource.Config.order_index];
-            for(int i = 0; i < DataSource.Config.order_index; i++)
+            for (int i = 0; i < DataSource.Config.order_index; i++)
             {
-                orders[i] = DataSource.OrdersArr[i];
+                if (DataSource.OrdersArr[i].Order_ID == order.Order_ID)
+                {
+                    DataSource.OrdersArr[i] = order;
+                    return true;
+                }
             }
-            return orders;    
+            throw new Exception("the order does not exist!");
         }
-        public void DeleteOrder(int ID)
+
+        public void Delete(int ID)
         {
             for (int i = 0; i < DataSource.Config.order_index; i++)
             {
@@ -53,45 +89,5 @@ namespace Dal
             throw new Exception("the order id does not exist!\n");
 
         }
-        public void UpdateOrder(Order order)
-        {
-            int index=-1;
-            for(int i=0; i<DataSource.Config.order_index; i++)
-            {
-                if(DataSource.OrdersArr[i].Order_ID == order.Order_ID)
-                {
-                    index = i;
-                }
-            }
-            if (index == -1)
-            {
-                throw new Exception("the order does not exist!");
-            }
-            else
-            {
-                DataSource.OrdersArr[index] = order;
-            }
-        }
-        public OrderItem[] ProductsInOrder(int ID)
-        {
-            int sum_items=0,idx=0;
-          foreach(OrderItem oi in DataSource.OrderItemsArr)
-            {
-                if (oi.Order_ID == ID)
-                {
-                    sum_items++;
-                }
-          }
-            OrderItem[] items_in_order = new OrderItem[sum_items];
-            foreach (OrderItem oi in DataSource.OrderItemsArr)
-            {
-                if (oi.Order_ID == ID)
-                {
-                    items_in_order[idx++] = oi;
-                }
-            }
-            return items_in_order;
-        }
-        
     }
 }

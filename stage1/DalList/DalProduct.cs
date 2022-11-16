@@ -1,12 +1,13 @@
 ﻿
 
 using Dal.DO;
+using DalApi;
 
 namespace Dal
 {
-    public class DalProduct
+    public class DalProduct: Iproduct
     {
-        public int create_product(Product product)
+        public int Create(Product product)
         {
             if (DataSource.Config.product_index > 49)
             {
@@ -16,7 +17,7 @@ namespace Dal
             DataSource.ProductsArr[DataSource.Config.product_index++] = product;
             return product.Product_ID;
         }
-        public Product read_product(int ID)
+        public Product Read(int ID)
         {
            for (int i=0;i< DataSource.Config.product_index; i++)
             {
@@ -28,24 +29,27 @@ namespace Dal
             }
             throw new Exception("product id does not exist!");
         }
-        public Product[] all_products()
+        public bool Update(Product product)
         {
-            Product[] allProducts=new Product[DataSource.Config.product_index];
-            for(int i=0;i< DataSource.Config.product_index;i++)
+            for (int i = 0; i < DataSource.Config.product_index; i++)
             {
-                allProducts[i]= DataSource.ProductsArr[i];  
-            }
-            return allProducts;  
-        }
-        public void delete_product(int ID)
-        {
-            for(int i = 0; i < DataSource.Config.product_index; i++)
-            {
-                if(DataSource.ProductsArr[i].Product_ID == ID)
+                if (DataSource.ProductsArr[i].Product_ID == product.Product_ID)
                 {
-                    for(int j = i; j< DataSource.Config.product_index; j++)
+                    DataSource.ProductsArr[i] = product;
+                    return true;
+                }
+            }
+                throw new Exception("the product does not exist!");
+        }
+        public void Delete(int ID)
+        {
+            for (int i = 0; i < DataSource.Config.product_index; i++)
+            {
+                if (DataSource.ProductsArr[i].Product_ID == ID)
+                {
+                    for (int j = i; j < DataSource.Config.product_index; j++)
                     {
-                        DataSource.ProductsArr[j] = DataSource.ProductsArr[j+1];
+                        DataSource.ProductsArr[j] = DataSource.ProductsArr[j + 1];
                     }
                     DataSource.Config.product_index--;
                     return;
@@ -53,25 +57,14 @@ namespace Dal
             }
             throw new Exception("the order id does not exist!\n");
         }
-        public void updateProduct(Product product)
+        public Product[] all_products()
         {
-            int index = -1;
+            Product[] allProducts = new Product[DataSource.Config.product_index];
             for (int i = 0; i < DataSource.Config.product_index; i++)
             {
-                if (DataSource.ProductsArr[i].Product_ID == product.Product_ID)
-                {
-                    index = i;
-                }
+                allProducts[i] = DataSource.ProductsArr[i];
             }
-            if (index == -1)
-            {
-                throw new Exception("the product does not exist!");
-            }
-            else
-            {
-               
-                DataSource.ProductsArr[index] = product;
-            }
+            return allProducts;
         }
     }
 }

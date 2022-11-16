@@ -10,20 +10,7 @@ namespace DalApi
 {
     public interface IorderItem : Icrud<OrderItem>
     {
-        public int Create(OrderItem obj);
-
-
-        public void Delete(int id);
-       
-
-        public OrderItem Read(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Update(OrderItem obj)
-        {
-            throw new NotImplementedException();
-        }
+        public OrderItem Read_item_by_product_order(int order_id, int product_id);
+        public OrderItem[] all_order_items();
     }
 }
