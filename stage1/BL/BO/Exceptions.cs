@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace BO
 {
-    public class OrderForList
+    public class NotExistExceptions : Exception
     {
+        public override string Message => "object does not exist";
+
     }
 }
