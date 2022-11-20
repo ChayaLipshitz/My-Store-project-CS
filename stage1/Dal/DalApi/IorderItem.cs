@@ -11,6 +11,6 @@ namespace DalApi
     public interface IorderItem : Icrud<OrderItem>
     {
         public OrderItem Read_item_by_product_order(int order_id, int product_id);
-        public List<OrderItem> all_order_items();
+        public IEnumerable<OrderItem> all_order_items();
     }
 }

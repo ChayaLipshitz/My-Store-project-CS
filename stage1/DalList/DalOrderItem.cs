@@ -8,7 +8,7 @@ using DalApi;
 
 namespace Dal
 {
-    public class DalOrderItem:IorderItem
+    internal class DalOrderItem:IorderItem
     {
         public int Create(OrderItem order_item)
         {
@@ -63,7 +63,7 @@ namespace Dal
             throw new Exception("the order item does not exist!\n");
         }
 
-        public List<OrderItem> all_order_items()
+        public IEnumerable<OrderItem> all_order_items()
         {
             return DataSource.OrderItemsList;
         }

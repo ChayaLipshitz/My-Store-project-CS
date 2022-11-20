@@ -3,15 +3,15 @@ using Dal.DO;
 using DalApi;
 namespace Dal
 {
-    public class DalOrder : Iorder
+    internal class DalOrder : Iorder
     {
 
-        public  List<Order> AllOrders()
+        public  IEnumerable<Order> AllOrders()
         {
             return DataSource.OrdersList;
         }
 
-        public List<OrderItem> ProductsInOrder(int ID)
+        public IEnumerable<OrderItem> ProductsInOrder(int ID)
         {
             List<OrderItem> orderItem = new List<OrderItem>();
             foreach (OrderItem oi in DataSource.OrderItemsList)

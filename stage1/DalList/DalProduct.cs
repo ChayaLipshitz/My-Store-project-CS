@@ -3,7 +3,7 @@ using DalApi;
 
 namespace Dal
 {
-    public class DalProduct: Iproduct
+    internal class DalProduct: Iproduct
     {
         public int Create(Product product)
         {
@@ -47,7 +47,7 @@ namespace Dal
             }
             throw new NotExistExceptions();
         }
-        public List<Product> all_products()
+        public IEnumerable<Product> all_products()
         {            
             return DataSource.ProductsList;
         }

@@ -3,10 +3,10 @@ using DalApi;
 namespace Dal;
 class Program
 {
-    IDal dalList = new DalList();
-    private static readonly Iproduct dalProduct = dalList.iproduct();
-    private static readonly DalOrder dalOrder = new();
-    private static readonly DalOrderItem dalOrderItem = new();
+    public static readonly IDal dalList = new DalList();
+    private static readonly Iproduct dalProduct = dalList.iproduct;
+    private static readonly Iorder dalOrder = dalList.iorder;
+    private static readonly IorderItem dalOrderItem = dalList.iorderItem;
     private static Product CreateProductFromUser()
     {
         Console.WriteLine("enter the product name:\n");
@@ -76,7 +76,7 @@ class Program
                     }
                     break;
                 case INNER_CHOICE.READ_ALL:
-                    List<Product> products = dalProduct.all_products();
+                    IEnumerable<Product> products = dalProduct.all_products();
                     foreach (Product p in products)
                     {
                         Console.WriteLine(p.ToString() + "\n");
@@ -190,7 +190,7 @@ class Program
                     }
                     break;
                 case INNER_CHOICE.READ_ALL:
-                    List<Order> orders = dalOrder.AllOrders();
+                    IEnumerable<Order> orders = dalOrder.AllOrders();
                     foreach (Order o in orders)
                     {
                         Console.WriteLine(o + "\n");
@@ -229,7 +229,7 @@ class Program
                     id = Convert.ToInt32(Console.ReadLine());
                     try
                     {
-                        List<OrderItem> orderItems = dalOrder.ProductsInOrder(id);
+                        IEnumerable<OrderItem> orderItems = dalOrder.ProductsInOrder(id);
                         foreach (OrderItem oi in orderItems)
                         {
                             Console.WriteLine(oi + "\n");
@@ -307,7 +307,7 @@ class Program
                     }
                     break;
                 case INNER_CHOICE.READ_ALL:
-                    List<OrderItem> orderItems = dalOrderItem.all_order_items();
+                    IEnumerable<OrderItem> orderItems = dalOrderItem.all_order_items();
                     foreach (OrderItem oi in orderItems)
                     {
                         Console.WriteLine(oi + "\n");

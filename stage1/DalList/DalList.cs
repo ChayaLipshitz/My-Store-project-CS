@@ -11,7 +11,7 @@ namespace Dal
     sealed  public  class DalList : IDal
 
     {
-        public Iorder iorder => new DalOrder();
+        public  Iorder iorder => new DalOrder();
 
         public IorderItem iorderItem =>  new DalOrderItem();
 

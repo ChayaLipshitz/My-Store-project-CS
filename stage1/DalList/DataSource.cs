@@ -1,6 +1,6 @@
 ﻿using Dal.DO;
 namespace Dal;
-public class DataSource
+internal class DataSource
 {
 
     static readonly Random rand = new Random();

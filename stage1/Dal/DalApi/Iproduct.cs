@@ -11,6 +11,6 @@ namespace DalApi
     public interface Iproduct : Icrud<Product>
     {
 
-        public List<Product> all_products();
+        public IEnumerable<Product> all_products();
     }
 }
