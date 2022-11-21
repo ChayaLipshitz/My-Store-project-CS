@@ -4,12 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BO
+namespace BO;
+public class OrderTracking
 {
-    public class OrderTracking
-    {
-        public int ID { get; set; }
-        public eOrderStatus Status { get; set; }
+    public int ID { get; set; }
+    public eOrderStatus Status { get; set; }
 
+
+    public override string ToString()
+    {
+        return $"ID: {ID}\n" +
+            $"Status: {Status}\n\n";
     }
 }

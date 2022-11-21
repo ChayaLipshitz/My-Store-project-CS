@@ -14,4 +14,15 @@ public class ProductItem
     public int Amount { get; set; }
     public bool InStock { get; set; }
 
+
+    public override string ToString()
+    {
+        return $"ID: {ID}\n" +
+            $"Name: {Name}\n" +
+            $"Price: {Price}\n" +
+            $"Category: {Category}\n" +
+            $"Amount: {Amount}\n" +
+            $"InStock: {InStock}\n\n";
+    }
+
 }

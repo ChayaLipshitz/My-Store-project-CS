@@ -11,5 +11,12 @@ public class ProductForList
     public string Name { get; set; }
     public double Price { get; set; }
     public eCategory Category { get; set; }
+    public override string ToString()
+    {
+        return $"ID: {ID}\n" +
+            $"Name: {Name}\n" +
+            $"Price: {Price}\n" +
+            $"Category: {Category}\n\n";
+    }
 
 }
