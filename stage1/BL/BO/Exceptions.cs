@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BO
+namespace BO;
+public class NotExistExceptions : Exception
 {
-    public class NotExistExceptions : Exception
-    {
-        public override string Message => "object does not exist";
+    public override string Message => "object does not exist";
 
-    }
 }

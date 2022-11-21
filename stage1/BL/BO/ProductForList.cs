@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BO
+namespace BO;
+public class ProductForList
 {
-    public class ProductForList
-    {
-    }
+    public int ID { get; set; }
+    public string Name { get; set; }
+    public double Price { get; set; }
+    public eCategory Category { get; set; }
+
 }
