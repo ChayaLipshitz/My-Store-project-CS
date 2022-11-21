@@ -13,6 +13,13 @@ namespace BO
         public int AmountOfItems { get; set; }
         public eOrderStatus Status { get; set; }
         public double TotalPrice { get; set; }
-
+        public override string ToString()
+        {
+            return $"ID: {ID}\n" +
+                $"CustomerName: {CustomerName}\n" +
+                $"AmountOfItems: {AmountOfItems}\n" +
+                $"Status: {Status}\n" +
+                $"TotalPrice: {TotalPrice}\n\n\n";
+        }
     }
 }
