@@ -24,16 +24,16 @@ class Program
     {
         Console.WriteLine("enter the product name:\n");
         string newName = Console.ReadLine();
-        string name = newName ==""? p.Product_Name:newName;
+        string name = newName ==""? p.Name:newName;
         Console.WriteLine("enter the product price:\n");
         string priceStr = Console.ReadLine();
-        double price = priceStr != "" ? Convert.ToDouble(priceStr) : p.Product_Price;
+        double price = priceStr != "" ? Convert.ToDouble(priceStr) : p.Price;
         Console.WriteLine($"choose category: enter {(int)eCategory.FRUITS} for FRUITS, {(int)eCategory.SNACKS} for SNACKS,  {(int)eCategory.FROZEN} for FROZEN:\n");
         string categorySTR = Console.ReadLine();
-        eCategory category = categorySTR != "" ? (eCategory)Convert.ToInt32(categorySTR) : p.Product_Category;
+        eCategory category = categorySTR != "" ? (eCategory)Convert.ToInt32(categorySTR) : p.Category;
         Console.WriteLine("enter the amount you have from this product in stock\n");
         string inStockSTR = Console.ReadLine();
-        int instock = inStockSTR != "" ? Convert.ToInt32(inStockSTR) : p.Product_Instock;
+        int instock = inStockSTR != "" ? Convert.ToInt32(inStockSTR) : p.Instock;
         Product product = new Product(name, price, category, instock);
         return product;
     }
@@ -91,7 +91,7 @@ class Program
                         Product old_p = dalProduct.Read(id);
                         Console.WriteLine(old_p.ToString());
                         Product p = UpdateProductFromUser(old_p);
-                        p.Product_ID = id;
+                        p.ID = id;
                         dalProduct.Update(p);
                     }
                     catch (Exception e)

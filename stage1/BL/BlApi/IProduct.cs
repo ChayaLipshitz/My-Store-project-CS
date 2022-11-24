@@ -8,12 +8,11 @@ namespace BlApi
 {
     public interface IProduct
     {
-        public IEnumerable<ProductForList> all_products();
-        public IEnumerable<ProductItem> Catalog();
-        public IEnumerable<Product> ProductDetails(int id);
-        //  public IEnumerable<Product> ProductDetails(int id);
-        public void AddProduct(Product product);
-
-
+        public IEnumerable<ProductForList> ReadAll();
+        public BO.Product ProductDetails(int ProductId);
+        public BO.ProductItem ProductDetails(int ProductId, Cart cart);
+        public void Add(BO.Product product);
+        public void Update(BO.Product product);
+        public void Delete(int id);
     }
 }
