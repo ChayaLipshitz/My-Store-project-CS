@@ -7,6 +7,8 @@ public enum eCategory
     SNACKS,
     FROZEN
 }
+
+
 public enum OUT_CHOICE
 {
     EXIT,
