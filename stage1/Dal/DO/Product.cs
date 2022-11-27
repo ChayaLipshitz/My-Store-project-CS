@@ -7,13 +7,13 @@ namespace Dal.DO;
     public string Name { get; set; }
     public double Price { get; set; }
     public eCategory Category { get; set; }
-    public int Instock { get; set; }
+    public int InStock { get; set; }
 
     public Product(string name, double price, eCategory category, int instock)
     {
        ID = -1;
         Category = category;
-        Instock = instock;
+        InStock = instock;
         Name = name;
        Price = price;
     }
@@ -23,7 +23,7 @@ namespace Dal.DO;
                     $"product name: {Name}\n" +
                     $"product price: {Price}\n" +
                     $"product category: {Category}\n" +
-                    $"amount in stock: {Instock}\n\n";
+                    $"amount in stock: {InStock}\n\n";
     }
 }
 

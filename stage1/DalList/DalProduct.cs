@@ -8,15 +8,15 @@ namespace Dal
         public int Create(Product product)
         {
            
-            product.Product_ID = DataSource.Config.Product_ID;
+            product.ID = DataSource.Config.Product_ID;
             DataSource.ProductsList.Add(product);
-            return product.Product_ID;
+            return product.ID;
         }
         public Product Read(int ID)
         {
             foreach(Product p in DataSource.ProductsList)
             {
-                if (p.Product_ID == ID)
+                if (p.ID == ID)
                 {
                     return p;
                 }
@@ -27,7 +27,7 @@ namespace Dal
         {
             for (int i = 0; i < DataSource.ProductsList.Count(); i++)
             {
-                if (DataSource.ProductsList[i].Product_ID == product.Product_ID)
+                if (DataSource.ProductsList[i].ID == product.ID)
                 {
                     DataSource.ProductsList[i] = product;
                     return true;
@@ -39,7 +39,7 @@ namespace Dal
         {
             foreach(Product p in DataSource.ProductsList)
             {
-                if (p.Product_ID == ID)
+                if (p.ID == ID)
                 {
                     DataSource.ProductsList.Remove(p);
                     return;

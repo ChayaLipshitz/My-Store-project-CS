@@ -8,6 +8,36 @@ namespace BlImplementation;
 internal class BlProduct : IProduct
 {
     IDal DAl = new DalList();
+    private Dal.DO.Product ConvertToDOproduct(BO.Product BOproduct)
+    {
+        Dal.DO.Product DOproduct = new Dal.DO.Product();
+        DOproduct.ID = BOproduct.ID;
+        DOproduct.Name = BOproduct.Name;
+        DOproduct.Price = BOproduct.Price;
+        DOproduct.Category = (Dal.DO.eCategory)BOproduct.Category;
+        DOproduct.InStock = BOproduct.InStock;
+        return DOproduct;
+    }
+    private bool CheckObjValidation(BO.Product product)
+    {
+        if (product.ID < 0)
+        {
+            throw new BO.PropertyInValidException("Id");
+        }
+        if (product.Name == "")
+        {
+            throw new BO.PropertyInValidException("name");
+        }
+        if (product.Price < 0)
+        {
+            throw new BO.PropertyInValidException("price");
+        }
+        if (product.InStock < 0)
+        {
+            throw new BO.PropertyInValidException("quantity in stock");
+        }
+        return true;
+    }
     public IEnumerable<BO.ProductForList> ReadAll()
     {
         List<BO.ProductForList> productForList = new List<BO.ProductForList>();
@@ -42,7 +72,7 @@ internal class BlProduct : IProduct
                 BLproduct.Name = DALproduct.Name;
                 BLproduct.Price = DALproduct.Price;
                 BLproduct.Category = (BO.eCategory)DALproduct.Category;
-                BLproduct.InStock = DALproduct.Instock;
+                BLproduct.InStock = DALproduct.InStock;
             }
             catch (BO.NotExistExceptions ex)
             {
@@ -77,7 +107,7 @@ internal class BlProduct : IProduct
                 BLproductItem.Name = DALproduct.Name;
                 BLproductItem.Price = DALproduct.Price;
                 BLproductItem.Category = (BO.eCategory)DALproduct.Category;
-                BLproductItem.InStock = DALproduct.Instock>0;
+                BLproductItem.InStock = DALproduct.InStock>0;
                 BLproductItem.Amount = amount;
             }
             catch (BO.NotExistExceptions ex)
@@ -96,20 +126,61 @@ internal class BlProduct : IProduct
         }
         return BLproductItem;
     }
-
+    
     public void Add(BO.Product product)
     {
-        throw new NotImplementedException();
+        if (CheckObjValidation(product))
+        {
+            try
+            {
+                DAl.iproduct.Create(ConvertToDOproduct(product));
+            }
+            catch (Dal.DO.DuplicateIdExceptions err)
+            {
+                throw new BO.DataError(err);
+            }
+        }
     }
 
     public void Update(BO.Product product)
     {
-        throw new NotImplementedException();
-    }
+        if (CheckObjValidation(product))
+        {
+            try
+            {
+                DAl.iproduct.Update(ConvertToDOproduct(product));
+            }
+            catch (Dal.DO.NotExistExceptions err)
+            {
+                throw new BO.DataError(err);
+            }
+        }
 
+    } 
     public void Delete(int id)
     {
-        throw new NotImplementedException();
+        bool flag = true;
+        foreach( Dal.DO.Order order in DAl.iorder.AllOrders())
+        {
+            if (order.Order_ID == id)
+            {
+                flag = false;
+            }
+        }
+        if (!flag)
+        {
+            throw new BO.ProductExistsInOrderException();
+        }
+        try
+        {
+                DAl.iorder.Delete(id);
+        }
+        catch(Dal.DO.NotExistExceptions err)
+        {
+                throw new BO.DataError(err);
+        }
+       
+       
     }
 
     

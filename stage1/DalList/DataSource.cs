@@ -30,12 +30,12 @@ internal class DataSource
             Product product = new Product();
             int nameIndex = (int)rand.NextInt64(productsName.Length);
             int price = (int)rand.NextInt64(1, 100);
-            product.Product_Name = productsName[nameIndex];
-            product.Product_Price = price;
-            product.Product_Instock = (int)rand.NextInt64(200);
+            product.Name = productsName[nameIndex];
+            product.Price = price;
+            product.InStock = (int)rand.NextInt64(200);
             int x = 1;
-            product.Product_Category = (eCategory)x;
-            product.Product_ID = Config.Product_ID;
+            product.Category = (eCategory)x;
+            product.ID = Config.Product_ID;
             ProductsList.Add(product);
         }
     }
@@ -75,7 +75,7 @@ internal class DataSource
             orderItem.OrderItem_ID = Config.OrderItem_ID;
             int productIndex = (int)rand.NextInt64(ProductsList.Count());
             int orderIndex = (int)rand.NextInt64(OrdersList.Count());
-            orderItem.Product_ID = ProductsList[productIndex].Product_ID;
+            orderItem.Product_ID = ProductsList[productIndex].ID;
             orderItem.Order_ID = OrdersList[orderIndex].Order_ID;
             OrderItemsList.Add(orderItem);
         }
