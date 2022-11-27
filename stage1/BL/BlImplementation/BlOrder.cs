@@ -7,10 +7,25 @@ namespace BlImplementation;
 internal class BlOrder:IOrder
 {
     IDal DAl = new DalList();
-
+    private BO.Order ConvertToBOorder(Dal.DO.Order DOorder)
+    {
+        BO.Order BOorder = new BO.Order();
+        BOorder.
+    }
     public BO.Order Read(int id)
     {
-       
+        if (id >= 0)
+        {
+            try
+            {
+                Dal.DO.Order order = DAl.iorder.Read(id);
+
+            }
+            catch (Dal.DO.NotExistExceptions err)
+            {
+                throw new BO.DataError(err);
+            }
+        }
     }
 
     public IEnumerable<BO.OrderForList> ReadAll()
@@ -31,7 +46,9 @@ internal class BlOrder:IOrder
                 orderForList.TotalPrice += oi.Product_Price * oi.Product_Amount;
             }
             ordersForList.Add(orderForList);
+            ///   !!!!!!!!!!!!!  STATUS !!!!!!!!!!!!!
         }
+        return ordersForList;
     }
 
     public BO.OrderTracking Tracking(int OrderId)
