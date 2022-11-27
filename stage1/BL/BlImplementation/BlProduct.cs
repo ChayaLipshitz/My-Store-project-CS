@@ -48,11 +48,15 @@ internal class BlProduct : IProduct
         }
         return true;
     }
+    /// <summary>
+    /// all products as ProductForList
+    /// </summary>
+    /// <returns>IEnumerable of all the products as ProductForList</returns>
     public IEnumerable<BO.ProductForList> ReadAll()
     {
         List<BO.ProductForList> productForList = new List<BO.ProductForList>();
         IEnumerable<Dal.DO.Product> products = DAl.iproduct.all_products();
-       foreach(Dal.DO.Product product in products)
+        foreach(Dal.DO.Product product in products)
         {
             BO.ProductForList p = new BO.ProductForList();
             p.ID = product.ID;
@@ -84,13 +88,9 @@ internal class BlProduct : IProduct
             {
                 throw new BO.DataError(err);  ////--------------------------------///
             }
+            return BLproduct;
         }
-        else
-        {
             throw new BO.IDNotValidException();
-        }
-        return BLproduct;
-
     }
     /// <summary>
     ///  product details for client screen
@@ -167,7 +167,7 @@ internal class BlProduct : IProduct
         bool flag = true;
         foreach( Dal.DO.Order order in DAl.iorder.AllOrders())
         {
-            if (order.Order_ID == id)
+            if (order.ID == id)
             {
                 flag = false;
             }

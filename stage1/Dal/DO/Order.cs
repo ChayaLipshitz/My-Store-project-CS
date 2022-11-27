@@ -5,7 +5,7 @@ namespace Dal.DO;
 
 public struct Order
 {
-    public int Order_ID { get; set; }
+    public int ID { get; set; }
     public string Customer_Name { get; set; }
     public string Customer_Email { get; set; }
     public string Customer_Address { get; set; }
@@ -14,7 +14,7 @@ public struct Order
     public DateTime Delivery_Date { get; set; }
     public override string ToString()
     {
-        return $"Order id: {Order_ID}\n" +
+        return $"Order id: {ID}\n" +
             $"Customer name: {Customer_Name}\n" +
             $"Customer email: {Customer_Email}\n" +
             $"Customer address: {Customer_Address}\n" +
@@ -24,7 +24,7 @@ public struct Order
     }
     public Order(string name,string email,string address, DateTime Order_date, DateTime Ship_date, DateTime Delivery_date)
     {
-        Order_ID = -1;
+        ID = -1;
         Customer_Name = name;
         Customer_Email = email;
         Customer_Address = address;

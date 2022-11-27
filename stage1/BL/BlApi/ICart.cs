@@ -8,10 +8,10 @@ namespace BlApi
 {
     public interface ICart
     {
-        public void addOrderItem(Cart cart,int id);
-        public void UpdateOrderItem(Cart cart,int id,int quantity);
-        public void SubmitOrder (Cart cart,int id//customerDetails already in cart?
-                                                 );
+        public void addOrderItem(BO.Cart cart,int id);
+        public void UpdateOrderItem(BO.Cart cart,int id,int quantity);
+        public void SubmitOrder (BO.Cart cart, string CustomerName, string CustomerEmail, string CustomerAddress//customerDetails already in cart?
+                                                                                                             );
         
     }
 }

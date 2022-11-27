@@ -33,7 +33,7 @@ namespace Dal
                     return true;
                 }
             }
-                throw new NotExistExceptions();
+                throw new NotExistExceptions();0
         }
         public void Delete(int ID)
         {
