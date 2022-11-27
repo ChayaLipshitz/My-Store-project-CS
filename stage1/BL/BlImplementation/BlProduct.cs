@@ -18,6 +18,16 @@ internal class BlProduct : IProduct
         DOproduct.InStock = BOproduct.InStock;
         return DOproduct;
     }
+    private BO.Product ConvertToBOproduct(Dal.DO.Product DOproduct)
+    {
+        BO.Product BOproduct = new BO.Product();
+        BOproduct.ID = DOproduct.ID;
+        BOproduct.Name = DOproduct.Name;
+        BOproduct.Price = DOproduct.Price;
+        BOproduct.Category = (BO.eCategory)DOproduct.Category;
+        BOproduct.InStock = DOproduct.InStock;
+        return BOproduct;
+    }
     private bool CheckObjValidation(BO.Product product)
     {
         if (product.ID < 0)
@@ -68,16 +78,11 @@ internal class BlProduct : IProduct
             try
             {
                 Dal.DO.Product DALproduct = DAl.iproduct.Read(ProductId);
-                BLproduct.ID = DALproduct.ID;
-                BLproduct.Name = DALproduct.Name;
-                BLproduct.Price = DALproduct.Price;
-                BLproduct.Category = (BO.eCategory)DALproduct.Category;
-                BLproduct.InStock = DALproduct.InStock;
+                BLproduct = ConvertToBOproduct(DALproduct);
             }
-            catch (BO.NotExistExceptions ex)
+            catch (BO.NotExistExceptions err)
             {
-                throw new BO.NotExistExceptions();  ////--------------------------------///
-
+                throw new BO.DataError(err);  ////--------------------------------///
             }
         }
         else
@@ -110,14 +115,14 @@ internal class BlProduct : IProduct
                 BLproductItem.InStock = DALproduct.InStock>0;
                 BLproductItem.Amount = amount;
             }
-            catch (BO.NotExistExceptions ex)
+            catch (BO.NotExistExceptions err)
             {
-                throw new BO.NotExistExceptions();  ////--------------------------------///
+                throw new BO.DataError(err);  ////--------------------------------///
 
             }
-            catch(Exception ex)
+            catch(Exception err)
             {
-                throw new BO.NotExistExceptions();
+                throw new BO.DataError(err);
             }
         }
         else
