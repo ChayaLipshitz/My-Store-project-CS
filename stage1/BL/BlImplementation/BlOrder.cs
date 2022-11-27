@@ -15,7 +15,7 @@ internal class BlOrder:IOrder
 
     public IEnumerable<BO.OrderForList> ReadAll()
     {
-        List<BO.OrderForList> orderForLists = new List<BO.OrderForList>();
+        List<BO.OrderForList> ordersForList = new List<BO.OrderForList>();
         IEnumerable <Dal.DO.Order> allOrders= DAl.iorder.AllOrders();
         foreach (Dal.DO.Order order in allOrders)
         {
@@ -30,6 +30,7 @@ internal class BlOrder:IOrder
                 orderForList.AmountOfItems += oi.Product_Amount;
                 orderForList.TotalPrice += oi.Product_Price * oi.Product_Amount;
             }
+            ordersForList.Add(orderForList);
         }
     }
 
