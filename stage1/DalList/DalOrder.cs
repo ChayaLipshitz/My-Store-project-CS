@@ -25,15 +25,15 @@ namespace Dal
         }
         public int Create(Order order)
         {            
-            order.Order_ID = DataSource.Config.Order_ID;
+            order.ID = DataSource.Config.Order_ID;
             DataSource.OrdersList.Add(order);
-            return order.Order_ID;
+            return order.ID;
         }
         public Order Read(int ID)
         {
             foreach (Order order in DataSource.OrdersList)
             {
-                if (order.Order_ID == ID)
+                if (order.ID == ID)
                 {
                     return order;
                 }
@@ -45,7 +45,7 @@ namespace Dal
         {            
             for (int i = 0; i < DataSource.OrdersList.Count(); i++)
             {
-                if (DataSource.OrdersList[i].Order_ID == new_order.Order_ID)
+                if (DataSource.OrdersList[i].ID == new_order.ID)
                 {
                     DataSource.OrdersList[i] = new_order;
                     return true;
@@ -58,7 +58,7 @@ namespace Dal
         {
             foreach(Order order in DataSource.OrdersList)
             {
-                if (order.Order_ID == ID)
+                if (order.ID == ID)
                 {
                     DataSource.OrdersList.Remove(order);
                     return;
