@@ -36,3 +36,43 @@ public class DataError : Exception
     public DataError(Exception ERR) : base("", ERR) { }
     public override string Message => $" data error: {InnerException.Message}";
 }
+
+
+public class NotInStockException : Exception
+{
+    public string Property { get; }
+    public NotInStockException(string msg)
+    {
+        Property = msg;
+    }
+    public override string Message =>  Property;
+
+}
+
+
+public class TheQuantityIsZeroException : Exception
+{
+    public string Property { get; }
+    public TheQuantityIsZeroException(string msg)
+    {
+        Property = msg;
+    }
+    public override string Message => Property;
+}
+
+public class EmailIsNotValidException : Exception
+{
+    public string Property { get; }
+    
+    public override string Message => "Email is not valid";
+}
+
+public class CustomerDetailsAreUnknown : Exception
+{
+    public string Property { get; }
+    public CustomerDetailsAreUnknown(string msg)
+    {
+        Property = msg;
+    }
+    public override string Message => Property;
+}
