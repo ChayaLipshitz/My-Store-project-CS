@@ -40,7 +40,6 @@ namespace Dal
             }
             throw new NotExistExceptions();
         }
-
         public  bool Update(Order new_order)
         {            
             for (int i = 0; i < DataSource.OrdersList.Count(); i++)

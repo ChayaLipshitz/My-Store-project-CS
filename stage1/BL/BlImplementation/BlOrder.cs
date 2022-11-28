@@ -7,26 +7,26 @@ namespace BlImplementation;
 internal class BlOrder:IOrder
 {
     IDal DAl = new DalList();
-    private BO.Order ConvertToBOorder(Dal.DO.Order DOorder)
-    {
-        BO.Order BOorder = new BO.Order();
-        BOorder.
-    }
-    public BO.Order Read(int id)
-    {
-        if (id >= 0)
-        {
-            try
-            {
-                Dal.DO.Order order = DAl.iorder.Read(id);
+    //private BO.Order ConvertToBOorder(Dal.DO.Order DOorder)
+    //{
+    //    BO.Order BOorder = new BO.Order();
+    //    BOorder.
+    //}
+    //public BO.Order Read(int id)
+    //{
+    //    if (id >= 0)
+    //    {
+    //        try
+    //        {
+    //            Dal.DO.Order order = DAl.iorder.Read(id);
 
-            }
-            catch (Dal.DO.NotExistExceptions err)
-            {
-                throw new BO.DataError(err);
-            }
-        }
-    }
+    //        }
+    //        catch (Dal.DO.NotExistExceptions err)
+    //        {
+    //            throw new BO.DataError(err);
+    //        }
+    //    }
+    //}
 
     public IEnumerable<BO.OrderForList> ReadAll()
     {
@@ -45,12 +45,16 @@ internal class BlOrder:IOrder
                 orderForList.AmountOfItems += oi.Product_Amount;
                 orderForList.TotalPrice += oi.Product_Price * oi.Product_Amount;
             }
+            if (order.Ship_Date == DateTime.MinValue)
+                orderForList.Status = (BO.eOrderStatus)0;
+            else if(order.Delivery_Date==DateTime.MinValue)
+                orderForList.Status = (BO.eOrderStatus)1; 
+            else
+                orderForList.Status= (BO.eOrderStatus)2;
             ordersForList.Add(orderForList);
-            ///   !!!!!!!!!!!!!  STATUS !!!!!!!!!!!!!
         }
         return ordersForList;
     }
-
     public BO.OrderTracking Tracking(int OrderId)
     {
         throw new NotImplementedException();

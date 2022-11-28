@@ -55,7 +55,7 @@ public class DataSource
             order.Customer_Name = customers_Name[nameIndex];
             order.Customer_Email = Customer_Email[emailIndex];
             order.Customer_Address = Customer_Address[addressIndex];
-            order.Order_ID = Config.Order_ID;
+            order.ID = Config.Order_ID;
             order.Order_Date = DateTime.MinValue;
             TimeSpan shipDelay = TimeSpan.FromDays(2);
             TimeSpan deliveryDelay = TimeSpan.FromDays(2);
@@ -76,7 +76,7 @@ public class DataSource
             int productIndex = (int)rand.NextInt64(ProductsList.Count());
             int orderIndex = (int)rand.NextInt64(OrdersList.Count());
             orderItem.Product_ID = ProductsList[productIndex].ID;
-            orderItem.Order_ID = OrdersList[orderIndex].Order_ID;
+            orderItem.Order_ID = OrdersList[orderIndex].ID;
             OrderItemsList.Add(orderItem);
         }
     }

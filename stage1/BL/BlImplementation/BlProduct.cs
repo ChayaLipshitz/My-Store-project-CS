@@ -86,7 +86,7 @@ internal class BlProduct : IProduct
             }
             catch (BO.NotExistExceptions err)
             {
-                throw new BO.DataError(err);  ////--------------------------------///
+                throw new BO.DataError(err); ////--------------------------------///
             }
             return BLproduct;
         }
@@ -184,13 +184,6 @@ internal class BlProduct : IProduct
         {
                 throw new BO.DataError(err);
         }
-       
-       
     }
-
-    
-
-   
-   
 }
 

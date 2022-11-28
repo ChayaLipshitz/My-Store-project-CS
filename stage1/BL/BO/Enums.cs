@@ -17,7 +17,7 @@ public enum eOrderStatus
 
    ORDERED,
    SHIPPED,
-   RECEIVED
+   DELIVERED
 }
 
 

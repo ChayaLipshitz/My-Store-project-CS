@@ -33,7 +33,7 @@ class Program
         eCategory category = categorySTR != "" ? (eCategory)Convert.ToInt32(categorySTR) : p.Category;
         Console.WriteLine("enter the amount you have from this product in stock\n");
         string inStockSTR = Console.ReadLine();
-        int instock = inStockSTR != "" ? Convert.ToInt32(inStockSTR) : p.Instock;
+        int instock = inStockSTR != "" ? Convert.ToInt32(inStockSTR) : p.InStock;
         Product product = new Product(name, price, category, instock);
         return product;
     }
@@ -204,7 +204,7 @@ class Program
                         Order old_order = dalOrder.Read(id);
                         Console.WriteLine(old_order);
                         Order o = UpdateOrderFromUser(old_order);
-                        o.Order_ID = id;
+                        o.ID = id;
                         dalOrder.Update(o);
                     }
                     catch (Exception e)

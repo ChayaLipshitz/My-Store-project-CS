@@ -71,6 +71,33 @@ internal class BlCart:ICart
     {
         IsValidCart(cart, CustomerName, CustomerEmail, CustomerAddress); //check valiation of cart and customer details
         Dal.DO.Order newOrder = new Dal.DO.Order();
+        newOrder.Customer_Address = CustomerAddress;
+        newOrder.Customer_Name = CustomerName;
+        newOrder.Customer_Email = CustomerEmail;
+        newOrder.Order_Date= DateTime.Now;
+        newOrder.Ship_Date = DateTime.MinValue;
+        newOrder.Delivery_Date = DateTime.MinValue;
+        int id = dal.iorder.Create(newOrder);
+        foreach(BO.OrderItem BOoi in cart.Items)
+            {
+            try
+            {
+                Dal.DO.OrderItem DOoi = new Dal.DO.OrderItem();
+                DOoi.Order_ID = id;
+                DOoi.Product_Price = BOoi.Price;
+                DOoi.Product_ID = BOoi.ProductID;
+                DOoi.Product_Amount= BOoi.Amount;
+                dal.iorderItem.Create(DOoi);
+                Dal.DO.Product product= dal.iproduct.Read(DOoi.Product_ID);
+                product.InStock -= DOoi.Product_Amount;
+                dal.iproduct.Update(product);
+            }
+            catch (Dal.DO.NotExistExceptions ex)
+            {
+                throw new BO.DataError(ex);
+            }
+
+        }
 
     }
     public void IsValidCart(BO.Cart cart, string CustomerName, string CustomerEmail, string CustomerAddress)
