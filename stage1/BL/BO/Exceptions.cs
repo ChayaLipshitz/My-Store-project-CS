@@ -74,5 +74,5 @@ public class CustomerDetailsAreUnknown : Exception
     {
         Property = msg;
     }
-    public override string Message => Property;
+    public override string Message => $"Customer {Property} is unknown";
 }
