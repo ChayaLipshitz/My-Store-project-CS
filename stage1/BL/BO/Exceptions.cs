@@ -45,7 +45,7 @@ public class NotInStockException : Exception
     {
         Property = msg;
     }
-    public override string Message =>  Property;
+    public override string Message => $"The product {Property} is not in stock";
 
 }
 

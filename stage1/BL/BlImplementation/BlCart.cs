@@ -25,7 +25,7 @@ internal class BlCart:ICart
                     return cart;
                 }
                 else
-                    throw new BO.NotInStockException($"The product {p.Name} is not in stock");
+                    throw new BO.NotInStockException( p.Name);
             };
             //creating a new OrderItem:
             if (p.InStock > 0)
@@ -41,7 +41,7 @@ internal class BlCart:ICart
                 cart.Items.Add(OItem);
             }
             else
-                throw new BO.NotInStockException($"The product {p.Name} is not in stock");
+                throw new BO.NotInStockException(p.Name);
             return cart;
         }
         catch (Dal.DO.NotExistExceptions e)
@@ -91,7 +91,7 @@ internal class BlCart:ICart
                 }
                 if (OItem.Amount > product.InStock)
                 {
-                    throw new BO.NotInStockException($"The product {product.Name} is not in stock");
+                    throw new BO.NotInStockException(product.Name);
                 }
             }
             catch (Dal.DO.NotExistExceptions)
