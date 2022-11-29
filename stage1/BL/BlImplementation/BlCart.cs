@@ -11,37 +11,30 @@ internal class BlCart:ICart
         try
         {
             Dal.DO.Product p = dal.iproduct.Read(id);
+            if (p.InStock <= 0)
+                throw new BO.NotInStockException(p.Name);
             foreach (BO.OrderItem item in cart.Items)
             {
-                if (item.ID == id)
+                if (item.ProductID == id)
                 {
                     //Updating the existing OrderItem
-                    if (p.InStock > 0)
-                    {
-                        item.Amount++;
-                        item.TotalPrice += p.Price;
-                        cart.TotalPrice += p.Price;
-                        return cart;
-                    }
-                    else
-                        throw new BO.NotInStockException(p.Name);
+                    item.Amount++;
+                    item.TotalPrice += p.Price;
+                    cart.TotalPrice += p.Price;
+                    return cart;
                 }
             };
             //creating a new OrderItem:
-            if (p.InStock > 0)
-            {
-                BO.OrderItem OItem = new BO.OrderItem();
-                OItem.ID = DataSource.Config.OrderItem_ID;
-                OItem.ProductID = p.ID;
-                OItem.Name = p.Name;
-                OItem.Price = p.Price;
-                OItem.Amount = 1;
-                OItem.TotalPrice = p.Price;
-                cart.TotalPrice += p.Price;
-                cart.Items.Add(OItem);
-                return cart;
-            }
-                throw new BO.NotInStockException(p.Name);
+            BO.OrderItem OItem = new BO.OrderItem();
+            OItem.ID = DataSource.Config.OrderItem_ID;
+            OItem.ProductID = p.ID;
+            OItem.Name = p.Name;
+            OItem.Price = p.Price;
+            OItem.Amount = 1;
+            OItem.TotalPrice = p.Price;
+            cart.TotalPrice += p.Price;
+            cart.Items.Add(OItem);
+            return cart;
         }
         catch (Dal.DO.NotExistExceptions ex)
         {
@@ -69,6 +62,7 @@ internal class BlCart:ICart
     }
     public void SubmitOrder(BO.Cart cart, string CustomerName, string CustomerEmail, string CustomerAddress)
     {
+        // catch all the ex in IsValidCart ?????????????
         IsValidCart(cart, CustomerName, CustomerEmail, CustomerAddress); //check valiation of cart and customer details
         Dal.DO.Order newOrder = new Dal.DO.Order();
         newOrder.Customer_Address = CustomerAddress;
