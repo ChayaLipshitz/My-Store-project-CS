@@ -43,9 +43,9 @@ internal class BlCart:ICart
             }
                 throw new BO.NotInStockException(p.Name);
         }
-        catch (Dal.DO.NotExistExceptions e)
+        catch (Dal.DO.NotExistExceptions ex)
         {
-            throw new BO.NotExistExceptions();////////
+            throw new BO.DataError(ex);
         }
     }
     public BO.Cart UpdateOrderItem(BO.Cart cart, int id, int quantity)

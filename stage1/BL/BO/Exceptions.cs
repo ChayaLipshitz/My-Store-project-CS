@@ -10,11 +10,11 @@ public class NotExistExceptions : Exception
     public override string Message => "object does not exist";
 
 }
-public class IDNotValidException : Exception
-{
-    public override string Message => "the id is not valid";
+//public class IDNotValidException : Exception
+//{
+//    public override string Message => "the id is not valid";
 
-}
+//}
 public class ProductExistsInOrderException : Exception
 {
     public override string Message => "the product exists in one or more orders";
@@ -75,4 +75,15 @@ public class CustomerDetailsAreUnknown : Exception
         Property = msg;
     }
     public override string Message => $"Customer {Property} is unknown";
+}
+
+public class OrderAlreadyException : Exception
+{
+    public string Property { get; }
+    public OrderAlreadyException(string msg)
+    {
+        Property = msg;
+    }
+    public override string Message => $"The order already {Property}";
+
 }
