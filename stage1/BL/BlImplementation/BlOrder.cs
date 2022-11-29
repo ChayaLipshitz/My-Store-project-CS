@@ -6,7 +6,7 @@ namespace BlImplementation;
 internal class BlOrder:IOrder
 {
     IDal dal = new DalList();
-    private BO.Order ConvertToBOorder(Dal.DO.Order DOorder)
+    private BO.Order convertToBOorder(Dal.DO.Order DOorder)
     {
         BO.Order BOorder = new BO.Order();
         BOorder.OrderID = DOorder.ID;
