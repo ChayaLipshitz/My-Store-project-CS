@@ -71,7 +71,7 @@ internal class BlOrder:IOrder
             try
             {
                 Dal.DO.Order DOorder = dal.iorder.Read(OrderId);                
-                return ConvertToBOorder(DOorder);
+                return convertToBOorder(DOorder);
             }
             catch (Dal.DO.NotExistExceptions err)
             {
@@ -91,7 +91,7 @@ internal class BlOrder:IOrder
                 throw new BO.OrderAlreadyException("shipped");
             order.Ship_Date = DateTime.Now;
             dal.iorder.Update(order);
-            return ConvertToBOorder(order);
+            return convertToBOorder(order);
         }
         catch (Dal.DO.NotExistExceptions ex)
         {
@@ -109,7 +109,7 @@ internal class BlOrder:IOrder
                 throw new BO.OrderAlreadyException("delivered");
             order.Delivery_Date = DateTime.Now;
             dal.iorder.Update(order);
-            return ConvertToBOorder(order);
+            return convertToBOorder(order);
         }
         catch (Dal.DO.NotExistExceptions ex)
         {
