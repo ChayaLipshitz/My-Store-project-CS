@@ -15,6 +15,12 @@ public class NotExistExceptions : Exception
 //    public override string Message => "the id is not valid";
 
 //}
+public class OrderWasNotShippedException : Exception
+{
+    public override string Message => "the requested order was not shipped yet";
+
+}
+
 public class ProductExistsInOrderException : Exception
 {
     public override string Message => "the product exists in one or more orders";

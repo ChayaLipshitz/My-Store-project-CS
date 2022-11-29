@@ -7,7 +7,7 @@ using DalApi;
 namespace BlImplementation;
 internal class BlProduct : IProduct
 {
-    IDal DAl = new DalList();
+    IDal dal = new DalList();
     private Dal.DO.Product ConvertToDOproduct(BO.Product BOproduct)
     {
         Dal.DO.Product DOproduct = new Dal.DO.Product();
@@ -28,7 +28,7 @@ internal class BlProduct : IProduct
         BOproduct.InStock = DOproduct.InStock;
         return BOproduct;
     }
-    private bool CheckObjValidation(BO.Product product)
+    private void CheckObjValidation(BO.Product product)
     {
         if (product.ID < 0)
         {
@@ -46,7 +46,6 @@ internal class BlProduct : IProduct
         {
             throw new BO.PropertyInValidException("quantity in stock");
         }
-        return true;
     }
     /// <summary>
     /// all products as ProductForList
@@ -55,7 +54,7 @@ internal class BlProduct : IProduct
     public IEnumerable<BO.ProductForList> ReadAll()
     {
         List<BO.ProductForList> productForList = new List<BO.ProductForList>();
-        IEnumerable<Dal.DO.Product> products = DAl.iproduct.all_products();
+        IEnumerable<Dal.DO.Product> products = dal.iproduct.all_products();
         foreach(Dal.DO.Product product in products)
         {
             BO.ProductForList p = new BO.ProductForList();
@@ -81,16 +80,16 @@ internal class BlProduct : IProduct
         {
             try
             {
-                Dal.DO.Product DALproduct = DAl.iproduct.Read(ProductId);
+                Dal.DO.Product DALproduct = dal.iproduct.Read(ProductId);
                 BLproduct = ConvertToBOproduct(DALproduct);
+                return BLproduct;
             }
             catch (BO.NotExistExceptions err)
             {
                 throw new BO.DataError(err); ////--------------------------------///
             }
-            return BLproduct;
         }
-            throw new BO.IDNotValidException();
+            throw new BO.PropertyInValidException("ID");
     }
     /// <summary>
     ///  product details for client screen
@@ -100,89 +99,83 @@ internal class BlProduct : IProduct
     /// <returns></returns>
     public BO.ProductItem ProductDetails(int ProductId, BO.Cart cart)
     {
-
-        BO.ProductItem BLproductItem = new BO.ProductItem();
-        if (ProductId >= 0)
+        if (ProductId < 0)
+            throw new BO.PropertyInValidException("ID");
+        BO.ProductItem BOproductItem = new BO.ProductItem();
+        try
         {
-            try
-            {
-                int amount =cart.Items.Find(product => product.ID == ProductId).Amount;
-                Dal.DO.Product DALproduct = DAl.iproduct.Read(ProductId);
-                BLproductItem.ID = DALproduct.ID;
-                BLproductItem.Name = DALproduct.Name;
-                BLproductItem.Price = DALproduct.Price;
-                BLproductItem.Category = (BO.eCategory)DALproduct.Category;
-                BLproductItem.InStock = DALproduct.InStock>0;
-                BLproductItem.Amount = amount;
-            }
-            catch (BO.NotExistExceptions err)
-            {
-                throw new BO.DataError(err);  ////--------------------------------///
-
-            }
-            catch(Exception err)
-            {
-                throw new BO.DataError(err);
-            }
+            Dal.DO.Product DOproduct = dal.iproduct.Read(ProductId);
+            BOproductItem.ID = DOproduct.ID;
+            BOproductItem.Name = DOproduct.Name;
+            BOproductItem.Price = DOproduct.Price;
+            BOproductItem.Category = (BO.eCategory)DOproduct.Category;
+            BOproductItem.InStock = DOproduct.InStock>0;
+            BOproductItem.Amount = cart.Items.Find(oi => oi.ProductID == ProductId).Amount;
+            return BOproductItem;
         }
-        else
+        catch (BO.NotExistExceptions err)
         {
-            throw new BO.IDNotValidException();
+            throw new BO.DataError(err);  
+
         }
-        return BLproductItem;
+        catch(Exception err)
+        {
+            throw new BO.DataError(err);
+        }       
     }
     
     public void Add(BO.Product product)
     {
-        if (CheckObjValidation(product))
-        {
             try
             {
-                DAl.iproduct.Create(ConvertToDOproduct(product));
+                CheckObjValidation(product);
+                dal.iproduct.Create(ConvertToDOproduct(product));
             }
             catch (Dal.DO.DuplicateIdExceptions err)
             {
                 throw new BO.DataError(err);
             }
-        }
+            catch(BO.PropertyInValidException ex)
+            {
+                throw ex;
+            }
     }
 
     public void Update(BO.Product product)
     {
-        if (CheckObjValidation(product))
-        {
             try
             {
-                DAl.iproduct.Update(ConvertToDOproduct(product));
+                CheckObjValidation(product);
+                dal.iproduct.Update(ConvertToDOproduct(product));
             }
             catch (Dal.DO.NotExistExceptions err)
             {
                 throw new BO.DataError(err);
             }
-        }
-
-    } 
-    public void Delete(int id)
-    {
-        bool flag = true;
-        foreach( Dal.DO.Order order in DAl.iorder.AllOrders())
-        {
-            if (order.ID == id)
+            catch (BO.PropertyInValidException ex)
             {
-                flag = false;
+                throw ex;
             }
-        }
-        if (!flag)
+    } 
+    public void Delete(int ProductID)
+    {
+        // or to check just in al the ordderItems in dal  ?????
+        foreach( Dal.DO.Order order in dal.iorder.AllOrders())
         {
-            throw new BO.ProductExistsInOrderException();
+           IEnumerable< Dal.DO.OrderItem> orderItems = dal.iorder.ProductsInOrder(order.ID);
+            foreach(Dal.DO.OrderItem oi in orderItems)
+            {
+                if (oi.Product_ID == ProductID)
+                    throw new BO.ProductExistsInOrderException();
+            }
         }
         try
         {
-                DAl.iorder.Delete(id);
+            dal.iorder.Delete(ProductID);
         }
         catch(Dal.DO.NotExistExceptions err)
         {
-                throw new BO.DataError(err);
+            throw new BO.DataError(err);
         }
     }
 }

@@ -16,7 +16,7 @@ internal class BlOrder:IOrder
         BOorder.Order_Date = DOorder.Order_Date;
         BOorder.Delivery_Date = DOorder.Delivery_Date;
         BOorder.Ship_Date = DOorder.Ship_Date;
-        BOorder.Status = calculateStatus(BOorder.Ship_Date, BOorder.Delivery_Date);
+        BOorder.Status = calculateOrderStatus(BOorder.Ship_Date, BOorder.Delivery_Date);
         BOorder.TotalPrice = 0;
         IEnumerable<Dal.DO.OrderItem> orderItems = dal.iorder.ProductsInOrder(DOorder.ID);
         foreach (Dal.DO.OrderItem DOorderitem in orderItems)
@@ -33,7 +33,7 @@ internal class BlOrder:IOrder
         }
         return BOorder;
     }
-    private BO.eOrderStatus calculateStatus( DateTime Ship_Date, DateTime Delivery_Date)
+    private BO.eOrderStatus calculateOrderStatus( DateTime Ship_Date, DateTime Delivery_Date)
     {
         if (Ship_Date == DateTime.MinValue)
            return BO.eOrderStatus.ORDERED;
@@ -59,7 +59,7 @@ internal class BlOrder:IOrder
                 orderForList.AmountOfItems += oi.Product_Amount;
                 orderForList.TotalPrice += oi.Product_Price * oi.Product_Amount;
             }
-            orderForList.Status = calculateStatus(order.Ship_Date, order.Delivery_Date);
+            orderForList.Status = calculateOrderStatus(order.Ship_Date, order.Delivery_Date);
             ordersForList.Add(orderForList);
         }
         return ordersForList;
@@ -98,6 +98,9 @@ internal class BlOrder:IOrder
             throw new BO.DataError(ex);
         }
     }
+
+
+
     public BO.Order UpdateOrderDelivered(int OrderId)
     {
         if (OrderId < 0)
@@ -107,6 +110,8 @@ internal class BlOrder:IOrder
             Dal.DO.Order order = dal.iorder.Read(OrderId);
             if (order.Delivery_Date != DateTime.MinValue)
                 throw new BO.OrderAlreadyException("delivered");
+            if(order.Ship_Date == DateTime.MinValue)
+               throw new BO.OrderWasNotShippedException();
             order.Delivery_Date = DateTime.Now;
             dal.iorder.Update(order);
             return convertToBOorder(order);
@@ -123,7 +128,7 @@ internal class BlOrder:IOrder
             Dal.DO.Order order = dal.iorder.Read(OrderId);
             BO.OrderTracking orderTracking = new BO.OrderTracking();
             orderTracking.ID = order.ID;
-            orderTracking.Status = calculateStatus(order.Ship_Date, order.Delivery_Date);
+            orderTracking.Status = calculateOrderStatus(order.Ship_Date, order.Delivery_Date);
             orderTracking.dateAndStatus.Add((order.Order_Date, BO.eOrderStatus.ORDERED));
             if(order.Ship_Date != DateTime.MinValue)    
             orderTracking.dateAndStatus.Add((order.Ship_Date, BO.eOrderStatus.SHIPPED));
