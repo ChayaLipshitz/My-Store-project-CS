@@ -46,11 +46,11 @@ internal class BlOrder:IOrder
                 orderForList.TotalPrice += oi.Product_Price * oi.Product_Amount;
             }
             if (order.Ship_Date == DateTime.MinValue)
-                orderForList.Status = (BO.eOrderStatus)0;
+                orderForList.Status = BO.eOrderStatus.ORDERED;
             else if(order.Delivery_Date==DateTime.MinValue)
-                orderForList.Status = (BO.eOrderStatus)1; 
+                orderForList.Status = BO.eOrderStatus.SHIPPED; 
             else
-                orderForList.Status= (BO.eOrderStatus)2;
+                orderForList.Status= BO.eOrderStatus.DELIVERED;
             ordersForList.Add(orderForList);
         }
         return ordersForList;
