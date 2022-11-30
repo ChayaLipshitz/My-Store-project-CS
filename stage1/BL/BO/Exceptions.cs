@@ -10,6 +10,16 @@ public class NotExistExceptions : Exception
     public override string Message => "object does not exist";
 
 }
+public class ProductDoesNoExistInCartExceptions : Exception
+{
+    public override string Message => "Product does not exist in cart";
+
+}
+public class CartISEmptyException : Exception
+{
+    public override string Message => "the cart is empty";
+
+}
 //public class IDNotValidException : Exception
 //{
 //    public override string Message => "the id is not valid";

@@ -16,12 +16,12 @@ namespace BO
         public double TotalPrice { get; set; }
         public override string ToString()
         {
-            return $"ID: {ID}\n" +
-                $"Name: {Name}\n" +
-                $"ProductID: {ProductID}\n" +
-                $"Price: {Price}\n" +
-                $"Amount: {Amount}\n" +
-                $"TotalPrice: {TotalPrice}\n\n";
+            return $" --ID: {ID}\n" +
+                $" --Name: {Name}\n" +
+                $" --ProductID: {ProductID}\n" +
+                $" --Price: {Price}\n" +
+                $" --Amount: {Amount}\n" +
+                $" --TotalPrice: {TotalPrice}\n";
         }
     }
 }

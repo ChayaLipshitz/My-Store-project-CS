@@ -43,7 +43,7 @@ internal class BlCart:ICart
     }
     public BO.Cart UpdateOrderItem(BO.Cart cart, int id, int quantity)
     {
-            BO.OrderItem OItem = cart.Items.Find(OItem => OItem.ID == id);
+            BO.OrderItem OItem = cart.Items.Find(OItem => OItem.ProductID == id);
             if(OItem == null)
                 throw new BO.NotExistExceptions();
             if (quantity == 0)
@@ -109,7 +109,7 @@ internal class BlCart:ICart
             try
             {
                 Dal.DO.Product product = dal.iproduct.Read(OItem.ProductID);
-                if (OItem.Amount > 0)
+                if (OItem.Amount < 0)
                 {
                     throw new BO.PropertyInValidException("Amount");
                 }

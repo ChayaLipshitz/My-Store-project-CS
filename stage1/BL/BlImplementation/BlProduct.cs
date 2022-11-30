@@ -104,24 +104,29 @@ internal class BlProduct : IProduct
         try
         {
             Dal.DO.Product DOproduct = dal.iproduct.Read(ProductId);
-            BOproductItem.ID = DOproduct.ID;
-            BOproductItem.Name = DOproduct.Name;
-            BOproductItem.Price = DOproduct.Price;
-            BOproductItem.Category = (BO.eCategory)DOproduct.Category;
-            BOproductItem.InStock = DOproduct.InStock>0;
-            BOproductItem.Amount = cart.Items.Find(oi => oi.ProductID == ProductId).Amount;
-            
-            return BOproductItem;
+            if (cart.Items == null) throw new BO.CartISEmptyException();
+            foreach (BO.OrderItem oi in cart.Items)
+            {
+                if(oi.ProductID == ProductId)
+                {
+                    BOproductItem.Amount = oi.Amount;
+                    BOproductItem.ID = DOproduct.ID;
+                    BOproductItem.Name = DOproduct.Name;
+                    BOproductItem.Price = DOproduct.Price;
+                    BOproductItem.Category = (BO.eCategory)DOproduct.Category;
+                    BOproductItem.InStock = DOproduct.InStock > 0;
+                    return BOproductItem;
+                }
+            }
+            throw new BO.ProductDoesNoExistInCartExceptions();
+           
         }
         catch (BO.NotExistExceptions err)
         {
             throw new BO.DataError(err);  
 
         }
-        catch(Exception err)
-        {
-            throw new BO.DataError(err);
-        }       
+       
     }
     
     public void Add(BO.Product product)

@@ -83,10 +83,19 @@ public class Program
             {
                 Console.WriteLine(ex.Message);
             }
-            catch(DataError ex)
+            catch(ProductExistsInOrderException ex)
             {
                 Console.WriteLine(ex.Message);
-            }catch(ProductExistsInOrderException ex)
+            }
+            catch (ProductDoesNoExistInCartExceptions ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            catch (CartISEmptyException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            catch (DataError ex)
             {
                 Console.WriteLine(ex.Message);
             }
@@ -134,12 +143,61 @@ public class Program
         int inner_choice;
         do
         {
-            Console.WriteLine("enter 0 o exit\nenter 1 to add a item to cart\nenter 2 to update quentity of item in cart\n ");
+            Console.WriteLine("enter 0 o exit\n" +
+                "enter 1 to add a item to cart\n" +
+                "enter 2 to update quantity of item in cart\n" +
+                "enter 3 for submitting the cart ");
             inner_choice = Convert.ToInt32(Console.ReadLine());
-            switch (inner_choice)
+            try
             {
-
+                switch (inner_choice)
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        Console.WriteLine("enter the product id:\n");
+                        int id = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine(bl.iCart.addOrderItem(cart, id));
+                        break;
+                    case 2:
+                        Console.WriteLine("enter the product id:\n");
+                        id = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine("enter the new quantity\n");
+                        int quantity = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine(bl.iCart.UpdateOrderItem(cart, id, quantity));
+                        break;
+                    case 3:
+                        Console.WriteLine("enter your name:");
+                        cart.CustomerName = Console.ReadLine();
+                        Console.WriteLine("enter your Email:");
+                        cart.CustomerEmail = Console.ReadLine();
+                        Console.WriteLine("enter your Address:");
+                        cart.CustomerAddress = Console.ReadLine();
+                        bl.iCart.SubmitOrder(cart, cart.CustomerName, cart.CustomerEmail, cart.CustomerAddress);
+                        break;
+                }
             }
+            catch (NotInStockException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            catch (DataError ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            catch (PropertyInValidException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            catch (NotExistExceptions ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            catch (OrderAlreadyException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            
         } while (inner_choice != 0);
 
     }
