@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using BlApi;
 namespace BlImplementation;
-public class BL : IBl
+public class Bl : IBl
 {
-    public IOrder Order => new BlOrder();
+    public IOrder iOrder => new BlOrder();
 
-    public IProduct Product => new BlProduct();
+    public IProduct iProduct => new BlProduct();
 
-    public ICart Cart => new BlCart();
+    public ICart iCart => new BlCart();
 }

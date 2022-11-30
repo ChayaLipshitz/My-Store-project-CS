@@ -3,7 +3,6 @@ using BlApi;
 using Dal;
 using DalApi;
 
-
 namespace BlImplementation;
 internal class BlProduct : IProduct
 {
@@ -111,6 +110,7 @@ internal class BlProduct : IProduct
             BOproductItem.Category = (BO.eCategory)DOproduct.Category;
             BOproductItem.InStock = DOproduct.InStock>0;
             BOproductItem.Amount = cart.Items.Find(oi => oi.ProductID == ProductId).Amount;
+            
             return BOproductItem;
         }
         catch (BO.NotExistExceptions err)
@@ -126,36 +126,36 @@ internal class BlProduct : IProduct
     
     public void Add(BO.Product product)
     {
-            try
-            {
-                CheckObjValidation(product);
-                dal.iproduct.Create(ConvertToDOproduct(product));
-            }
-            catch (Dal.DO.DuplicateIdExceptions err)
-            {
-                throw new BO.DataError(err);
-            }
-            catch(BO.PropertyInValidException ex)
-            {
-                throw ex;
-            }
+        try
+        {
+            CheckObjValidation(product);
+            dal.iproduct.Create(ConvertToDOproduct(product));
+        }
+        catch (Dal.DO.DuplicateIdExceptions err)
+        {
+            throw new BO.DataError(err);
+        }
+        catch (BO.PropertyInValidException ex)
+        {
+            throw ex;
+        }
     }
 
     public void Update(BO.Product product)
     {
-            try
-            {
-                CheckObjValidation(product);
-                dal.iproduct.Update(ConvertToDOproduct(product));
-            }
-            catch (Dal.DO.NotExistExceptions err)
-            {
-                throw new BO.DataError(err);
-            }
-            catch (BO.PropertyInValidException ex)
-            {
-                throw ex;
-            }
+        try
+        {
+            CheckObjValidation(product);
+            dal.iproduct.Update(ConvertToDOproduct(product));
+        }
+        catch (Dal.DO.NotExistExceptions err)
+        {
+            throw new BO.DataError(err);
+        }
+        catch (BO.PropertyInValidException ex)
+        {
+            throw ex;
+        }
     } 
     public void Delete(int ProductID)
     {

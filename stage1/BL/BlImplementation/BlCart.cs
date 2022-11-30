@@ -62,8 +62,8 @@ internal class BlCart:ICart
     }
     public void SubmitOrder(BO.Cart cart, string CustomerName, string CustomerEmail, string CustomerAddress)
     {
-        // catch all the ex in IsValidCart ?????????????
-        IsValidCart(cart, CustomerName, CustomerEmail, CustomerAddress); //check valiation of cart and customer details
+
+        IsValidCart(cart, CustomerName, CustomerEmail, CustomerAddress); //check validation of cart and customer details
         Dal.DO.Order newOrder = new Dal.DO.Order();
         newOrder.Customer_Address = CustomerAddress;
         newOrder.Customer_Name = CustomerName;
@@ -90,6 +90,14 @@ internal class BlCart:ICart
             {
                 throw new BO.DataError(ex);
             }
+            catch (BO.NotInStockException ex)
+            {
+                throw ex;
+            }
+            catch (BO.PropertyInValidException ex)
+            {
+                throw ex;
+            }
 
         }
 
@@ -110,22 +118,22 @@ internal class BlCart:ICart
                     throw new BO.NotInStockException(product.Name);
                 }
             }
-            catch (Dal.DO.NotExistExceptions)
+            catch (Dal.DO.NotExistExceptions ex)
             {
-                throw new BO.NotExistExceptions();
+                throw new BO.DataError(ex);
             }
         }
 
         if (!IsValidEmail(CustomerEmail))
         {
-            throw new BO.EmailIsNotValidException();
+            throw new BO.PropertyInValidException("Email");
         }
         if (CustomerAddress == "") 
-            throw new BO.CustomerDetailsAreUnknown("address");
+            throw new BO.PropertyInValidException("address");
         if (CustomerName == "")
-            throw new BO.CustomerDetailsAreUnknown("name");
+            throw new BO.PropertyInValidException("name");
         if (CustomerEmail == "")
-            throw new BO.CustomerDetailsAreUnknown("Email");
+            throw new BO.PropertyInValidException("Email");
     } 
     bool IsValidEmail(string email)
     {

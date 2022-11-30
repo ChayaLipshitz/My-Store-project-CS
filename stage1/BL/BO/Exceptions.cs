@@ -66,23 +66,6 @@ public class TheQuantityIsZeroException : Exception
     public override string Message => Property;
 }
 
-public class EmailIsNotValidException : Exception
-{
-    public string Property { get; }
-    
-    public override string Message => "Email is not valid";
-}
-
-public class CustomerDetailsAreUnknown : Exception
-{
-    public string Property { get; }
-    public CustomerDetailsAreUnknown(string msg)
-    {
-        Property = msg;
-    }
-    public override string Message => $"Customer {Property} is unknown";
-}
-
 public class OrderAlreadyException : Exception
 {
     public string Property { get; }
