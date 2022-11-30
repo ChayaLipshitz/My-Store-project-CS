@@ -160,14 +160,10 @@ internal class BlProduct : IProduct
     public void Delete(int ProductID)
     {
         // or to check just in al the ordderItems in dal  ?????
-        foreach( Dal.DO.Order order in dal.iorder.AllOrders())
+        foreach( Dal.DO.OrderItem orderItem in dal.iorderItem.all_order_items())
         {
-           IEnumerable< Dal.DO.OrderItem> orderItems = dal.iorder.ProductsInOrder(order.ID);
-            foreach(Dal.DO.OrderItem oi in orderItems)
-            {
-                if (oi.Product_ID == ProductID)
+                if (orderItem.Product_ID == ProductID)
                     throw new BO.ProductExistsInOrderException();
-            }
         }
         try
         {
