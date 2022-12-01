@@ -112,30 +112,56 @@ public class Program
                 " enter 3 for a Updateing order shipped\n" +
                 " enter 4 for Updateing order deivered\n");
             inner_choice = Convert.ToInt32(Console.ReadLine());
-            switch (inner_choice)
+            try
             {
-                case 0:
-                    break;
-                case 1:
-                    foreach (OrderForList order in bl.iOrder.ReadAll() )
-                    {
-                        Console.WriteLine(order);
-                        Console.WriteLine("\n");
-                    }
-                    break;
-                case 2:
-                    Console.WriteLine("enter the order id:\n");
-                    int orderID = Convert.ToInt32(Console.ReadLine());
-                    Console.WriteLine(bl.iOrder.Read(orderID));
-                    Console.WriteLine("\n");
-                    break;
-                case 3:
-                    Console.WriteLine("enter the order id:\n");
-                     orderID = Convert.ToInt32(Console.ReadLine());
-                    Order updatedShippingOrder = bl.iOrder.UpdateOrderShipped(orderID);
-                    break;
 
+                switch (inner_choice)
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        foreach (OrderForList order in bl.iOrder.ReadAll())
+                        {
+                            Console.WriteLine(order);
+                            Console.WriteLine("\n");
+                        }
+                        break;
+                    case 2:
+                        Console.WriteLine("enter the order id:\n");
+                        int orderID = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine(bl.iOrder.Read(orderID));
+                        Console.WriteLine("\n");
+                        break;
+                    case 3:
+                        Console.WriteLine("enter the order id:\n");
+                        orderID = Convert.ToInt32(Console.ReadLine());
+                        Order updatedShippingOrder = bl.iOrder.UpdateOrderShipped(orderID);
+                        break;
+                    case 4:
+                        Console.WriteLine("enter the order id:\n");
+                        orderID = Convert.ToInt32(Console.ReadLine());
+                        Order updatedDeliveredOrder = bl.iOrder.UpdateOrderDelivered(orderID);
+                        break;
+
+                }
             }
+            catch (OrderAlreadyException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            catch (PropertyInValidException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            catch (DataError ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            catch (OrderWasNotShippedException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            
         } while (inner_choice != 0);
     }
     public static void CartMenu()
@@ -193,10 +219,7 @@ public class Program
             {
                 Console.WriteLine(ex.Message);
             }
-            catch (OrderAlreadyException ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+           
             
         } while (inner_choice != 0);
 
