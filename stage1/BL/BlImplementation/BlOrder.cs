@@ -6,6 +6,11 @@ namespace BlImplementation;
 internal class BlOrder:IOrder
 {
     IDal dal = new DalList();
+    /// <summary>
+    /// converts a do order to a bo order
+    /// </summary>
+    /// <param name="DOorder">order from the do</param>
+    /// <returns>returns a bo order whith the datails from the given do order</returns>
     private BO.Order convertToBOorder(Dal.DO.Order DOorder)
     {
         BO.Order BOorder = new BO.Order();
@@ -33,6 +38,12 @@ internal class BlOrder:IOrder
         }
         return BOorder;
     }
+    /// <summary>
+    /// calculating the order status
+    /// </summary>
+    /// <param name="Ship_Date">the order shipping date</param>
+    /// <param name="Delivery_Date">the order delivery date</param>
+    /// <returns>the order status</returns>
     private BO.eOrderStatus calculateOrderStatus( DateTime Ship_Date, DateTime Delivery_Date)
     {
         if (Ship_Date == DateTime.MinValue)
@@ -42,6 +53,10 @@ internal class BlOrder:IOrder
         else
             return BO.eOrderStatus.DELIVERED;
     }
+    /// <summary>
+    /// read all orders from the database
+    /// </summary>
+    /// <returns>returns all the orders</returns>
     public IEnumerable<BO.OrderForList> ReadAll()
     {
         List<BO.OrderForList> ordersForList = new List<BO.OrderForList>();
@@ -64,6 +79,13 @@ internal class BlOrder:IOrder
         }
         return ordersForList;
     }
+   /// <summary>
+   /// reading a certain order by order id
+   /// </summary>
+   /// <param name="OrderId">order id</param>
+   /// <returns>returns the order</returns>
+   /// <exception cref="BO.DataError"></exception>
+   /// <exception cref="BO.PropertyInValidException"></exception>
     public BO.Order Read(int OrderId)
     {
         if (OrderId >= 0)
@@ -80,6 +102,14 @@ internal class BlOrder:IOrder
         }
         throw new BO.PropertyInValidException("ID");
     }
+    /// <summary>
+    /// updating the order shipping date
+    /// </summary>
+    /// <param name="OrderId">the order id</param>
+    /// <returns>returns the updated order</returns>
+    /// <exception cref="BO.PropertyInValidException"></exception>
+    /// <exception cref="BO.OrderAlreadyException"></exception>
+    /// <exception cref="BO.DataError"></exception>
     public BO.Order UpdateOrderShipped(int OrderId)
     {
         if (OrderId < 0)
@@ -99,7 +129,15 @@ internal class BlOrder:IOrder
         }
     }
 
-
+    /// <summary>
+    /// updating the order delivery date
+    /// </summary>
+    /// <param name="OrderId">order id</param>
+    /// <returns>returns the updated order</returns>
+    /// <exception cref="BO.PropertyInValidException"></exception>
+    /// <exception cref="BO.OrderAlreadyException"></exception>
+    /// <exception cref="BO.OrderWasNotShippedException"></exception>
+    /// <exception cref="BO.DataError"></exception>
 
     public BO.Order UpdateOrderDelivered(int OrderId)
     {
@@ -121,6 +159,11 @@ internal class BlOrder:IOrder
             throw new BO.DataError(ex);
         }
     }
+    /// <summary>
+    /// tracking a certain order
+    /// </summary>
+    /// <param name="OrderId">order id</param>
+    /// <returns>returns the order tracking</returns>
     public BO.OrderTracking Tracking(int OrderId)
     {
         try
@@ -129,7 +172,8 @@ internal class BlOrder:IOrder
             BO.OrderTracking orderTracking = new BO.OrderTracking();
             orderTracking.ID = order.ID;
             orderTracking.Status = calculateOrderStatus(order.Ship_Date, order.Delivery_Date);
-            orderTracking.dateAndStatus.Add((order.Order_Date, BO.eOrderStatus.ORDERED));
+            if (order.Order_Date != DateTime.MinValue)
+                orderTracking.dateAndStatus.Add((order.Order_Date, BO.eOrderStatus.ORDERED));
             if(order.Ship_Date != DateTime.MinValue)    
             orderTracking.dateAndStatus.Add((order.Ship_Date, BO.eOrderStatus.SHIPPED));
             if (order.Delivery_Date != DateTime.MinValue)    

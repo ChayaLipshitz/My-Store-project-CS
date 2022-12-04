@@ -7,6 +7,11 @@ namespace BlImplementation;
 internal class BlProduct : IProduct
 {
     IDal dal = new DalList();
+    /// <summary>
+    /// get a product in BO.Product type and convert it to a Dal.DO.Product type
+    /// </summary>
+    /// <param name="BOproduct">the product in BO.Product type</param>
+    /// <returns>returns the product in Dal.DO.Product type</returns>
     private Dal.DO.Product ConvertToDOproduct(BO.Product BOproduct)
     {
         Dal.DO.Product DOproduct = new Dal.DO.Product();
@@ -17,6 +22,11 @@ internal class BlProduct : IProduct
         DOproduct.InStock = BOproduct.InStock;
         return DOproduct;
     }
+    /// <summary>
+    /// get a product in Dal.DO.Product type and convert it to a get a product in BO.Product type and convert it to a Dal.DO.Product type type
+    /// </summary>
+    /// <param name="DOproduct">the product in Dal.DO.Product type</param>
+    /// <returns>returns the product in BO.Product type</returns>
     private BO.Product ConvertToBOproduct(Dal.DO.Product DOproduct)
     {
         BO.Product BOproduct = new BO.Product();
@@ -27,6 +37,12 @@ internal class BlProduct : IProduct
         BOproduct.InStock = DOproduct.InStock;
         return BOproduct;
     }
+
+    /// <summary>
+    /// check if the product properties are valid
+    /// </summary>
+    /// <param name="product">product</param>
+    /// <exception cref="BO.PropertyInValidException"></exception>
     private void CheckObjValidation(BO.Product product)
     {
         if (product.ID < 0)
@@ -128,7 +144,11 @@ internal class BlProduct : IProduct
         }
        
     }
-    
+    /// <summary>
+    /// adding a new product
+    /// </summary>
+    /// <param name="product">product to add</param>
+    /// <exception cref="BO.DataError">error from the database</exception>
     public void Add(BO.Product product)
     {
         try
@@ -145,7 +165,11 @@ internal class BlProduct : IProduct
             throw ex;
         }
     }
-
+    /// <summary>
+    /// updating a product
+    /// </summary>
+    /// <param name="product">updated product</param>
+    /// <exception cref="BO.DataError">error from the database</exception>
     public void Update(BO.Product product)
     {
         try
@@ -161,7 +185,13 @@ internal class BlProduct : IProduct
         {
             throw ex;
         }
-    } 
+    }
+    /// <summary>
+    /// deleting  a product
+    /// </summary>
+    /// <param name="ProductID">product id to delete</param>
+    /// <exception cref="BO.ProductExistsInOrderException"></exception>
+    /// <exception cref="BO.DataError">error from the database</exception>
     public void Delete(int ProductID)
     {
         // or to check just in al the ordderItems in dal  ?????

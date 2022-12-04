@@ -6,6 +6,14 @@ namespace BlImplementation;
 internal class BlCart:ICart
 {
     IDal dal = new DalList();
+    /// <summary>
+    /// add order item to the cart
+    /// </summary>
+    /// <param name="cart">the customer cart</param>
+    /// <param name="id">the product id</param>
+    /// <returns>returns the cart whith to new order item</returns>
+    /// <exception cref="BO.NotInStockException"></exception>
+    /// <exception cref="BO.DataError"></exception>
     public BO.Cart addOrderItem(BO.Cart cart, int id)
     {
         try
@@ -41,6 +49,14 @@ internal class BlCart:ICart
             throw new BO.DataError(ex);
         }
     }
+    /// <summary>
+    /// updating the quantity in a order item in the given cart
+    /// </summary>
+    /// <param name="cart">the customer cart</param>
+    /// <param name="id">the product id</param>
+    /// <param name="quantity">the new quantity</param>
+    /// <returns></returns>
+    /// <exception cref="BO.NotExistExceptions"></exception>
     public BO.Cart UpdateOrderItem(BO.Cart cart, int id, int quantity)
     {
             BO.OrderItem OItem = cart.Items.Find(OItem => OItem.ProductID == id);
@@ -60,6 +76,14 @@ internal class BlCart:ICart
             }
             return cart;
     }
+    /// <summary>
+    /// submitting the cart and creating a new order
+    /// </summary>
+    /// <param name="cart">the customer cart</param>
+    /// <param name="CustomerName">the customer name</param>
+    /// <param name="CustomerEmail">the customer email</param>
+    /// <param name="CustomerAddress">the customer address</param>
+    /// <exception cref="BO.DataError">error from the database=dal</exception>
     public void SubmitOrder(BO.Cart cart, string CustomerName, string CustomerEmail, string CustomerAddress)
     {
 
@@ -102,6 +126,16 @@ internal class BlCart:ICart
         }
 
     }
+    /// <summary>
+    /// checks if the cart has valid values
+    /// </summary>
+    /// <param name="cart">the customer cart</param>
+    /// <param name="CustomerName">the customer name</param>
+    /// <param name="CustomerEmail">the customer email</param>
+    /// <param name="CustomerAddress">the customer address</param>
+    /// <exception cref="BO.PropertyInValidException">in valid property</exception>
+    /// <exception cref="BO.NotInStockException"></exception>
+    /// <exception cref="BO.DataError"></exception>
     public void IsValidCart(BO.Cart cart, string CustomerName, string CustomerEmail, string CustomerAddress)
     {
         foreach (BO.OrderItem OItem in cart.Items)
@@ -134,7 +168,12 @@ internal class BlCart:ICart
             throw new BO.PropertyInValidException("name");
         if (CustomerEmail == "")
             throw new BO.PropertyInValidException("Email");
-    } 
+    }
+    /// <summary>
+    /// checks if the email is valid
+    /// </summary>
+    /// <param name="email">the customer email</param>
+    /// <returns></returns>
     bool IsValidEmail(string email)
     {
         var trimmedEmail = email.Trim();

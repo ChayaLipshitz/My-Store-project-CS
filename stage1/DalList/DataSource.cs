@@ -51,7 +51,6 @@ public class DataSource
             int nameIndex = (int)rand.NextInt64(customers_Name.Length);
             int emailIndex = (int)rand.NextInt64(Customer_Email.Length);
             int addressIndex = (int)rand.NextInt64(Customer_Address.Length);
-
             order.Customer_Name = customers_Name[nameIndex];
             order.Customer_Email = Customer_Email[emailIndex];
             order.Customer_Address = Customer_Address[addressIndex];
@@ -59,7 +58,7 @@ public class DataSource
             order.Order_Date = DateTime.MinValue;
             TimeSpan shipDelay = TimeSpan.FromDays(2);
             TimeSpan deliveryDelay = TimeSpan.FromDays(2);
-            order.Ship_Date = order.Order_Date + shipDelay;
+            order.Ship_Date =  order.Order_Date + shipDelay;
             order.Delivery_Date = order.Ship_Date + deliveryDelay;
             OrdersList.Add(order);
         }

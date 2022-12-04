@@ -109,8 +109,9 @@ public class Program
             Console.WriteLine("enter 0 o exit\n" +
                 "enter 1 to Read All orders\n" +
                 "enter 2 for  reading a certain order\n" +
-                " enter 3 for a Updateing order shipped\n" +
-                " enter 4 for Updateing order deivered\n");
+                "enter 3 for a Updateing order shipped\n" +
+                "enter 4 for Updateing order deivered\n" +
+                "enter 5 for tracking an order\n" ) ;
             inner_choice = Convert.ToInt32(Console.ReadLine());
             try
             {
@@ -141,6 +142,11 @@ public class Program
                         Console.WriteLine("enter the order id:\n");
                         orderID = Convert.ToInt32(Console.ReadLine());
                         Order updatedDeliveredOrder = bl.iOrder.UpdateOrderDelivered(orderID);
+                        break;
+                    case 5:
+                        Console.WriteLine("enter the order id:\n");
+                        orderID = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine(bl.iOrder.Tracking(orderID));
                         break;
 
                 }
