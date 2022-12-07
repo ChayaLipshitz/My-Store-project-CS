@@ -7,30 +7,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Include="PL\PL.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="PL\obj\Debug\refint\" />
-    <Folder Include="PL\obj\Debug\ref\" />
-    <Folder Include="PL\obj\Release\refint\" />
-    <Folder Include="PL\obj\Release\ref\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="PL\App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </None>
-    <None Update="PL\MainEntity.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </None>
-    <None Update="PL\MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </None>
-    <None Update="PL\ProductListWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </None>
-  </ItemGroup>
-
 </Project>

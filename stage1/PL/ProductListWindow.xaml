@@ -21,8 +21,10 @@ VerticalAlignment="Stretch" Width="auto">
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
         </Grid>
-        <ComboBox  x:Name="EntitiesSelector" Grid.Column="1" Margin="564,84,116,0" Grid.Row="1" VerticalAlignment="Top" Width="120" SelectionChanged="AttributeSelector_SelectionChanged" Height="124"/>
+
         <Label Content="Label" HorizontalAlignment="Left" Margin="164,42,0,0" VerticalAlignment="Top" Height="62" Grid.Column="0" Width="84"/>
+        <ComboBox  x:Name="CategorySelector" Margin="379,57,10,0" VerticalAlignment="Top" SelectionChanged="AttributeSelector_SelectionChanged" Height="32"/>
+
         <ListView x:Name="ProductsListview" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="ProductsListview_SelectionChanged">
             <ListView.View>
                 <GridView>

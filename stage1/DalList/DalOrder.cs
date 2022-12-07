@@ -1,12 +1,13 @@
 ﻿
 using Dal.DO;
 using DalApi;
+
 namespace Dal
 {
     internal class DalOrder : Iorder
     {
 
-        public  IEnumerable<Order> AllOrders()
+        private  IEnumerable<Order> AllOrders()
         {
             return DataSource.OrdersList;
         }
@@ -65,6 +66,22 @@ namespace Dal
             }
             throw new NotExistExceptions();
 
+        }
+
+        public IEnumerable<Order> ReadByFilter(Func<Order, bool> f = null)
+        {
+           if(f == null)
+           {
+                return AllOrders();
+           }
+           List<Order> orders = new List<Order>();
+            foreach (Order order in DataSource.OrdersList) {
+                if (f(order)){
+                    orders.Add(order);
+                }
+            }
+                
+           return orders;
         }
     }
 }

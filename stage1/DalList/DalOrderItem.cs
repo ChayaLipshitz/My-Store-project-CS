@@ -63,9 +63,28 @@ namespace Dal
             throw new Exception("the order item does not exist!\n");
         }
 
-        public IEnumerable<OrderItem> all_order_items()
+        private IEnumerable<OrderItem> all_order_items()
         {
             return DataSource.OrderItemsList;
+        }
+        
+        public IEnumerable<OrderItem> ReadByFilter(Func<OrderItem, bool> f = null)
+        {
+
+            if (f == null)
+            {
+                return all_order_items();
+            }
+            List<OrderItem> OrderItems = new List<OrderItem>();
+            foreach (OrderItem orderItem in DataSource.OrderItemsList)
+            {
+                if (f(orderItem))
+                {
+                    OrderItems.Add(orderItem);
+                }
+            }
+
+            return OrderItems;
         }
     }
 }
