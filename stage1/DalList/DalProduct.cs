@@ -47,9 +47,27 @@ namespace Dal
             }
             throw new NotExistExceptions();
         }
-        public IEnumerable<Product> all_products()
+        private IEnumerable<Product> all_products()
         {            
             return DataSource.ProductsList;
+        }
+
+        public IEnumerable<Product> ReadByFilter(Func<Product, bool> f = null)
+        {
+            if (f == null)
+            {
+                return all_products();
+            }
+            List<Product> products = new List<Product>();
+            foreach (Product product in DataSource.ProductsList)
+            {
+                if (f(product))
+                {
+                    products.Add(product);
+                }
+            }
+
+            return products;
         }
     }
 }
