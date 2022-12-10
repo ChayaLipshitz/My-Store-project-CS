@@ -69,7 +69,7 @@ internal class BlProduct : IProduct
     public IEnumerable<BO.ProductForList> ReadAll()
     {
         List<BO.ProductForList> productForList = new List<BO.ProductForList>();
-        IEnumerable<Dal.DO.Product> products = dal.iproduct.all_products();
+        IEnumerable<Dal.DO.Product> products = dal.iproduct.ReadByFilter();
         foreach(Dal.DO.Product product in products)
         {
             BO.ProductForList p = new BO.ProductForList();
@@ -195,7 +195,7 @@ internal class BlProduct : IProduct
     public void Delete(int ProductID)
     {
         // or to check just in al the ordderItems in dal  ?????
-        foreach( Dal.DO.OrderItem orderItem in dal.iorderItem.all_order_items())
+        foreach( Dal.DO.OrderItem orderItem in dal.iorderItem.ReadByFilter())
         {
                 if (orderItem.Product_ID == ProductID)
                     throw new BO.ProductExistsInOrderException();
@@ -208,6 +208,22 @@ internal class BlProduct : IProduct
         {
             throw new BO.DataError(err);
         }
+    }
+
+    public IEnumerable<BO.ProductForList> ReadByCategory(BO.eCategory category)
+    {
+        List<BO.ProductForList> productForList = new List<BO.ProductForList>();
+        IEnumerable<Dal.DO.Product> products = dal.iproduct.ReadByFilter(p=>p.Category==(Dal.DO.eCategory)category);
+        foreach (Dal.DO.Product product in products)
+        {
+            BO.ProductForList p = new BO.ProductForList();
+            p.ID = product.ID;
+            p.Name = product.Name;
+            p.Price = product.Price;
+            p.Category = (BO.eCategory)product.Category;
+            productForList.Add(p);
+        }
+        return productForList;
     }
 }
 

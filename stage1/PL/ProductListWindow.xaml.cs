@@ -40,6 +40,13 @@ namespace PL
         private void AttributeSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             BO.eCategory category =(BO.eCategory) CategorySelector.SelectedItem;
+            ProductsListview.ItemsSource = bl.iProduct.ReadByCategory(category);
         }
+
+        private void AddProductBTN_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+       
     }
 }

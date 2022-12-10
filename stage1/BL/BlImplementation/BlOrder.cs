@@ -60,7 +60,7 @@ internal class BlOrder:IOrder
     public IEnumerable<BO.OrderForList> ReadAll()
     {
         List<BO.OrderForList> ordersForList = new List<BO.OrderForList>();
-        IEnumerable<Dal.DO.Order> allOrders = dal.iorder.AllOrders();
+        IEnumerable<Dal.DO.Order> allOrders = dal.iorder.ReadByFilter();
         foreach (Dal.DO.Order order in allOrders)
         {
             BO.OrderForList orderForList = new BO.OrderForList();

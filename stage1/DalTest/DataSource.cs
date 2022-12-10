@@ -33,7 +33,7 @@ public class DataSource
             product.Name = productsName[nameIndex];
             product.Price = price;
             product.InStock = (int)rand.NextInt64(200);
-            int x = 1;
+            int x = 2;
             product.Category = (eCategory)x;
             product.ID = Config.Product_ID;
             ProductsList.Add(product);
@@ -46,7 +46,7 @@ public class DataSource
             product.Name = productsName[nameIndex];
             product.Price = price;
             product.InStock = (int)rand.NextInt64(200);
-            int x = 2;
+            int x = 1;
             product.Category = (eCategory)x;
             product.ID = Config.Product_ID;
             ProductsList.Add(product);

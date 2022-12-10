@@ -32,5 +32,7 @@ VerticalAlignment="Stretch" Width="auto">
                 </GridView>
             </ListView.View>
         </ListView>
+        <Button x:Name="AddProductBTN" Content="Add new Product" Grid.Row="2" HorizontalAlignment="Left" Margin="533,48,0,104" Padding="5" Width="238" Click="AddProductBTN_Click"/>
+
     </Grid>
 </Window>
