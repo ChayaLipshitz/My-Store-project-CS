@@ -45,8 +45,15 @@ namespace PL
 
         private void AddProductBTN_Click(object sender, RoutedEventArgs e)
         {
+            new ProductWindow().Show();
+            this.Hide();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            new MainWindow().Show();
+            this.Hide();
 
         }
-       
     }
 }

@@ -20,9 +20,10 @@ VerticalAlignment="Stretch" Width="auto">
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
+            <Button Content="Main Window" HorizontalAlignment="Left" Margin="49,34,0,0" VerticalAlignment="Top" Height="43" Width="81" Click="Button_Click"/>
         </Grid>
 
-        <Label Content="Label" HorizontalAlignment="Left" Margin="164,42,0,0" VerticalAlignment="Top" Height="62" Grid.Column="0" Width="84"/>
+        <Label Content="filter by category:&#xA;" HorizontalAlignment="Left" Margin="208,55,0,0" VerticalAlignment="Top" Height="34" Grid.Column="0" Width="166"/>
         <ComboBox  x:Name="CategorySelector" Margin="379,57,10,0" VerticalAlignment="Top" SelectionChanged="AttributeSelector_SelectionChanged" Height="32"/>
 
         <ListView x:Name="ProductsListview" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="ProductsListview_SelectionChanged">
