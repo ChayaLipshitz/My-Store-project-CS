@@ -7,9 +7,9 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
-        <Button   x:Name="BTN" HorizontalAlignment="Left" Margin="446,88,0,0" VerticalAlignment="Top" Height="54" Width="114" Click="BTN_Click">
-            <Canvas/>
+
+        <Button   x:Name="BTN" Content="Product"  HorizontalAlignment="Left" Margin="446,88,0,0" VerticalAlignment="Top" Height="54" Width="114" Click="BTN_Click">
+            
         </Button>
 
     </Grid>

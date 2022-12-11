@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlApi;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,14 +20,65 @@ namespace PL
     /// </summary>
     public partial class ProductWindow : Window
     {
-        public ProductWindow()
+        BO.Product product = new();
+        private IBl bl;
+        public ProductWindow(IBl Bl)
         {
+            bl = Bl;
             InitializeComponent();
+            categorySelector.ItemsSource = Enum.GetValues(typeof(BO.eCategory));
+
+
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+       
+
+        private void categorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+           product.Category = (BO.eCategory)categorySelector.SelectedItem;
+
+        }
+
+        private void SubmitBTN_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                
+                product.Name = NameTXT.Text;
+                //if (product.Name == "")
+                //{
+                //    NameTXT.BorderBrush = new Brush('AliceBlue');
+                //}
+                product.Price = Convert.ToInt32(PriceTXT.Text);
+                product.InStock = Convert.ToInt32(InStockTXT.Text);
+                product.Category = (BO.eCategory)categorySelector.SelectedItem;
+                bl.iProduct.Add(product);
+                new ProductListWindow(bl).Show();
+                this.Hide();
+            }
+            catch (Dal.DO.DuplicateIdExceptions err)
+            {
+                throw new BO.DataError(err);
+            }
+            catch (BO.PropertyInValidException ex)
+            {
+                throw ex;
+            }
+        }
+        private void NameTXT_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            
+        }
+
+        private void PriceTXT_TextChanged(object sender, TextChangedEventArgs e)
         {
 
         }
+        private void InStockTXT_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }    
+
+        
     }
 }

@@ -28,24 +28,11 @@ namespace PL
             bl = Bl;
             ProductsListview.ItemsSource = bl.iProduct.ReadAll();
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.eCategory));
-        }
-
-        
-
-        private void ProductsListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-           
-        }
-
-        private void AttributeSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            BO.eCategory category =(BO.eCategory) CategorySelector.SelectedItem;
-            ProductsListview.ItemsSource = bl.iProduct.ReadByCategory(category);
-        }
+        }      
 
         private void AddProductBTN_Click(object sender, RoutedEventArgs e)
         {
-            new ProductWindow().Show();
+            new ProductWindow(bl).Show();
             this.Hide();
         }
 
@@ -53,6 +40,23 @@ namespace PL
         {
             new MainWindow().Show();
             this.Hide();
+
+        }
+
+        private void CategorySelector_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+            BO.eCategory category = (BO.eCategory)CategorySelector.SelectedItem;
+            ProductsListview.ItemsSource = bl.iProduct.ReadByCategory(category);
+        }
+
+        private void ProductsListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+           
+           new MainEntity((BO.ProductForList)ProductsListview.SelectedItem).Show();
+        }
+
+        private void ProductsListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
 
         }
     }

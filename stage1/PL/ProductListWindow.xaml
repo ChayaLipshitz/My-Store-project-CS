@@ -21,12 +21,12 @@ VerticalAlignment="Stretch" Width="auto">
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
             <Button Content="Main Window" HorizontalAlignment="Left" Margin="49,34,0,0" VerticalAlignment="Top" Height="43" Width="81" Click="Button_Click"/>
+            <ComboBox x:Name="CategorySelector" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="61,61,0,0" VerticalAlignment="Top" Width="284" Height="43" SelectionChanged="CategorySelector_SelectionChanged_1" />
         </Grid>
 
         <Label Content="filter by category:&#xA;" HorizontalAlignment="Left" Margin="208,55,0,0" VerticalAlignment="Top" Height="34" Grid.Column="0" Width="166"/>
-        <ComboBox  x:Name="CategorySelector" Margin="379,57,10,0" VerticalAlignment="Top" SelectionChanged="AttributeSelector_SelectionChanged" Height="32"/>
 
-        <ListView x:Name="ProductsListview" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="ProductsListview_SelectionChanged">
+        <ListView x:Name="ProductsListview" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="ProductsListview_SelectionChanged" HorizontalAlignment="Right" Margin="0,208,0,0" Grid.RowSpan="2" Width="800" MouseDoubleClick="ProductsListview_MouseDoubleClick">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>

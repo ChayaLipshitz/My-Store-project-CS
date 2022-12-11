@@ -19,7 +19,7 @@ namespace PL
     /// </summary>
     public partial class MainEntity : Window
     {
-        public MainEntity()
+        public MainEntity(BO.ProductForList product)
         {
             InitializeComponent();
         }
