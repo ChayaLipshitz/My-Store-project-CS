@@ -52,7 +52,8 @@ namespace PL
         private void ProductsListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
            
-           new MainEntity((BO.ProductForList)ProductsListview.SelectedItem).Show();
+           new ProductWindow(bl,((BO.ProductForList)ProductsListview.SelectedItem).ID).Show();
+            this.Hide();
         }
 
         private void ProductsListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
