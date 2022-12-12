@@ -95,7 +95,7 @@ internal class BlProduct : IProduct
         {
             try
             {
-                Dal.DO.Product DALproduct = dal.iproduct.Read(ProductId);
+                Dal.DO.Product DALproduct = dal.iproduct.ReadSingle(p=>p.ID==ProductId);
                 BLproduct = ConvertToBOproduct(DALproduct);
                 return BLproduct;
             }
@@ -119,7 +119,7 @@ internal class BlProduct : IProduct
         BO.ProductItem BOproductItem = new BO.ProductItem();
         try
         {
-            Dal.DO.Product DOproduct = dal.iproduct.Read(ProductId);
+            Dal.DO.Product DOproduct = dal.iproduct.ReadSingle(p=>p.ID==ProductId);
             if (cart.Items == null) throw new BO.CartISEmptyException();
             foreach (BO.OrderItem oi in cart.Items)
             {

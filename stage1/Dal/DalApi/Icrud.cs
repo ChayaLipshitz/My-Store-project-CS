@@ -11,7 +11,7 @@ namespace Dal
        IEnumerable<T> ReadByFilter(Func<T, bool> f = null);
         T ReadSingle(Func<T, bool> f );   
         int Create(T obj);
-        T Read(int id);
+      //  T Read(int id);
         bool Update(T obj);
         void Delete(int id);
 

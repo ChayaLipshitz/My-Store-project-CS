@@ -28,7 +28,7 @@ internal class BlOrder:IOrder
         {
             BO.OrderItem BOorderItem = new BO.OrderItem();
             BOorderItem.ID = DOorderitem.Order_ID;
-            BOorderItem.Name = dal.iproduct.Read(DOorderitem.Product_ID).Name;
+            BOorderItem.Name = dal.iproduct.ReadSingle(p=>p.ID== DOorderitem.Product_ID).Name;
             BOorderItem.ProductID = DOorderitem.Product_ID;
             BOorderItem.Amount = DOorderitem.Product_Amount;
             BOorderItem.Price = DOorderitem.Product_Price;
@@ -92,7 +92,7 @@ internal class BlOrder:IOrder
         {
             try
             {
-                Dal.DO.Order DOorder = dal.iorder.Read(OrderId);                
+                Dal.DO.Order DOorder = dal.iorder.ReadSingle(p=>p.ID==OrderId);                
                 return convertToBOorder(DOorder);
             }
             catch (Dal.DO.NotExistExceptions err)
@@ -116,7 +116,7 @@ internal class BlOrder:IOrder
             throw new BO.PropertyInValidException("ID");
         try
         {
-            Dal.DO.Order order = dal.iorder.Read(OrderId);
+            Dal.DO.Order order = dal.iorder.ReadSingle(p=>p.ID==OrderId);
             if (order.Ship_Date != DateTime.MinValue)
                 throw new BO.OrderAlreadyException("shipped");
             order.Ship_Date = DateTime.Now;
@@ -145,7 +145,7 @@ internal class BlOrder:IOrder
             throw new BO.PropertyInValidException("ID");
         try
         {
-            Dal.DO.Order order = dal.iorder.Read(OrderId);
+            Dal.DO.Order order = dal.iorder.ReadSingle(o=>o.ID==OrderId);
             if (order.Delivery_Date != DateTime.MinValue)
                 throw new BO.OrderAlreadyException("delivered");
             if(order.Ship_Date == DateTime.MinValue)
@@ -168,7 +168,7 @@ internal class BlOrder:IOrder
     {
         try
         {
-            Dal.DO.Order order = dal.iorder.Read(OrderId);
+            Dal.DO.Order order = dal.iorder.ReadSingle(o=>o.ID==OrderId);
             BO.OrderTracking orderTracking = new BO.OrderTracking();
             orderTracking.ID = order.ID;
             orderTracking.Status = calculateOrderStatus(order.Ship_Date, order.Delivery_Date);

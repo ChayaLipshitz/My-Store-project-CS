@@ -18,7 +18,7 @@ internal class BlCart:ICart
     {
         try
         {
-            Dal.DO.Product p = dal.iproduct.Read(id);
+            Dal.DO.Product p = dal.iproduct.ReadSingle(p=>p.ID==id);
             if (p.InStock <= 0)
                 throw new BO.NotInStockException(p.Name);
             foreach (BO.OrderItem item in cart.Items)
@@ -106,7 +106,7 @@ internal class BlCart:ICart
                 DOoi.Product_ID = BOoi.ProductID;
                 DOoi.Product_Amount= BOoi.Amount;
                 dal.iorderItem.Create(DOoi);
-                Dal.DO.Product product= dal.iproduct.Read(DOoi.Product_ID);
+                Dal.DO.Product product= dal.iproduct.ReadSingle(p=>p.ID==DOoi.Product_ID);
                 product.InStock -= DOoi.Product_Amount;
                 dal.iproduct.Update(product);
             }
@@ -142,7 +142,7 @@ internal class BlCart:ICart
         {
             try
             {
-                Dal.DO.Product product = dal.iproduct.Read(OItem.ProductID);
+                Dal.DO.Product product = dal.iproduct.ReadSingle(p=>p.ID==OItem.ProductID);
                 if (OItem.Amount < 0)
                 {
                     throw new BO.PropertyInValidException("Amount");
