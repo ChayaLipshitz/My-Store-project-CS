@@ -9,6 +9,7 @@ namespace Dal
     public interface Icrud<T> where T : struct
     {
        IEnumerable<T> ReadByFilter(Func<T, bool> f = null);
+        T ReadSingle(Func<T, bool> f );   
         int Create(T obj);
         T Read(int id);
         bool Update(T obj);

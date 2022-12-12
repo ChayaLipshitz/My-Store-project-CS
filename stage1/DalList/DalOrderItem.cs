@@ -8,7 +8,7 @@ using DalApi;
 
 namespace Dal
 {
-    internal class DalOrderItem:IorderItem
+    internal class DalOrderItem : IorderItem
     {
         public int Create(OrderItem order_item)
         {
@@ -85,6 +85,12 @@ namespace Dal
             }
 
             return OrderItems;
+        }
+
+        public OrderItem ReadSingle(Func<OrderItem, bool> f)
+        {
+            IEnumerable<OrderItem> OrderItems = all_order_items();
+            return OrderItems.Where(f).First();
         }
     }
 }

@@ -75,13 +75,14 @@ namespace Dal
                 return AllOrders();
            }
            List<Order> orders = new List<Order>();
-            foreach (Order order in DataSource.OrdersList) {
-                if (f(order)){
-                    orders.Add(order);
-                }
-            }
-                
-           return orders;
+            return orders.Where(f);
+
+        }
+
+        public Order ReadSingle(Func<Order, bool> f)
+        {
+            IEnumerable<Order> orders = AllOrders();
+             return orders.Where(f).First();
         }
     }
 }

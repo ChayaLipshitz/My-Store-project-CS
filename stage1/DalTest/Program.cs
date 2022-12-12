@@ -68,7 +68,7 @@ class Program
                     int id = Convert.ToInt32(Console.ReadLine());
                     try
                     {
-                        Console.WriteLine((dalProduct.Read(id)));
+                        Console.WriteLine((dalProduct.ReadSingle(p=>p.ID==id)));
                     }
                     catch (Exception e)
                     {
@@ -88,7 +88,7 @@ class Program
                     {
                         Console.WriteLine("enter the id of the product to update:\n");
                         id = Convert.ToInt32(Console.ReadLine());
-                        Product old_p = dalProduct.Read(id);
+                        Product old_p = dalProduct.ReadSingle(p => p.ID == id);
                         Console.WriteLine(old_p.ToString());
                         Product p = UpdateProductFromUser(old_p);
                         p.ID = id;
@@ -182,7 +182,7 @@ class Program
                     int id = Convert.ToInt32(Console.ReadLine());
                     try
                     {
-                        Console.WriteLine((dalOrder.Read(id)));
+                        Console.WriteLine((dalOrder.ReadSingle(o=>o.ID==id)));
                     }
                     catch (Exception e)
                     {
@@ -201,7 +201,7 @@ class Program
                     {
                         Console.WriteLine("enter the id of the order to update:\n");
                         id = Convert.ToInt32(Console.ReadLine());
-                        Order old_order = dalOrder.Read(id);
+                        Order old_order = dalOrder.ReadSingle(o => o.ID == id);
                         Console.WriteLine(old_order);
                         Order o = UpdateOrderFromUser(old_order);
                         o.ID = id;
@@ -299,7 +299,7 @@ class Program
                     int id = Convert.ToInt32(Console.ReadLine());
                     try
                     {
-                        Console.WriteLine((dalOrderItem.Read(id)));
+                        Console.WriteLine((dalOrderItem.ReadSingle(oi => oi.OrderItem_ID == id)));
                     }
                     catch (Exception e)
                     {
@@ -318,7 +318,7 @@ class Program
                     {
                         Console.WriteLine("enter the id of the orderItem to update:\n");
                         id = Convert.ToInt32(Console.ReadLine());
-                        OrderItem old_oi = dalOrderItem.Read(id);
+                        OrderItem old_oi = dalOrderItem.ReadSingle(oi => oi.OrderItem_ID == id);
                         Console.WriteLine(old_oi);
                         OrderItem oi = UpdateOrderItemFromUser(old_oi);
                         oi.OrderItem_ID = id;

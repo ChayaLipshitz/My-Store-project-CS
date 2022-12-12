@@ -59,18 +59,14 @@ namespace Dal
                 return all_products();
             }
             List<Product> products = new List<Product>();
-            foreach (Product product in DataSource.ProductsList)
-            {
-                if (f(product))
-                {
-                    products.Add(product);
-                }
-            }
-
-            return products;
+           return products.Where(f);
         }
 
-        
+        public Product ReadSingle(Func<Product, bool> f)
+        {
+           IEnumerable<Product> products = all_products();
+            return products.Where(f).First();
+        }
     }
 }
 
