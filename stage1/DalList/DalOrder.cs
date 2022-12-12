@@ -30,17 +30,17 @@ namespace Dal
             DataSource.OrdersList.Add(order);
             return order.ID;
         }
-        public Order Read(int ID)
-        {
-            foreach (Order order in DataSource.OrdersList)
-            {
-                if (order.ID == ID)
-                {
-                    return order;
-                }
-            }
-            throw new NotExistExceptions();
-        }
+        //public Order Read(int ID)
+        //{
+        //    foreach (Order order in DataSource.OrdersList)
+        //    {
+        //        if (order.ID == ID)
+        //        {
+        //            return order;
+        //        }
+        //    }
+        //    throw new NotExistExceptions();
+        //}
         public  bool Update(Order new_order)
         {            
             for (int i = 0; i < DataSource.OrdersList.Count(); i++)
@@ -82,7 +82,17 @@ namespace Dal
         public Order ReadSingle(Func<Order, bool> f)
         {
             IEnumerable<Order> orders = AllOrders();
-             return orders.Where(f).First();
+            Order order;
+           
+            try
+            {
+                order = orders.Where(f).First();
+                return order;
+            }
+            catch (Exception ex)
+            {
+                throw new NotExistExceptions();
+            }
         }
     }
 }

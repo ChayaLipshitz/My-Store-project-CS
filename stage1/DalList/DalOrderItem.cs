@@ -16,17 +16,17 @@ namespace Dal
             DataSource.OrderItemsList.Add(order_item);
             return order_item.OrderItem_ID;
         }
-        public OrderItem Read(int ID)
-        {
-            foreach(OrderItem oi in DataSource.OrderItemsList)
-            {
-                if (oi.OrderItem_ID == ID)
-                {
-                    return oi;
-                }
-            }
-            throw new NotExistExceptions();
-        }
+        //public OrderItem Read(int ID)
+        //{
+        //    foreach(OrderItem oi in DataSource.OrderItemsList)
+        //    {
+        //        if (oi.OrderItem_ID == ID)
+        //        {
+        //            return oi;
+        //        }
+        //    }
+        //    throw new NotExistExceptions();
+        //}
         public void Delete(int ID)
         {
             foreach (OrderItem order in DataSource.OrderItemsList)
@@ -90,7 +90,17 @@ namespace Dal
         public OrderItem ReadSingle(Func<OrderItem, bool> f)
         {
             IEnumerable<OrderItem> OrderItems = all_order_items();
+            OrderItem oi;
             return OrderItems.Where(f).First();
+            try
+            {
+                oi = OrderItems.Where(f).First();
+                return oi;
+            }
+            catch (Exception ex)
+            {
+                throw new NotExistExceptions();
+            }
         }
     }
 }

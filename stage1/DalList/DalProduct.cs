@@ -12,17 +12,17 @@ namespace Dal
             DataSource.ProductsList.Add(product);
             return product.ID;
         }
-        public Product Read(int ID)
-        {
-            foreach(Product p in DataSource.ProductsList)
-            {
-                if (p.ID == ID)
-                {
-                    return p;
-                }
-            }    
-            throw new NotExistExceptions();
-        }
+        //public Product Read(int ID)
+        //{
+        //    foreach(Product p in DataSource.ProductsList)
+        //    {
+        //        if (p.ID == ID)
+        //        {
+        //            return p;
+        //        }
+        //    }    
+        //    throw new NotExistExceptions();
+        //}
         public bool Update(Product product)
         {
             for (int i = 0; i < DataSource.ProductsList.Count(); i++)
@@ -64,8 +64,17 @@ namespace Dal
 
         public Product ReadSingle(Func<Product, bool> f)
         {
-           IEnumerable<Product> products = all_products();
-            return products.Where(f).First();
+            IEnumerable<Product> products = all_products();
+            Product product;
+            try
+            {
+                product = products.Where(f).First();
+                return product;
+            }
+            catch (Exception ex)
+            {
+               throw new NotExistExceptions();
+            }
         }
     }
 }
