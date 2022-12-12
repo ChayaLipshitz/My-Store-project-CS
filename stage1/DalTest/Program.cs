@@ -30,7 +30,7 @@ class Program
         double price = priceStr != "" ? Convert.ToDouble(priceStr) : p.Price;
         Console.WriteLine($"choose category: enter {(int)eCategory.FRUITS} for FRUITS, {(int)eCategory.SNACKS} for SNACKS,  {(int)eCategory.FROZEN} for FROZEN:\n");
         string categorySTR = Console.ReadLine();
-        eCategory category = categorySTR != "" ? (eCategory)Convert.ToInt32(categorySTR) : p.Category;
+        eCategory category = (eCategory)(categorySTR != "" ? (eCategory)Convert.ToInt32(categorySTR) : p.Category);
         Console.WriteLine("enter the amount you have from this product in stock\n");
         string inStockSTR = Console.ReadLine();
         int instock = inStockSTR != "" ? Convert.ToInt32(inStockSTR) : p.InStock;
@@ -76,7 +76,7 @@ class Program
                     }
                     break;
                 case INNER_CHOICE.READ_ALL:
-                    IEnumerable<Product> products = dalProduct.all_products();
+                    IEnumerable<Product> products = dalProduct.ReadByFilter();
                     foreach (Product p in products)
                     {
                         Console.WriteLine(p.ToString() + "\n");
@@ -146,13 +146,13 @@ class Program
         string address = addressStr == "" ? o.Customer_Address : addressStr;
         Console.WriteLine("enter the order date");
         string OrderDateSTR = Console.ReadLine();
-        DateTime Order_Date = OrderDateSTR != "" ? Convert.ToDateTime(OrderDateSTR) : o.Order_Date;
+        DateTime Order_Date = (DateTime)(OrderDateSTR != "" ? Convert.ToDateTime(OrderDateSTR) : o.Order_Date);
         Console.WriteLine("enter the ship date");
         string OrderShipSTR = Console.ReadLine();
-        DateTime Ship_Date = OrderShipSTR != "" ? Convert.ToDateTime(OrderShipSTR) : o.Ship_Date;
+        DateTime Ship_Date = (DateTime)(OrderShipSTR != "" ? Convert.ToDateTime(OrderShipSTR): o.Ship_Date);
         Console.WriteLine("enter the delivery date");
         string Delivery_DateSTR = Console.ReadLine();
-        DateTime Delivery_Date = Delivery_DateSTR != "" ? Convert.ToDateTime(Delivery_DateSTR) : o.Delivery_Date;
+        DateTime Delivery_Date = (DateTime)(Delivery_DateSTR != "" ? Convert.ToDateTime(Delivery_DateSTR) : o.Delivery_Date);
         Order order = new Order(name, Email, address, Order_Date, Ship_Date, Delivery_Date);
         return order;
     }
@@ -190,7 +190,7 @@ class Program
                     }
                     break;
                 case INNER_CHOICE.READ_ALL:
-                    IEnumerable<Order> orders = dalOrder.AllOrders();
+                    IEnumerable<Order> orders = dalOrder.ReadByFilter();
                     foreach (Order o in orders)
                     {
                         Console.WriteLine(o + "\n");
@@ -307,7 +307,7 @@ class Program
                     }
                     break;
                 case INNER_CHOICE.READ_ALL:
-                    IEnumerable<OrderItem> orderItems = dalOrderItem.all_order_items();
+                    IEnumerable<OrderItem> orderItems = dalOrderItem.ReadByFilter();
                     foreach (OrderItem oi in orderItems)
                     {
                         Console.WriteLine(oi + "\n");

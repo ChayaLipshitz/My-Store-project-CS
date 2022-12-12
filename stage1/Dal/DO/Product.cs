@@ -4,9 +4,9 @@ namespace Dal.DO;
     public struct Product
     {
     public int ID { get; set; }
-    public string Name { get; set; }
+    public string? Name { get; set; }
     public double Price { get; set; }
-    public eCategory Category { get; set; }
+    public eCategory? Category { get; set; }
     public int InStock { get; set; }
 
     public Product(string name, double price, eCategory category, int instock)

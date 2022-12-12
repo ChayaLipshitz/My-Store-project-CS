@@ -21,7 +21,7 @@ internal class BlOrder:IOrder
         BOorder.Order_Date = DOorder.Order_Date;
         BOorder.Delivery_Date = DOorder.Delivery_Date;
         BOorder.Ship_Date = DOorder.Ship_Date;
-        BOorder.Status = calculateOrderStatus(BOorder.Ship_Date, BOorder.Delivery_Date);
+        BOorder.Status = calculateOrderStatus((DateTime)BOorder.Ship_Date, (DateTime)BOorder.Delivery_Date);
         BOorder.TotalPrice = 0;
         IEnumerable<Dal.DO.OrderItem> orderItems = dal.iorder.ProductsInOrder(DOorder.ID);
         foreach (Dal.DO.OrderItem DOorderitem in orderItems)
@@ -44,7 +44,7 @@ internal class BlOrder:IOrder
     /// <param name="Ship_Date">the order shipping date</param>
     /// <param name="Delivery_Date">the order delivery date</param>
     /// <returns>the order status</returns>
-    private BO.eOrderStatus calculateOrderStatus( DateTime Ship_Date, DateTime Delivery_Date)
+    private BO.eOrderStatus calculateOrderStatus( DateTime? Ship_Date, DateTime? Delivery_Date)
     {
         if (Ship_Date == DateTime.MinValue)
            return BO.eOrderStatus.ORDERED;

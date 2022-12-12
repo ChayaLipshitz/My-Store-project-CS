@@ -9,9 +9,9 @@ namespace BO
     public class OrderForList
     {
         public int ID { get; set; }
-        public string CustomerName { get; set; }
+        public string? CustomerName { get; set; }
         public int AmountOfItems { get; set; }
-        public eOrderStatus Status { get; set; }
+        public eOrderStatus? Status { get; set; }
         public double TotalPrice { get; set; }
         public override string ToString()
         {
