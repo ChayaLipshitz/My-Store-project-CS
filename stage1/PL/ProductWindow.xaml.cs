@@ -66,11 +66,6 @@ namespace PL
         /// </summary>
         private void SubmitBTN_Click(object sender, RoutedEventArgs e)
         {
-            
-                product.Name = NameTXT.Text;
-                product.Price = PriceTXT.Text == "" ? -1 : Convert.ToDouble(PriceTXT.Text);
-                product.InStock = InStockTXT.Text == "" ? -1 : Convert.ToInt32(InStockTXT.Text);
-                product.Category = (BO.eCategory)categorySelector.SelectedItem;
                 try
                 {
                     product.Name = NameTXT.Text;
