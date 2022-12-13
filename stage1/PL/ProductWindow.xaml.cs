@@ -125,7 +125,16 @@ namespace PL
 
         private void deleteBTN_Click(object sender, RoutedEventArgs e)
         {
-            bl.iProduct.Delete(productID);
+            try
+            {
+                bl.iProduct.Delete(productID);
+                new ProductListWindow(bl).Show();
+                this.Hide();
+            }
+            catch(Exception err)
+            {
+                MessageBox.Show(err.Message);
+            }
         }
     }
 }
