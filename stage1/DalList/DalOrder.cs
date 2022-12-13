@@ -74,7 +74,7 @@ namespace Dal
            {
                 return AllOrders();
            }
-           List<Order> orders = new List<Order>();
+            IEnumerable<Order> orders = AllOrders();
             return orders.Where(f);
 
         }

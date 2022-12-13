@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="AssistingEntity"  Width="800">
+        Title="AssistingEntity"  Width="1000">
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -15,22 +15,32 @@
         <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
 VerticalAlignment="Stretch" Width="auto">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="250"/>
             </Grid.ColumnDefinitions >
-            <Button Content="Main Window" HorizontalAlignment="Left" Margin="49,34,0,0" VerticalAlignment="Top" Height="43" Width="81" Click="Button_Click"/>
-            <ComboBox x:Name="CategorySelector" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="61,61,0,0" VerticalAlignment="Top" Width="284" Height="43" SelectionChanged="CategorySelector_SelectionChanged_1" />
+            <ComboBox x:Name="CategorySelector" HorizontalAlignment="Left" Margin="238,138,0,0" VerticalAlignment="Top" Width="195" Height="31" SelectionChanged="CategorySelector_SelectionChanged_1" Grid.Column="2" Grid.ColumnSpan="2" />
+            <Button x:Name="Back" Content="Back" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Height="34" Width="136" Grid.Column="3" Click="back_Click" Background="Black" Foreground="#FFF4F9F1" FontSize="20" />
+            <Button x:Name="NonFilter" Grid.Column="3" Content="X" HorizontalAlignment="Left" Margin="190,138,0,0" VerticalAlignment="Top" Height="31" Width="34" FontSize="22" Click="NonFilter_Click" FontWeight="Bold" FontFamily="ISOCTEUR"/>
         </Grid>
 
-        <Label Content="filter by category:&#xA;" HorizontalAlignment="Left" Margin="208,55,0,0" VerticalAlignment="Top" Height="34" Grid.Column="0" Width="166"/>
+        <Label Content="filter by category:&#xA;" HorizontalAlignment="Left" Margin="592,141,0,0" VerticalAlignment="Top" Height="31" Grid.Column="0" Width="144" FontSize="16" FontFamily="Sling"/>
 
-        <ListView x:Name="ProductsListview" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="ProductsListview_SelectionChanged" HorizontalAlignment="Right" Margin="0,208,0,0" Grid.RowSpan="2" Width="800" MouseDoubleClick="ProductsListview_MouseDoubleClick">
+        <ListView x:Name="ProductsListview" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="ProductsListview_SelectionChanged" HorizontalAlignment="Right" Margin="0,208,0,0" Grid.RowSpan="2" Width="1000" MouseDoubleClick="ProductsListview_MouseDoubleClick">
             <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
+
+                <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Employee Information">
+
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ID}" Header="ID" Width="250"/>
+
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="Name" Width="250"/>
+
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Price}" Header="Price" Width="250"/>
+
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Category}" Header="Category" Width="250"/>
                 </GridView>
+
             </ListView.View>
         </ListView>
         <Button x:Name="AddProductBTN" Content="Add new Product" Grid.Row="2" HorizontalAlignment="Left" Margin="533,48,0,104" Padding="5" Width="238" Click="AddProductBTN_Click"/>

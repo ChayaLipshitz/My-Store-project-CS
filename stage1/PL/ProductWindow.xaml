@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="ProductWindow" Height="450" Width="800">
     <Grid>
+        <Button x:Name="Back" Content="Back to products list" HorizontalAlignment="Left" Margin="636,18,0,0" VerticalAlignment="Top" Height="34" Width="136" Click="back_Click" Background="Black" Foreground="#FFF4F9F1" />
 
         <Label Content="enter the product details:" HorizontalAlignment="Left" Margin="344,40,0,0" VerticalAlignment="Top" Width="196" Height="40"/>
         <Label Content="enter the product name" HorizontalAlignment="Left" Margin="200,101,0,0" VerticalAlignment="Top" Width="137" Height="33"/>
@@ -16,7 +17,7 @@
         <ComboBox  x:Name="categorySelector" HorizontalAlignment="Left" Margin="362,255,0,0" VerticalAlignment="Top" Width="120" Height="26" SelectionChanged="categorySelector_SelectionChanged"/>
         <Button x:Name="SubmitBTN" Content="Add the product" HorizontalAlignment="Center" Margin="0,338,0,0" VerticalAlignment="Top" Width="146" Height="35" Click="SubmitBTN_Click"/>
         <TextBox  x:Name="NameTXT" HorizontalAlignment="Left" Margin="362,101,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="29" TextChanged="NameTXT_TextChanged"/>
-        <TextBox x:Name="PriceTXT" HorizontalAlignment="Left" Margin="362,153,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="29" TextChanged="PriceTXT_TextChanged" BorderBrush="#FF134AEF"/>
+        <TextBox x:Name="PriceTXT" HorizontalAlignment="Left" Margin="362,153,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="29" TextChanged="PriceTXT_TextChanged" />
         <TextBox x:Name="InStockTXT" HorizontalAlignment="Left" Margin="362,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" Height="29" TextChanged="InStockTXT_TextChanged"/>
 
     </Grid>

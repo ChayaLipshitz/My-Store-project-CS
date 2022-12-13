@@ -25,7 +25,7 @@ public class DataSource
     static private void CreateProductsList()
     {
         string[] productsName = { "apples", "doritos", "potatos" };
-        for (int i = 0; i < 10;i++)
+        for (int i = 0; i < 20;i++)
         {
             Product product = new Product();
             int nameIndex = (int)rand.NextInt64(productsName.Length);
@@ -33,24 +33,11 @@ public class DataSource
             product.Name = productsName[nameIndex];
             product.Price = price;
             product.InStock = (int)rand.NextInt64(200);
-            int x = 1;
+            int x = (int)rand.NextInt64(3);
             product.Category = (eCategory)x;
             product.ID = Config.Product_ID;
             ProductsList.Add(product);
-        }
-        for (int i = 0; i < 10; i++)
-        {
-            Product product = new Product();
-            int nameIndex = (int)rand.NextInt64(productsName.Length);
-            int price = (int)rand.NextInt64(1, 100);
-            product.Name = productsName[nameIndex];
-            product.Price = price;
-            product.InStock = (int)rand.NextInt64(200);
-            int x = 2;
-            product.Category = (eCategory)x;
-            product.ID = Config.Product_ID;
-            ProductsList.Add(product);
-        }
+        } 
     }
     static private void CreateOrdersList()
     {

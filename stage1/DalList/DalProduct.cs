@@ -52,14 +52,14 @@ namespace Dal
             return DataSource.ProductsList;
         }
 
-        public IEnumerable<Product> ReadByFilter(Func<Product, bool> f = null)
+        public IEnumerable<Product> ReadByFilter(Func<Product, bool>? f = null)
         {
             if (f == null)
             {
                 return all_products();
             }
-            List<Product> products = new List<Product>();
-           return products.Where(f);
+            IEnumerable<Product> products = all_products();
+            return products.Where(f);
         }
 
         public Product ReadSingle(Func<Product, bool> f)

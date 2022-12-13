@@ -1,17 +1,9 @@
 ﻿using BlApi;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+
 
 namespace PL
 {
@@ -20,8 +12,11 @@ namespace PL
     /// </summary>
     public partial class ProductListWindow : Window
     {
-        private IBl bl;
-        
+        private IBl bl;   
+        /// <summary>
+        /// ctor of this page
+        /// </summary>
+        /// <param name="Bl"></param>
         public ProductListWindow(IBl Bl )
         {
             InitializeComponent();
@@ -29,26 +24,29 @@ namespace PL
             ProductsListview.ItemsSource = bl.iProduct.ReadAll();
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.eCategory));
         }      
-
         private void AddProductBTN_Click(object sender, RoutedEventArgs e)
         {
             new ProductWindow(bl).Show();
             this.Hide();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            new MainWindow().Show();
-            this.Hide();
-
-        }
-
+        /// <summary> 
+        /// the function present only the producs which in the requested category
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CategorySelector_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {
             BO.eCategory category = (BO.eCategory)CategorySelector.SelectedItem;
-            ProductsListview.ItemsSource = bl.iProduct.ReadByCategory(category);
+            var tmp = bl.iProduct.ReadByCategory(category);
+            ProductsListview.ItemsSource = tmp;
         }
 
+        /// <summary>
+        /// send the user to the screen of adding page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ProductsListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
            
@@ -56,9 +54,25 @@ namespace PL
             this.Hide();
         }
 
+        /// <summary>
+        /// go back to main window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void back_Click(object sender, RoutedEventArgs e)
+        {
+            new MainWindow().Show();
+            this.Hide();
+        }
+
         private void ProductsListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void NonFilter_Click(object sender, RoutedEventArgs e)
+        {
+            ProductsListview.ItemsSource =bl.iProduct.ReadAll();
         }
     }
 }

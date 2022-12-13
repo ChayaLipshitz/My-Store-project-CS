@@ -1,5 +1,4 @@
-﻿
-using BlApi;
+﻿using BlApi;
 using Dal;
 using DalApi;
 
@@ -213,7 +212,7 @@ internal class BlProduct : IProduct
     public IEnumerable<BO.ProductForList> ReadByCategory(BO.eCategory category)
     {
         List<BO.ProductForList> productForList = new List<BO.ProductForList>();
-        IEnumerable<Dal.DO.Product> products = dal.iproduct.ReadByFilter(p=>p.Category==(Dal.DO.eCategory)category);
+        IEnumerable<Dal.DO.Product> products = dal.iproduct.ReadByFilter(p => p.Category == (Dal.DO.eCategory)category);
         foreach (Dal.DO.Product product in products)
         {
             BO.ProductForList p = new BO.ProductForList();

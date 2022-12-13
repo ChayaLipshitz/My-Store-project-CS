@@ -75,16 +75,8 @@ namespace Dal
             {
                 return all_order_items();
             }
-            List<OrderItem> OrderItems = new List<OrderItem>();
-            foreach (OrderItem orderItem in DataSource.OrderItemsList)
-            {
-                if (f(orderItem))
-                {
-                    OrderItems.Add(orderItem);
-                }
-            }
-
-            return OrderItems;
+            IEnumerable<OrderItem> OrderItems = all_order_items();
+            return OrderItems.Where(f);
         }
 
         public OrderItem ReadSingle(Func<OrderItem, bool> f)
