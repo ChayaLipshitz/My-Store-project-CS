@@ -66,34 +66,40 @@ namespace PL
         /// </summary>
         private void SubmitBTN_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {                
+            
                 product.Name = NameTXT.Text;
                 product.Price = PriceTXT.Text == "" ? -1 : Convert.ToDouble(PriceTXT.Text);
                 product.InStock = InStockTXT.Text == "" ? -1 : Convert.ToInt32(InStockTXT.Text);
                 product.Category = (BO.eCategory)categorySelector.SelectedItem;
-                if (ToUpdate)
-                    bl.iProduct.Update(product);
-                else
-                    bl.iProduct.Add(product);
-                new ProductListWindow(bl).Show();
-                this.Hide();
-            }
-            catch (Dal.DO.DuplicateIdExceptions err)
-            {
-                MessageBox.Show(err.Message);
-            }
-            catch (BO.PropertyInValidException err)
-            {
-                MessageBox.Show(err.Message);
+                try
+                {
+                    product.Name = NameTXT.Text;
+                    product.Price = PriceTXT.Text == "" ? -1 : Convert.ToDouble(PriceTXT.Text);
+                    product.InStock = InStockTXT.Text == "" ? -1 : Convert.ToInt32(InStockTXT.Text);
+                    product.Category = (BO.eCategory)categorySelector.SelectedItem;
+                    if (ToUpdate)
+                        bl.iProduct.Update(product);
+                    else
+                        bl.iProduct.Add(product);
+                    new ProductListWindow(bl).Show();
+                    this.Hide();
+                }
+                catch (Dal.DO.DuplicateIdExceptions err)
+                {
+                    MessageBox.Show(err.Message);
+                }
+                catch (BO.PropertyInValidException err)
+                {
+                    MessageBox.Show(err.Message);
 
-            }
-            catch (Exception err)
-            {
-                MessageBox.Show(err.Message);
-            }
+                }
+                catch (Exception err)
+                {
+                    MessageBox.Show(err.Message);
+                }
+
             
-        }
+            }
         /// <summary>
         /// go back to the products list window
         /// </summary>
@@ -120,19 +126,4 @@ namespace PL
         }
 
     }
-    /*
-        NameTXT.BorderBrush = Brushes.Black;
-                PriceTXT.BorderBrush = Brushes.Black;
-                InStockTXT.BorderBrush = Brushes.Black;
-
-
-
-                {
-                    if (NameTXT.Text == "") { NameTXT.BorderBrush = Brushes.Red; }
-                    product.Name = NameTXT.Text;
-                    if (PriceTXT.Text == "") { PriceTXT.BorderBrush = Brushes.Red; }
-                    product.Price = PriceTXT.Text == "" ? -1 : Convert.ToInt32(PriceTXT.Text);
-                    if (InStockTXT.Text == "") { InStockTXT.BorderBrush = Brushes.Red; }
-                    product.InStock = InStockTXT.Text == "" ? -1 : Convert.ToInt32(InStockTXT.Text);*/
-
 }
