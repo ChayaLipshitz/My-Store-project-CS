@@ -22,8 +22,9 @@ namespace PL
     {
         BO.Product product = new();
         private IBl bl;
+        public int productID { get; set; } 
         private bool ToUpdate { get; set; } = false;
-
+        
 
         /// <summary>
         /// conctructor of this page
@@ -37,7 +38,9 @@ namespace PL
             categorySelector.ItemsSource = Enum.GetValues(typeof(BO.eCategory));
             if (id != null)
             {
+                productID=(int)id;
                 ToUpdate = true;
+                deleteBTN.Visibility = Visibility.Visible;    
                 product = bl.iProduct.ProductDetails((int)id);
                 NameTXT.Text = product.Name;
                 PriceTXT.Text = product.Price.ToString();
@@ -120,5 +123,9 @@ namespace PL
 
         }
 
+        private void deleteBTN_Click(object sender, RoutedEventArgs e)
+        {
+            bl.iProduct.Delete(productID);
+        }
     }
 }

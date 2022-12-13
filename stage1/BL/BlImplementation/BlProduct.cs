@@ -191,9 +191,8 @@ internal class BlProduct : IProduct
     /// <param name="ProductID">product id to delete</param>
     /// <exception cref="BO.ProductExistsInOrderException"></exception>
     /// <exception cref="BO.DataError">error from the database</exception>
-    public void Delete(int ProductID)
+    public  void Delete(int ProductID)
     {
-        // or to check just in al the ordderItems in dal  ?????
         foreach( Dal.DO.OrderItem orderItem in dal.iorderItem.ReadByFilter())
         {
                 if (orderItem.Product_ID == ProductID)
@@ -201,7 +200,8 @@ internal class BlProduct : IProduct
         }
         try
         {
-            dal.iorder.Delete(ProductID);
+            dal.iproduct.Delete(ProductID);
+            return;
         }
         catch(Dal.DO.NotExistExceptions err)
         {
