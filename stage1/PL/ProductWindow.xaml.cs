@@ -58,7 +58,7 @@ namespace PL
                 try
                 {
                     product.Name = NameTXT.Text;
-                    product.Price = PriceTXT.Text == "" ? -1 : Convert.ToInt32(PriceTXT.Text);
+                    product.Price = PriceTXT.Text == "" ? -1 : Convert.ToDouble(PriceTXT.Text);
                     product.InStock = InStockTXT.Text == "" ? -1 : Convert.ToInt32(InStockTXT.Text);
                     product.Category = (BO.eCategory)categorySelector.SelectedItem;
                 if (ToUpdate)

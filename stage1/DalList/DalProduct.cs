@@ -58,7 +58,7 @@ namespace Dal
             {
                 return all_products();
             }
-            List<Product> products = new List<Product>();
+            IEnumerable<Product> products = all_products();
            return products.Where(f);
         }
 
