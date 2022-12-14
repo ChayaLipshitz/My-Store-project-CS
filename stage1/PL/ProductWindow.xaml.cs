@@ -127,9 +127,14 @@ namespace PL
         {
             try
             {
-                bl.iProduct.Delete(productID);
-                new ProductListWindow(bl).Show();
-                this.Hide();
+             if(   MessageBox.Show($"are you sure you want to delete {product.Name}", "", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    bl.iProduct.Delete(productID);
+                    MessageBox.Show("the product was deleted!");
+                    new ProductListWindow(bl).Show();
+                    this.Hide();
+                }
+               
             }
             catch(Exception err)
             {
