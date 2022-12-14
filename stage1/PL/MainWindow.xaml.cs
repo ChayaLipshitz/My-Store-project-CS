@@ -28,11 +28,15 @@ namespace PL
             bl = new BlImplementation.Bl();
             InitializeComponent();
         }
-
-        private void BTN_Click(object sender, RoutedEventArgs e){
+        /// <summary>
+        /// button to the product window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ProductBTN_Click(object sender, RoutedEventArgs e)
+        {
             new ProductListWindow(bl).Show();
             this.Hide();
-
         }
     }
 }

@@ -1,18 +1,7 @@
 ﻿using BlApi;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-
 namespace PL
 {
     /// <summary>
@@ -46,11 +35,11 @@ namespace PL
                 PriceTXT.Text = product.Price.ToString();
                 InStockTXT.Text = product.InStock.ToString();
                 categorySelector.Text = product.Category.ToString();
-                SubmitBTN.Content = "update the product";
+                AddUpdateBTN.Content = "update the product";
             }
             else
             {
-                SubmitBTN.Content = "add the product";
+                AddUpdateBTN.Content = "add the product";
                 categorySelector.Text =((BO.eCategory)0).ToString();
             }
         }
@@ -64,40 +53,7 @@ namespace PL
             product.Category = (BO.eCategory)categorySelector.SelectedItem;
 
         }
-        /// <summary>
-        /// the function takes the properties from the user and update / create the product
-        /// </summary>
-        private void SubmitBTN_Click(object sender, RoutedEventArgs e)
-        {
-                try
-                {
-                    product.Name = NameTXT.Text;
-                    product.Price = PriceTXT.Text == "" ? -1 : Convert.ToDouble(PriceTXT.Text);
-                    product.InStock = InStockTXT.Text == "" ? -1 : Convert.ToInt32(InStockTXT.Text);
-                    product.Category = (BO.eCategory)categorySelector.SelectedItem;
-                    if (ToUpdate)
-                        bl.iProduct.Update(product);
-                    else
-                        bl.iProduct.Add(product);
-                    new ProductListWindow(bl).Show();
-                    this.Hide();
-                }
-                catch (Dal.DO.DuplicateIdExceptions err)
-                {
-                    MessageBox.Show(err.Message);
-                }
-                catch (BO.PropertyInValidException err)
-                {
-                    MessageBox.Show(err.Message);
-
-                }
-                catch (Exception err)
-                {
-                    MessageBox.Show(err.Message);
-                }
-
-            
-            }
+       
         /// <summary>
         /// go back to the products list window
         /// </summary>
@@ -140,6 +96,41 @@ namespace PL
             {
                 MessageBox.Show(err.Message);
             }
+        }
+        /// <summary>
+        /// the function takes the properties from the user and update/create the product
+        /// </summary>
+
+        private void AddUpdateBTN_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                product.Name = NameTXT.Text;
+                product.Price = PriceTXT.Text == "" ? -1 : Convert.ToDouble(PriceTXT.Text);
+                product.InStock = InStockTXT.Text == "" ? -1 : Convert.ToInt32(InStockTXT.Text);
+                product.Category = (BO.eCategory)categorySelector.SelectedItem;
+                if (ToUpdate)
+                    bl.iProduct.Update(product);
+                else
+                    bl.iProduct.Add(product);
+                new ProductListWindow(bl).Show();
+                this.Hide();
+            }
+            catch (Dal.DO.DuplicateIdExceptions err)
+            {
+                MessageBox.Show(err.Message);
+            }
+            catch (BO.PropertyInValidException err)
+            {
+                MessageBox.Show(err.Message);
+
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message);
+            }
+
+
         }
     }
 }
