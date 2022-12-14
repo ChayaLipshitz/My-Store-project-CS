@@ -31,7 +31,7 @@ namespace PL
         }
 
         /// <summary> 
-        /// the function present only the producs which in the requested category
+        /// the function presents only the producs which in the requested category
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
