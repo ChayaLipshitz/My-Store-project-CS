@@ -8,9 +8,24 @@ using Dal.DO;
 
 namespace Dal
 {
-    sealed  public  class DalList : IDal
-
+    sealed public class DalList : IDal
+        
     {
+        private static Lazy<DalList> instance;
+
+        public static Lazy<DalList> GetInstence()
+        {
+            lock (instance) // thread safe
+            {
+                if (instance == null)
+                    instance = new  Lazy<DalList>();
+                return instance;
+            }
+        }
+        private DalList()
+        {
+
+        }
         public  Iorder iorder => new DalOrder();
 
         public IorderItem iorderItem =>  new DalOrderItem();
