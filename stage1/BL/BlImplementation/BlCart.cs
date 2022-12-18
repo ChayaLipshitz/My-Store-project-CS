@@ -1,11 +1,10 @@
 ﻿
 using BlApi;
-using Dal;
 using DalApi;
 namespace BlImplementation;
 internal class BlCart:ICart
 {
-    IDal dal = new DalList();
+    IDal dal = DalApi.Factory.Get();
     /// <summary>
     /// add order item to the cart
     /// </summary>
@@ -34,7 +33,7 @@ internal class BlCart:ICart
             };
             //creating a new OrderItem:
             BO.OrderItem OItem = new BO.OrderItem();
-            OItem.ID = DataSource.Config.OrderItem_ID;
+            OItem.ID = Dal.DataSource.Config.OrderItem_ID;
             OItem.ProductID = p.ID;
             OItem.Name = p.Name;
             OItem.Price = p.Price;

@@ -1,11 +1,10 @@
 ﻿
 using BlApi;
-using Dal;
 using DalApi;
 namespace BlImplementation;
 internal class BlOrder:IOrder
 {
-    IDal dal = new DalList();
+    IDal dal = DalApi.Factory.Get();
     /// <summary>
     /// converts a do order to a bo order
     /// </summary>

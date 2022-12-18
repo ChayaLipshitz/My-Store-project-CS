@@ -1,11 +1,10 @@
 ﻿using BlApi;
-using Dal;
 using DalApi;
 
 namespace BlImplementation;
 internal class BlProduct : IProduct
 {
-    IDal dal = new DalList();
+    IDal dal = DalApi.Factory.Get();
     /// <summary>
     /// get a product in BO.Product type and convert it to a Dal.DO.Product type
     /// </summary>
