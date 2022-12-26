@@ -11,14 +11,14 @@ namespace Dal
     sealed public class DalList : IDal
         
     {
-        private static Lazy<DalList> instance;
+        private static DalList instance=new DalList();
 
-        public static Lazy<DalList> GetInstence()
+        public static DalList GetInstence()
         {
             lock (instance) // thread safe
             {
                 if (instance == null)
-                    instance = new  Lazy<DalList>();
+                    instance = new  DalList();
                 return instance;
             }
         }

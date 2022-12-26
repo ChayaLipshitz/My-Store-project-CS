@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DalApi;
+﻿namespace DalApi;
 using System.Reflection;
 using static DalApi.DalConfig;
-
+using Dal.DO;
 public static class Factory
 {
     public static IDal? Get()
@@ -34,4 +28,3 @@ public static class Factory
             ?? throw new DalConfigException($"Class {dal} is not singleton or Instance property not found");
     }
 }
-

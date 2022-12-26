@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DalApi;
+﻿namespace DalApi;
 using System.Xml.Linq;
-
+using Dal.DO;
 static class DalConfig
-{
+{ 
     internal static string? s_dalName;
     internal static Dictionary<string, string> s_dalPackages;
-
+ 
     static DalConfig()
     {
-        XElement dalConfig = XElement.Load(@"xml\dal-config.xml")
+        XElement dalConfig = XElement.Load(@"..\..\xml\dal-config.xml")
             ?? throw new DalConfigException("dal-config.xml file is not found");
         s_dalName = dalConfig?.Element("dal")?.Value
             ?? throw new DalConfigException("<dal> element is missing");
@@ -23,11 +17,3 @@ static class DalConfig
         s_dalPackages = packages.ToDictionary(p => "" + p.Name, p => p.Value);
     }
 }
-
-[Serializable]
-public class DalConfigException : Exception
-{
-    public DalConfigException(string msg) : base(msg) { }
-    public DalConfigException(string msg, Exception ex) : base(msg, ex) { }
-}
-

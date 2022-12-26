@@ -3,10 +3,10 @@ using DalApi;
 namespace Dal;
 class Program
 {
-    public static readonly Lazy<DalList> dalList = DalList.GetInstence();
-    private static readonly Iproduct dalProduct = dalList.Value.iproduct;
-    private static readonly Iorder dalOrder = dalList.Value.iorder;
-    private static readonly IorderItem dalOrderItem = dalList.Value.iorderItem;
+    public static readonly DalList dalList = DalList.GetInstence();
+    private static readonly Iproduct dalProduct = dalList.iproduct;
+    private static readonly Iorder dalOrder = dalList.iorder;
+    private static readonly IorderItem dalOrderItem = dalList.iorderItem;
     private static Product CreateProductFromUser()
     {
         Console.WriteLine("enter the product name:\n");
