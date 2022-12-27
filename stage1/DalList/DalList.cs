@@ -12,7 +12,7 @@ namespace Dal
         
     {
         private static DalList Instance=new DalList();
-
+       // public  static DalList instance { get { return GetInstence(); } }
         public static DalList GetInstence()
         {
             lock (Instance) // thread safe
