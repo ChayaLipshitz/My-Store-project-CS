@@ -11,21 +11,18 @@ namespace Dal
     sealed public class DalList : IDal
         
     {
-        private static DalList instance=new DalList();
+        private static DalList Instance=new DalList();
 
         public static DalList GetInstence()
         {
-            lock (instance) // thread safe
+            lock (Instance) // thread safe
             {
-                if (instance == null)
-                    instance = new  DalList();
-                return instance;
+                if (Instance == null)
+                    Instance = new  DalList();
+                return Instance;
             }
         }
-        private DalList()
-        {
-
-        }
+        private DalList() { }
         public  Iorder iorder => new DalOrder();
 
         public IorderItem iorderItem =>  new DalOrderItem();
