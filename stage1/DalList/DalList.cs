@@ -11,15 +11,16 @@ namespace Dal
     sealed public class DalList : IDal
         
     {
-        private static DalList Instance=new DalList();
-       // public  static DalList instance { get { return GetInstence(); } }
+        private static DalList instance = new DalList();
+        public static DalList Instance { get { return GetInstence(); } }
+
         public static DalList GetInstence()
         {
-            lock (Instance) // thread safe
+            lock (instance) // thread safe
             {
-                if (Instance == null)
-                    Instance = new  DalList();
-                return Instance;
+                if (instance == null)
+                    instance = new DalList();
+                return instance;
             }
         }
         private DalList() { }
