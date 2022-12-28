@@ -4,8 +4,7 @@ using Dal.DO;
 static class DalConfig
 { 
     internal static string? s_dalName;
-    internal static Dictionary<string, string> s_dalPackages;
- 
+    internal static Dictionary<string, string> s_dalPackages; 
     static DalConfig()
     {
         XElement dalConfig = XElement.Load(@"..\..\xml\dal-config.xml")

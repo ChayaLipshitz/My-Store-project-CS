@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Products>
+	<Product>
+		<ID>111111</ID>
+		<Name>doritos</Name>
+		<Price>3</Price>
+		<Category></Category>
+		<InStock></InStock>
+	</Product>
+	<Product>
+		<ID>111112</ID>
+		<Name></Name>
+		<Price></Price>
+		<Category></Category>
+		<InStock></InStock>
+	</Product>
+	<Product>
+		<ID>111113</ID>
+		<Name></Name>
+		<Price></Price>
+		<Category></Category>
+		<InStock></InStock>
+	</Product>
+</Products>
