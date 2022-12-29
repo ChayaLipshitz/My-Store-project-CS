@@ -3,7 +3,9 @@ using DalApi;
 namespace Dal;
 class Program
 {
-    public static readonly DalList dalList = DalList.GetInstence();
+    public static readonly IDal dalList = DalXml.GetInstence();
+   
+    //public static readonly DalList dalList = DalList.GetInstence();
     private static readonly Iproduct dalProduct = dalList.iproduct;
     private static readonly Iorder dalOrder = dalList.iorder;
     private static readonly IorderItem dalOrderItem = dalList.iorderItem;

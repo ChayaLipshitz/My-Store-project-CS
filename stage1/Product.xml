@@ -4,21 +4,15 @@
 		<ID>111111</ID>
 		<Name>doritos</Name>
 		<Price>3</Price>
-		<Category></Category>
-		<InStock></InStock>
+		<Category>0</Category>
+		<InStock>5</InStock>
 	</Product>
 	<Product>
 		<ID>111112</ID>
-		<Name></Name>
-		<Price></Price>
-		<Category></Category>
-		<InStock></InStock>
+		<Name>bamba</Name>
+		<Price>3</Price>
+		<Category>2</Category>
+		<InStock>5</InStock>
 	</Product>
-	<Product>
-		<ID>111113</ID>
-		<Name></Name>
-		<Price></Price>
-		<Category></Category>
-		<InStock></InStock>
-	</Product>
+	
 </Products>
