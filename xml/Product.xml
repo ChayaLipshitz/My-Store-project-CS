@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Product >
+	<ID>55555</ID>
+	<Name>crcr</Name>
+	<Price>3</Price>
+	<Category>SNACKS</Category>
+	<InStock>1</InStock>
+</Product>

@@ -13,8 +13,11 @@ namespace Dal
     {
         public int Create(Product product)
         {
+            product.ID = 55555;
             XElement? root = XDocument.Load(@"..\..\xml\Product.xml").Root;
             XmlSerializer ser = new XmlSerializer(typeof(Product));
+           
+           
             return 4;
         }
 

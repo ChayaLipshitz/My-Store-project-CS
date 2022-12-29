@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <OrderItems>
 	<OrderItem>
 		<OrderItem_ID>111111</OrderItem_ID>
@@ -6,7 +6,7 @@
 		<Order_ID>111111</Order_ID>
 		<Product_Price>2</Product_Price>
 		<Product_Amount>3</Product_Amount>
-		</OrderItem>
+	</OrderItem>
 	<OrderItem>
 		<OrderItem_ID>111112</OrderItem_ID>
 		<Product_ID>111112</Product_ID>
@@ -14,5 +14,5 @@
 		<Product_Price>1</Product_Price>
 		<Product_Amount>3</Product_Amount>
 
- </OrderItem>
+	</OrderItem>
 </OrderItems>
