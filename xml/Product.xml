@@ -1,8 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Product >
-	<ID>55555</ID>
-	<Name>crcr</Name>
-	<Price>3</Price>
-	<Category>SNACKS</Category>
-	<InStock>1</InStock>
-</Product>
+<Products>
+	<Product>
+		<ID>55555</ID>
+		<Name>1</Name>
+		<Price>1</Price>
+		<Category>SNACKS</Category>
+		<InStock>1</InStock>
+	</Product>
+	<Product>
+		<ID>55555</ID>
+		<Name>5</Name>
+		<Price>5</Price>
+		<Category>SNACKS</Category>
+		<InStock>2</InStock>
+	</Product>
+</Products>

@@ -5,14 +5,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Dal
 {
     internal class DalOrder : Iorder
     {
-        public int Create(Order obj)
+        public int Create(Order order)
         {
-            throw new NotImplementedException();
+            XElement? root = XDocument.Load(@"..\..\xml\Order.xml").Root;
+            XElement o = new("Order",
+           new XElement("ID", 3),
+           new XElement("CustomerName", order.Customer_Name),
+           new XElement("CustomerEmail", order.Customer_Email),
+           new XElement("CustomerAddress", order.Customer_Address),
+           new XElement("OrderDate", order.Order_Date),
+           new XElement("ShipDate", order.Ship_Date),
+           new XElement("DeliveryDate", order.Delivery_Date));
+            root?.Add(o);
+            root?.Save("../../xml/Order.xml");
+            return 3;
         }
 
         public void Delete(int id)

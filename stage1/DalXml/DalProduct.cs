@@ -15,10 +15,15 @@ namespace Dal
         {
             product.ID = 55555;
             XElement? root = XDocument.Load(@"..\..\xml\Product.xml").Root;
-            XmlSerializer ser = new XmlSerializer(typeof(Product));
-           
-           
-            return 4;
+            XElement p = new XElement("Product",
+                new XElement("ID", product.ID),
+                new XElement("Name", product.Name),
+                new XElement("Price", product.Price),
+                new XElement("Category", product.Category),
+                new XElement("InStock", product.InStock));
+            root?.Add(p);
+            root?.Save(@"..\..\xml\Product.xml");
+            return product.ID;
         }
 
         public void Delete(int id)
