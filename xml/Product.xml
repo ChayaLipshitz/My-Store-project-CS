@@ -21,4 +21,11 @@
     <Category>FROZEN</Category>
     <InStock>2</InStock>
   </Product>
+  <Product>
+    <ID>111112</ID>
+    <Name>a</Name>
+    <Price>50</Price>
+    <Category>FRUITS</Category>
+    <InStock>12</InStock>
+  </Product>
 </Products>

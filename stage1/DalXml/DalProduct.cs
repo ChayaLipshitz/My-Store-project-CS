@@ -10,7 +10,6 @@ using DalApi;
 namespace Dal
 
 
-    /////////// category
     ///...... delete
 {
     internal class DalProduct : Iproduct
@@ -44,12 +43,12 @@ namespace Dal
         {
             XElement? productsXML = XDocument.Load(@"..\..\xml\Product.xml").Root;
             IEnumerable<Product> allProducts = from p in productsXML?.Elements("Product")
-                                               select new Product 
+                                               select new Product
                                                {
                                                    ID = Convert.ToInt32(p.Element("ID").Value),
                                                    Name = p.Element("Name").Value,
                                                    Price = Convert.ToInt32(p.Element("Price").Value),
-                                                   Category = eCategory.FROZEN,///////////////////////-----/////////////
+                                                   Category = (eCategory)Enum.Parse(typeof(eCategory), p.Element("Category").Value),
                                                    InStock = Convert.ToInt32(p.Element("InStock").Value)
                                                };
             if (f == null)
@@ -69,7 +68,7 @@ namespace Dal
                                                    ID = Convert.ToInt32(p.Element("ID").Value),
                                                    Name = p.Element("Name").Value,
                                                    Price = Convert.ToInt32(p.Element("Price").Value),
-                                                   Category = eCategory.FROZEN,///////////////////////-----/////////////
+                                                   Category = (eCategory)Enum.Parse(typeof(eCategory), p.Element("Category").Value),
                                                    InStock = Convert.ToInt32(p.Element("InStock").Value)
                                                };
             return allProducts.Where(f).First();
