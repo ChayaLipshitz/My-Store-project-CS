@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using System.Xml.Serialization;
 
 namespace Dal
 {
@@ -13,18 +14,23 @@ namespace Dal
     {
         public int Create(Order order)
         {
-            XElement? root = XDocument.Load(@"..\..\xml\Order.xml").Root;
-            XElement o = new("Order",
-           new XElement("ID", 3),
-           new XElement("CustomerName", order.Customer_Name),
-           new XElement("CustomerEmail", order.Customer_Email),
-           new XElement("CustomerAddress", order.Customer_Address),
-           new XElement("OrderDate", order.Order_Date),
-           new XElement("ShipDate", order.Ship_Date),
-           new XElement("DeliveryDate", order.Delivery_Date));
-            root?.Add(o);
-            root?.Save("../../xml/Order.xml");
-            return 3;
+            XElement? IDS =  XDocument.Load("../../xml/ConfigData.xml").Root;
+            int orderId =Convert.ToInt32( IDS.Element("OrderId").Value);
+            order.ID=orderId;
+            orderId++;
+            IDS.Element("OrderId").Value = orderId.ToString();
+            IDS.Save("../../xml/ConfigData.xml");
+
+
+            StreamReader sread = new StreamReader ("../../xml/Order.xml");
+            XmlSerializer ser= new XmlSerializer(typeof(List<Order>));
+            List<Order> OrdersList = (List<Order>)ser.Deserialize(sread);
+            OrdersList.Add(order);
+            StreamWriter swrite = new("../../xml/Order.xml");
+            ser.Serialize(swrite, OrdersList);
+            return order.ID;
+
+
         }
 
         public void Delete(int id)
