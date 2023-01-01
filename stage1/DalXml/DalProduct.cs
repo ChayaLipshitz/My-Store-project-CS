@@ -36,7 +36,11 @@ namespace Dal
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            XElement? xdoc = XDocument.Load(@"..\..\xml\Product.xml").Root;
+            xdoc.Descendants("Product")
+                .Where(x => int.Parse(x.Element("ID").Value) == id)
+                .Remove();
+            xdoc.Save(@"..\..\xml\Product.xml");
         }
 
         public IEnumerable<Product> ReadByFilter(Func<Product, bool> f = null)
