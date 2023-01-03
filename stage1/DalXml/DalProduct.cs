@@ -51,7 +51,7 @@ namespace Dal
                                                {
                                                    ID = Convert.ToInt32(p.Element("ID").Value),
                                                    Name = p.Element("Name").Value,
-                                                   Price = Convert.ToInt32(p.Element("Price").Value),
+                                                   Price = Convert.ToDouble(p.Element("Price").Value),
                                                    Category = (eCategory)Enum.Parse(typeof(eCategory), p.Element("Category").Value),
                                                    InStock = Convert.ToInt32(p.Element("InStock").Value)
                                                };
@@ -71,7 +71,7 @@ namespace Dal
                                                {
                                                    ID = Convert.ToInt32(p.Element("ID").Value),
                                                    Name = p.Element("Name").Value,
-                                                   Price = Convert.ToInt32(p.Element("Price").Value),
+                                                   Price = Convert.ToDouble(p.Element("Price").Value),
                                                    Category = (eCategory)Enum.Parse(typeof(eCategory), p.Element("Category").Value),
                                                    InStock = Convert.ToInt32(p.Element("InStock").Value)
                                                };

@@ -1,20 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Products>
   <Product>
-    <ID>55555</ID>
-    <Name>1</Name>
-    <Price>1</Price>
-    <Category>SNACKS</Category>
-    <InStock>1</InStock>
-  </Product>
-  <Product>
-    <ID>55555</ID>
-    <Name>5</Name>
-    <Price>5</Price>
-    <Category>SNACKS</Category>
-    <InStock>2</InStock>
-  </Product>
-  <Product>
     <ID>111111</ID>
     <Name>shalgon</Name>
     <Price>9</Price>
@@ -23,9 +9,16 @@
   </Product>
   <Product>
     <ID>111113</ID>
-    <Name>hhh</Name>
+    <Name>kiwi</Name>
     <Price>4</Price>
     <Category>FRUITS</Category>
     <InStock>80</InStock>
+  </Product>
+  <Product>
+    <ID>111114</ID>
+    <Name>dddd</Name>
+    <Price>5.5</Price>
+    <Category>FRUITS</Category>
+    <InStock>50</InStock>
   </Product>
 </Products>

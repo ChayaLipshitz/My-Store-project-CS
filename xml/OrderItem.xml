@@ -8,13 +8,6 @@
     <Product_Amount>3</Product_Amount>
   </OrderItem>
   <OrderItem>
-    <OrderItem_ID>111112</OrderItem_ID>
-    <Product_ID>111112</Product_ID>
-    <Order_ID>111112</Order_ID>
-    <Product_Price>1</Product_Price>
-    <Product_Amount>3</Product_Amount>
-  </OrderItem>
-  <OrderItem>
     <OrderItem_ID>111117</OrderItem_ID>
     <Product_ID>111111</Product_ID>
     <Order_ID>111111</Order_ID>
@@ -34,5 +27,19 @@
     <Order_ID>111111</Order_ID>
     <Product_Price>8</Product_Price>
     <Product_Amount>9</Product_Amount>
+  </OrderItem>
+  <OrderItem>
+    <OrderItem_ID>111121</OrderItem_ID>
+    <Product_ID>111111</Product_ID>
+    <Order_ID>111129</Order_ID>
+    <Product_Price>9</Product_Price>
+    <Product_Amount>20</Product_Amount>
+  </OrderItem>
+  <OrderItem>
+    <OrderItem_ID>111122</OrderItem_ID>
+    <Product_ID>111113</Product_ID>
+    <Order_ID>111129</Order_ID>
+    <Product_Price>80</Product_Price>
+    <Product_Amount>23</Product_Amount>
   </OrderItem>
 </OrderItems>

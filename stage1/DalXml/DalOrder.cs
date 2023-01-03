@@ -64,7 +64,7 @@ namespace Dal
         public IEnumerable<OrderItem> ProductsInOrder(int ID)
         {
             XmlRootAttribute xRoot = new XmlRootAttribute();
-            xRoot.ElementName = "OrderItem";
+            xRoot.ElementName = "OrderItems";
             xRoot.IsNullable = true;
             StreamReader sread = new StreamReader("../../xml/OrderItem.xml");
             XmlSerializer ser = new XmlSerializer(typeof(List<OrderItem>), xRoot);
@@ -72,7 +72,6 @@ namespace Dal
             sread.Close();
             return orderItemsList.Where(oi => oi.Order_ID == ID);
         }
-
         public IEnumerable<Order> ReadByFilter(Func<Order, bool> f = null)
         {
             XmlRootAttribute xRoot = new XmlRootAttribute();
