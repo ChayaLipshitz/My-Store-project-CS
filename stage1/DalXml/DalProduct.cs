@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using System.Xml.Linq;
-using System.Xml.Serialization;
 using Dal.DO;
 using DalApi;
 namespace Dal
 
-
-    ///...... delete
 {
     internal class DalProduct : Iproduct
     {
@@ -36,11 +29,18 @@ namespace Dal
 
         public void Delete(int id)
         {
-            XElement? xdoc = XDocument.Load(@"..\..\xml\Product.xml").Root;
-            xdoc.Descendants("Product")
-                .Where(x => int.Parse(x.Element("ID").Value) == id)
-                .Remove();
-            xdoc.Save(@"..\..\xml\Product.xml");
+            try
+            {
+                XElement? xdoc = XDocument.Load(@"..\..\xml\Product.xml").Root;
+                xdoc.Descendants("Product")
+                    .Where(x => int.Parse(x.Element("ID").Value) == id).First()
+                    .Remove();
+                xdoc.Save(@"..\..\xml\Product.xml");
+            }
+            catch(InvalidOperationException ex) {
+                throw new NotExistExceptions();
+            }
+           
         }
 
         public IEnumerable<Product> ReadByFilter(Func<Product, bool> f = null)
@@ -75,7 +75,9 @@ namespace Dal
                                                    Category = (eCategory)Enum.Parse(typeof(eCategory), p.Element("Category").Value),
                                                    InStock = Convert.ToInt32(p.Element("InStock").Value)
                                                };
-            return allProducts.Where(f).First();
+            Product? product = allProducts.Where(f).First();
+            if (product == null) throw new NotExistExceptions();
+            return (Product)product;
         }
 
         public bool Update(Product updatedPro)

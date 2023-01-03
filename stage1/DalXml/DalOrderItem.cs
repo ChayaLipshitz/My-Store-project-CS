@@ -7,16 +7,28 @@ namespace Dal;
 
 internal class DalOrderItem : IorderItem
 {
+    public int getIDAndUpdate()
+    {
+        XmlRootAttribute IDSRoot = new XmlRootAttribute();
+        IDSRoot.ElementName = "IDS";
+        IDSRoot.IsNullable = true;
+        StreamReader read = new("../../xml/ConfigData.xml");
+        XmlSerializer serID = new XmlSerializer(typeof(IDSConfig), IDSRoot);
+        IDSConfig allIDS = ((IDSConfig)serID.Deserialize(read));
+        int orderID = allIDS.OrderItemId;
+        allIDS.OrderItemId++;
+        read.Close();
+        StreamWriter write = new("../../xml/ConfigData.xml");
+        serID.Serialize(write, allIDS);
+        write.Close();
+        return orderID;
+    }
+
+
     public int Create(OrderItem orderItem)
     {
-        XElement? IDS = XDocument.Load("../../xml/ConfigData.xml").Root;
-        int OrderItemId = Convert.ToInt32(IDS.Element("OrderItemId").Value);
-        orderItem.OrderItem_ID = OrderItemId;
-        OrderItemId++;
-        IDS.Element("OrderItemId").Value = OrderItemId.ToString();
-        IDS.Save("../../xml/ConfigData.xml");
 
-
+        orderItem.OrderItem_ID= getIDAndUpdate();   
         XmlRootAttribute xRoot = new XmlRootAttribute();
         xRoot.ElementName = "OrderItems";
         xRoot.IsNullable = true;
@@ -81,7 +93,7 @@ internal class DalOrderItem : IorderItem
         XmlSerializer ser = new XmlSerializer(typeof(List<OrderItem>), xRoot);
         List<OrderItem> OrderItemsList = (List<OrderItem>)ser.Deserialize(sread);
         sread.Close();
-        return OrderItemsList.Where(oi=> oi.Order_ID==order_id&& oi.Product_ID== product_id).First();
+        return OrderItemsList.Where(oi=> oi.Order_ID==order_id && oi.Product_ID== product_id).First();
     }
 
     public bool Update(OrderItem orderItem)

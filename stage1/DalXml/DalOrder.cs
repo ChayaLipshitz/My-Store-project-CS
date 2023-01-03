@@ -14,19 +14,26 @@ namespace Dal
     {
         public int Create(Order order)
         {
-            //XmlRootAttribute IDSRoot = new XmlRootAttribute();
-            //IDSRoot.ElementName = "IDS";
-            //IDSRoot.IsNullable = true;
-            //StreamReader read = new("../../xml/ConfigData.xml");
-            //XmlSerializer serID= new XmlSerializer(typeof(List<int>), IDSRoot);
-            //List<int> IDSList=(List<int>)  serID.Deserialize(read);
-
-            XElement? IDS =  XDocument.Load("../../xml/ConfigData.xml").Root;
-            int orderId =Convert.ToInt32( IDS.Element("OrderId").Value);
-            order.ID=orderId;
-            orderId++;
-            IDS.Element("OrderId").Value = orderId.ToString();
-            IDS.Save("../../xml/ConfigData.xml");
+            //  getting the id from the xml and updating it
+            XmlRootAttribute IDSRoot = new XmlRootAttribute();
+            IDSRoot.ElementName = "IDS";
+            IDSRoot.IsNullable = true;
+            StreamReader read = new("../../xml/ConfigData.xml");
+            XmlSerializer serID = new XmlSerializer(typeof(IDSConfig), IDSRoot);
+            IDSConfig allIDS = ((IDSConfig)serID.Deserialize(read));
+            int orderID = allIDS.OrderId;
+            order.ID = orderID;
+            allIDS.OrderId++;
+            read.Close();
+            StreamWriter write= new("../../xml/ConfigData.xml");
+            serID.Serialize(write, allIDS);
+            write.Close();
+            //XElement? IDS =  XDocument.Load("../../xml/ConfigData.xml").Root;
+            //int orderId =Convert.ToInt32( IDS.Element("OrderId").Value);
+            //order.ID=orderId;
+            //orderId++;
+            //IDS.Element("OrderId").Value = orderId.ToString();
+            //IDS.Save("../../xml/ConfigData.xml");
 
 
             XmlRootAttribute xRoot = new XmlRootAttribute();
