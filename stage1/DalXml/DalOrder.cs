@@ -22,12 +22,17 @@ namespace Dal
             IDS.Save("../../xml/ConfigData.xml");
 
 
+            XmlRootAttribute xRoot = new XmlRootAttribute();
+            xRoot.ElementName = "Orders";
+            xRoot.IsNullable = true;
             StreamReader sread = new StreamReader ("../../xml/Order.xml");
-            XmlSerializer ser= new XmlSerializer(typeof(List<Order>));
+            XmlSerializer ser= new XmlSerializer(typeof(List<Order>), xRoot);
             List<Order> OrdersList = (List<Order>)ser.Deserialize(sread);
+            sread.Close();
             OrdersList.Add(order);
             StreamWriter swrite = new("../../xml/Order.xml");
             ser.Serialize(swrite, OrdersList);
+            swrite.Close();
             return order.ID;
 
 
