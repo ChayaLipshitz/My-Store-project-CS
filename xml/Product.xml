@@ -16,9 +16,16 @@
   </Product>
   <Product>
     <ID>111111</ID>
-    <Name>tethejy</Name>
-    <Price>2</Price>
+    <Name>shalgon</Name>
+    <Price>9</Price>
     <Category>FROZEN</Category>
     <InStock>2</InStock>
+  </Product>
+  <Product>
+    <ID>111113</ID>
+    <Name>hhh</Name>
+    <Price>4</Price>
+    <Category>FRUITS</Category>
+    <InStock>80</InStock>
   </Product>
 </Products>

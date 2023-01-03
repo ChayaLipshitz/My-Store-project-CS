@@ -24,6 +24,5 @@ namespace Dal.DO;
         Product_Price = ProductPrice;
         Product_Amount = ProductAmount;
     }
-
 }
 

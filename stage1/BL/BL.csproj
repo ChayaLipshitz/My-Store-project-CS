@@ -31,6 +31,9 @@
     <ProjectReference Include="..\DalList\DalList.csproj" />
    
      
+    <ProjectReference Include="..\DalXml\DalXml.csproj" />
+   
+     
     <ProjectReference Include="..\Dal\DalFacade.csproj" />
   </ItemGroup>
 

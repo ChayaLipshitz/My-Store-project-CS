@@ -34,27 +34,74 @@ internal class DalOrderItem : IorderItem
 
     public void Delete(int id)
     {
-        throw new NotImplementedException();
+        XmlRootAttribute xRoot = new XmlRootAttribute();
+        xRoot.ElementName = "OrderItems";
+        xRoot.IsNullable = true;
+        StreamReader sread = new StreamReader("../../xml/OrderItem.xml");
+        XmlSerializer ser = new XmlSerializer(typeof(List<OrderItem>), xRoot);
+        List<OrderItem> OrderItemsList = (List<OrderItem>)ser.Deserialize(sread);
+        sread.Close();
+        OrderItem order = OrderItemsList.Where(o => o.OrderItem_ID == id).First();
+        OrderItemsList.Remove(order);
+        StreamWriter swrite = new("../../xml/OrderItem.xml");
+        ser.Serialize(swrite, OrderItemsList);
+        swrite.Close();
     }
 
     public IEnumerable<OrderItem> ReadByFilter(Func<OrderItem, bool> f = null)
     {
-        throw new NotImplementedException();
+        XmlRootAttribute xRoot = new XmlRootAttribute();
+        xRoot.ElementName = "OrderItems";
+        xRoot.IsNullable = true;
+        StreamReader sread = new StreamReader("../../xml/OrderItem.xml");
+        XmlSerializer ser = new XmlSerializer(typeof(List<OrderItem>), xRoot);
+        List<OrderItem> OrderItemsList = (List<OrderItem>)ser.Deserialize(sread);
+        sread.Close();
+        return f==null?OrderItemsList:OrderItemsList.Where(f);
     }
 
     public OrderItem ReadSingle(Func<OrderItem, bool> f)
     {
-        throw new NotImplementedException();
+        XmlRootAttribute xRoot = new XmlRootAttribute();
+        xRoot.ElementName = "OrderItems";
+        xRoot.IsNullable = true;
+        StreamReader sread = new StreamReader("../../xml/OrderItem.xml");
+        XmlSerializer ser = new XmlSerializer(typeof(List<OrderItem>), xRoot);
+        List<OrderItem> OrderItemsList = (List<OrderItem>)ser.Deserialize(sread);
+        sread.Close();
+        return OrderItemsList.Where(f).First();
     }
 
     public OrderItem Read_item_by_product_order(int order_id, int product_id)
     {
-        throw new NotImplementedException();
+        XmlRootAttribute xRoot = new XmlRootAttribute();
+        xRoot.ElementName = "OrderItems";
+        xRoot.IsNullable = true;
+        StreamReader sread = new StreamReader("../../xml/OrderItem.xml");
+        XmlSerializer ser = new XmlSerializer(typeof(List<OrderItem>), xRoot);
+        List<OrderItem> OrderItemsList = (List<OrderItem>)ser.Deserialize(sread);
+        sread.Close();
+        return OrderItemsList.Where(oi=> oi.Order_ID==order_id&& oi.Product_ID== product_id).First();
     }
 
-    public bool Update(OrderItem obj)
+    public bool Update(OrderItem orderItem)
     {
-        throw new NotImplementedException();
+        
+
+        XmlRootAttribute xRoot = new XmlRootAttribute();
+        xRoot.ElementName = "OrderItems";
+        xRoot.IsNullable = true;
+        StreamReader sread = new StreamReader("../../xml/OrderItem.xml");
+        XmlSerializer ser = new XmlSerializer(typeof(List<OrderItem>), xRoot);
+        List<OrderItem> orderItemsList = (List<OrderItem>)ser.Deserialize(sread);
+        sread.Close();
+        int index = orderItemsList.FindIndex(oi => orderItem.OrderItem_ID == oi.OrderItem_ID);
+        if(index == -1 ) throw new NotExistExceptions();
+        orderItemsList[index]=orderItem;
+        StreamWriter swrite = new StreamWriter("../../xml/OrderItem.xml");
+        ser.Serialize(swrite, orderItemsList);
+        swrite.Close();
+        return true;
     }
 }
 
