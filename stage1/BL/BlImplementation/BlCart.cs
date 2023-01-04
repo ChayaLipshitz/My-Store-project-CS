@@ -95,6 +95,7 @@ internal class BlCart:ICart
         newOrder.Ship_Date = DateTime.MinValue;
         newOrder.Delivery_Date = DateTime.MinValue;
         int id = dal.iorder.Create(newOrder);
+
         foreach(BO.OrderItem BOoi in cart.Items)
             {
             try

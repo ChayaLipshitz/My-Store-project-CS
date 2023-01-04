@@ -1,6 +1,5 @@
 ﻿
 using DalApi;
-using Dal.DO;
 
 namespace Dal
 {
@@ -9,7 +8,6 @@ namespace Dal
     {
         private static DalList instance = new DalList();
         public static DalList Instance { get { return GetInstence(); } }
-
         public static DalList GetInstence()
         {
             lock (instance) // thread safe
@@ -19,7 +17,7 @@ namespace Dal
                 return instance;
             }
         }
-        private DalList() { }
+        private DalList() {}
         public  Iorder iorder => new DalOrder();
 
         public IorderItem iorderItem =>  new DalOrderItem();
