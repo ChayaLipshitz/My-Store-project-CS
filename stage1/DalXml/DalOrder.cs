@@ -12,9 +12,9 @@ namespace Dal
 {
     internal class DalOrder : Iorder
     {
-        public int Create(Order order)
+        //  getting the id from the xml and updating it
+        public int getIDAndUpdateXml()
         {
-            //  getting the id from the xml and updating it
             XmlRootAttribute IDSRoot = new XmlRootAttribute();
             IDSRoot.ElementName = "IDS";
             IDSRoot.IsNullable = true;
@@ -22,20 +22,22 @@ namespace Dal
             XmlSerializer serID = new XmlSerializer(typeof(IDSConfig), IDSRoot);
             IDSConfig allIDS = ((IDSConfig)serID.Deserialize(read));
             int orderID = allIDS.OrderId;
-            order.ID = orderID;
             allIDS.OrderId++;
             read.Close();
-            StreamWriter write= new("../../xml/ConfigData.xml");
+            StreamWriter write = new("../../xml/ConfigData.xml");
             serID.Serialize(write, allIDS);
             write.Close();
-            //XElement? IDS =  XDocument.Load("../../xml/ConfigData.xml").Root;
-            //int orderId =Convert.ToInt32( IDS.Element("OrderId").Value);
-            //order.ID=orderId;
-            //orderId++;
-            //IDS.Element("OrderId").Value = orderId.ToString();
-            //IDS.Save("../../xml/ConfigData.xml");
+            return orderID;
+        }
+        /// <summary>
+         /// creatnig a new order
+         /// </summary>
+         /// <param name="order"></param>
+         /// <returns></returns>
+        public int Create(Order order)
+        {
 
-
+            order.ID = getIDAndUpdateXml();
             XmlRootAttribute xRoot = new XmlRootAttribute();
             xRoot.ElementName = "Orders";
             xRoot.IsNullable = true;
@@ -48,10 +50,11 @@ namespace Dal
             ser.Serialize(swrite, OrdersList);
             swrite.Close();
             return order.ID;
-
-
         }
-
+        /// <summary>
+        /// Deleting a certain order
+        /// </summary>
+        /// <param name="id"></param>
         public void Delete(int id)
         {
             XmlRootAttribute xRoot = new XmlRootAttribute();
@@ -67,7 +70,11 @@ namespace Dal
             ser.Serialize(swrite, OrdersList);
             swrite.Close();
         }
-
+        /// <summary>
+        /// reading the orders list by an optional given filter...
+        /// </summary>
+        /// <param name="f"></param>
+        /// <returns></returns>
         public IEnumerable<OrderItem> ProductsInOrder(int ID)
         {
             XmlRootAttribute xRoot = new XmlRootAttribute();
@@ -92,7 +99,11 @@ namespace Dal
                 return OrdersList;
             return  OrdersList.Where(f);
         }
-
+        /// <summary>
+        /// reading a certain order by a given condition
+        /// </summary>
+        /// <param name="f">filter function</param>
+        /// <returns></returns>
         public Order ReadSingle(Func<Order, bool> f)
         {
             XmlRootAttribute xRoot = new XmlRootAttribute();
@@ -105,6 +116,12 @@ namespace Dal
             return OrdersList.Where(f).First();
 
         }
+        /// <summary>
+        /// updating a certain orderItem
+        /// </summary>
+        /// <param name="orderItem"></param>
+        /// <returns></returns>
+        /// <exception cref="NotExistExceptions"></exception>
 
         public bool Update(Order obj)
         {

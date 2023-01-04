@@ -7,6 +7,11 @@ namespace Dal
 {
     internal class DalProduct : Iproduct
     {
+        /// <summary>
+        /// creating a new product
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns>return the order id</returns>
         public int Create(Product product)
         {
             XElement? IDS = XDocument.Load("../../xml/ConfigData.xml").Root;
@@ -26,7 +31,11 @@ namespace Dal
             root?.Save(@"..\..\xml\Product.xml");
             return product.ID;
         }
-
+        /// <summary>
+        /// Deleting a certain product
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <exception cref="NotExistExceptions"></exception>
         public void Delete(int id)
         {
             try
@@ -43,6 +52,10 @@ namespace Dal
            
         }
 
+        /// <summary>
+        /// Reading  the product list by an optional given filter 
+        /// </summary>
+        /// <returns>the product list</returns>
         public IEnumerable<Product> ReadByFilter(Func<Product, bool> f = null)
         {
             XElement? productsXML = XDocument.Load(@"..\..\xml\Product.xml").Root;
@@ -62,7 +75,11 @@ namespace Dal
             return allProducts.Where(f);
         }
 
-
+        /// <summary>
+        /// Reading a certain product by a given condition
+        /// </summary>
+        /// <param name="f"></param>
+        /// <returns></returns>
         public Product ReadSingle(Func<Product, bool> f)
         {
             XElement? productsXML = XDocument.Load(@"..\..\xml\Product.xml").Root;
@@ -79,7 +96,12 @@ namespace Dal
             if (product == null) throw new NotExistExceptions();
             return (Product)product;
         }
-
+        /// <summary>
+        /// Updating a certain product
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns>1 in case of succeed</returns>
+        /// <exception cref="NotExistExceptions"></exception>
         public bool Update(Product updatedPro)
         {
             try
