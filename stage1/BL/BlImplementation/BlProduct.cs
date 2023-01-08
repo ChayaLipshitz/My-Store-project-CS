@@ -1,4 +1,6 @@
 ﻿using BlApi;
+using BO;
+using Dal.DO;
 using DalApi;
 
 namespace BlImplementation;
@@ -66,18 +68,16 @@ internal class BlProduct : IProduct
     /// <returns>IEnumerable of all the products as ProductForList</returns>
     public IEnumerable<BO.ProductForList> ReadAll()
     {
-        List<BO.ProductForList> productForList = new List<BO.ProductForList>();
         IEnumerable<Dal.DO.Product> products = dal.iproduct.ReadByFilter();
-        foreach(Dal.DO.Product product in products)
-        {
-            BO.ProductForList p = new BO.ProductForList();
-            p.ID = product.ID;
-            p.Name=product.Name;
-            p.Price=product.Price;
-            p.Category = (BO.eCategory)product.Category;
-            productForList.Add(p);
-        }
-       return productForList;
+        IEnumerable<BO.ProductForList> productForList = from product in products
+                                                        select new BO.ProductForList
+                                                        {
+                                                            ID = product.ID,
+                                                            Name = product.Name,
+                                                            Price = product.Price,
+                                                            Category = (BO.eCategory)product.Category
+                                                        };
+        return productForList;
     }
     /// <summary>
     /// product details for manager screen
@@ -93,16 +93,16 @@ internal class BlProduct : IProduct
         {
             try
             {
-                Dal.DO.Product DALproduct = dal.iproduct.ReadSingle(p=>p.ID==ProductId);
+                Dal.DO.Product DALproduct = dal.iproduct.ReadSingle(p => p.ID == ProductId);
                 BLproduct = ConvertToBOproduct(DALproduct);
                 return BLproduct;
             }
-            catch (BO.NotExistExceptions err)
+            catch (Dal.DO.NotExistExceptions err)
             {
                 throw new BO.DataError(err); ////--------------------------------///
             }
         }
-            throw new BO.PropertyInValidException("ID");
+        throw new BO.PropertyInValidException("ID");
     }
     /// <summary>
     ///  product details for client screen
@@ -114,33 +114,29 @@ internal class BlProduct : IProduct
     {
         if (ProductId < 0)
             throw new BO.PropertyInValidException("ID");
-        BO.ProductItem BOproductItem = new BO.ProductItem();
         try
         {
-            Dal.DO.Product DOproduct = dal.iproduct.ReadSingle(p=>p.ID==ProductId);
-            if (cart.Items == null) throw new BO.CartISEmptyException();
-            foreach (BO.OrderItem oi in cart.Items)
-            {
-                if(oi.ProductID == ProductId)
-                {
-                    BOproductItem.Amount = oi.Amount;
-                    BOproductItem.ID = DOproduct.ID;
-                    BOproductItem.Name = DOproduct.Name;
-                    BOproductItem.Price = DOproduct.Price;
-                    BOproductItem.Category = (BO.eCategory)DOproduct.Category;
-                    BOproductItem.InStock = DOproduct.InStock > 0;
-                    return BOproductItem;
-                }
-            }
-            throw new BO.ProductDoesNoExistInCartExceptions();
-           
+            Dal.DO.Product DOproduct = dal.iproduct.ReadSingle(p => p.ID == ProductId);
+            if (cart.Items.Count() == 0) throw new BO.CartISEmptyException();
+            BO.ProductItem BOproductItem = (from oi in cart.Items
+                                            where oi.ID == ProductId
+                                            select new BO.ProductItem
+                                            {
+                                                ID = oi.ID,
+                                                Name = oi.Name,
+                                                Amount = oi.Amount,
+                                                Price = oi.Price,
+                                                Category = (BO.eCategory)DOproduct.Category,
+                                                InStock = DOproduct.InStock > 0
+                                            }).First() ?? throw new ProductDoesNoExistInCartExceptions();
+            return BOproductItem;
         }
         catch (BO.NotExistExceptions err)
         {
-            throw new BO.DataError(err);  
+            throw new BO.DataError(err);
 
         }
-       
+
     }
     /// <summary>
     /// adding a new product
@@ -190,19 +186,17 @@ internal class BlProduct : IProduct
     /// <param name="ProductID">product id to delete</param>
     /// <exception cref="BO.ProductExistsInOrderException"></exception>
     /// <exception cref="BO.DataError">error from the database</exception>
-    public  void Delete(int ProductID)
+    public void Delete(int ProductID)
     {
-        foreach( Dal.DO.OrderItem orderItem in dal.iorderItem.ReadByFilter())
-        {
-                if (orderItem.Product_ID == ProductID)
-                    throw new BO.ProductExistsInOrderException();
-        }
+        IEnumerable<Dal.DO.OrderItem> oi = dal.iorderItem.ReadByFilter(oi => oi.Product_ID == ProductID);
+        if (oi.Count() != 0)
+            throw new BO.ProductExistsInOrderException();
         try
         {
             dal.iproduct.Delete(ProductID);
             return;
         }
-        catch(Dal.DO.NotExistExceptions err)
+        catch (Dal.DO.NotExistExceptions err)
         {
             throw new BO.DataError(err);
         }
@@ -210,17 +204,16 @@ internal class BlProduct : IProduct
 
     public IEnumerable<BO.ProductForList> ReadByCategory(BO.eCategory category)
     {
-        List<BO.ProductForList> productForList = new List<BO.ProductForList>();
+
         IEnumerable<Dal.DO.Product> products = dal.iproduct.ReadByFilter(p => p.Category == (Dal.DO.eCategory)category);
-        foreach (Dal.DO.Product product in products)
-        {
-            BO.ProductForList p = new BO.ProductForList();
-            p.ID = product.ID;
-            p.Name = product.Name;
-            p.Price = product.Price;
-            p.Category = (BO.eCategory)product.Category;
-            productForList.Add(p);
-        }
+        IEnumerable<BO.ProductForList> productForList = from product in products
+                                                        select new BO.ProductForList
+                                                        {
+                                                            ID = product.ID,
+                                                            Name = product.Name,
+                                                            Price = product.Price,
+                                                            Category = (BO.eCategory)product.Category,
+                                                        };
         return productForList;
     }
 }

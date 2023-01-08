@@ -96,8 +96,17 @@ internal class DalOrderItem : IorderItem
         StreamReader sread = new StreamReader("../../xml/OrderItem.xml");
         XmlSerializer ser = new XmlSerializer(typeof(List<OrderItem>), xRoot);
         List<OrderItem> OrderItemsList = (List<OrderItem>)ser.Deserialize(sread);
-        sread.Close();
-        return OrderItemsList.Where(f).First();
+        sread.Close();        
+        try
+        {
+            OrderItem orderitem = OrderItemsList.Where(f).First();
+            return orderitem;
+        }
+        catch (Exception ex)
+        {
+            throw new NotExistExceptions();
+        }
+
     }
     /// <summary>
     /// read orderItem by product's id and order's id
@@ -113,9 +122,17 @@ internal class DalOrderItem : IorderItem
         StreamReader sread = new StreamReader("../../xml/OrderItem.xml");
         XmlSerializer ser = new XmlSerializer(typeof(List<OrderItem>), xRoot);
         List<OrderItem> OrderItemsList = (List<OrderItem>)ser.Deserialize(sread);
-        sread.Close();
-        return OrderItemsList.Where(oi=> oi.Order_ID==order_id && oi.Product_ID== product_id).First();
+        sread.Close(); 
+        try
+        {
+            return OrderItemsList.Where(oi => oi.Order_ID == order_id && oi.Product_ID == product_id).First();
+        }
+        catch(Exception ex)
+        {
+            throw new NotExistExceptions();
+        }
     }
+
     /// <summary>
     /// updating a certain orderItem
     /// </summary>
@@ -124,9 +141,7 @@ internal class DalOrderItem : IorderItem
     /// <exception cref="NotExistExceptions"></exception>
 
     public bool Update(OrderItem orderItem)
-    {
-        
-
+    {   
         XmlRootAttribute xRoot = new XmlRootAttribute();
         xRoot.ElementName = "OrderItems";
         xRoot.IsNullable = true;

@@ -15,10 +15,10 @@
     <InStock>80</InStock>
   </Product>
   <Product>
-    <ID>111114</ID>
-    <Name>dddd</Name>
-    <Price>5.5</Price>
-    <Category>FRUITS</Category>
-    <InStock>50</InStock>
+    <ID>111116</ID>
+    <Name>lpol.</Name>
+    <Price>7</Price>
+    <Category>SNACKS</Category>
+    <InStock>77</InStock>
   </Product>
 </Products>

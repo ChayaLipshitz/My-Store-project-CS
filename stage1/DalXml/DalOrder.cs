@@ -113,7 +113,16 @@ namespace Dal
             XmlSerializer ser = new XmlSerializer(typeof(List<Order>), xRoot);
             List<Order> OrdersList = (List<Order>)ser.Deserialize(sread);
             sread.Close();
-            return OrdersList.Where(f).First();
+            try
+            {
+              Order  order = OrdersList.Where(f).First();
+                return order;
+            }
+            catch (Exception ex)
+            {
+                throw new NotExistExceptions();
+            }
+           
 
         }
         /// <summary>

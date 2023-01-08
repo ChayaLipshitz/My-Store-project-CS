@@ -38,7 +38,9 @@ public class Program
                 "enter 1 to ReadAll products\n" +
                 "enter 2 for a certain Product details as a manager \n" +
                 "enter 3 for a certain ProductDetails as a client\n" +
-                "enter 4 for adding a new product\n");
+                "enter 4 for adding a new product\n"+
+                "enter 5 for a deleting a product \n" 
+                );
             inner_choice = Convert.ToInt32(Console.ReadLine());
             try
             {
@@ -77,6 +79,12 @@ public class Program
                         newProdct.InStock = Convert.ToInt32(Console.ReadLine());
                         bl.iProduct.Add(newProdct);
                         break;
+                    case 5:
+                        Console.WriteLine("Enter the product id");
+                         id = Convert.ToInt32(Console.ReadLine());
+                        bl.iProduct.Delete(id);
+                        break;
+
                 }
             }
             catch (PropertyInValidException ex)
@@ -98,6 +106,11 @@ public class Program
             catch (DataError ex)
             {
                 Console.WriteLine(ex.Message);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
             }
         } while (inner_choice != 0);
     }
