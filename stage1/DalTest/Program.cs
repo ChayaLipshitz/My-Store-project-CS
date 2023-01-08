@@ -3,7 +3,8 @@ using DalApi;
 namespace Dal;
 class Program
 {
-    public static readonly DalList dalList = DalList.GetInstence();
+    public static  IDal dalList = Factory.Get();
+    //public static readonly DalList dalList = DalList.GetInstence();
     private static readonly Iproduct dalProduct = dalList.iproduct;
     private static readonly Iorder dalOrder = dalList.iorder;
     private static readonly IorderItem dalOrderItem = dalList.iorderItem;
@@ -76,11 +77,19 @@ class Program
                     }
                     break;
                 case INNER_CHOICE.READ_ALL:
-                    IEnumerable<Product> products = dalProduct.ReadByFilter();
-                    foreach (Product p in products)
+                    try
                     {
-                        Console.WriteLine(p.ToString() + "\n");
+                        IEnumerable<Product> products = dalProduct.ReadByFilter();
+                        foreach (Product p in products)
+                        {
+                            Console.WriteLine(p.ToString() + "\n");
+                        }
                     }
+                    catch(Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    
                     break;
                 case INNER_CHOICE.UPDATE:
 

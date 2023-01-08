@@ -14,11 +14,4 @@
     <Category>FRUITS</Category>
     <InStock>80</InStock>
   </Product>
-  <Product>
-    <ID>111116</ID>
-    <Name>lpol.</Name>
-    <Price>7</Price>
-    <Category>SNACKS</Category>
-    <InStock>77</InStock>
-  </Product>
 </Products>
