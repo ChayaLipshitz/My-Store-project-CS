@@ -25,32 +25,29 @@ internal class DalProduct: Iproduct
     /// <exception cref="NotExistExceptions"></exception>
     public bool Update(Product product)
     {
-        for (int i = 0; i < DataSource.ProductsList.Count(); i++)
-        {
-            if (DataSource.ProductsList[i].ID == product.ID)
-            {
-                DataSource.ProductsList[i] = product;
-                return true;
-            }
-        }
-            throw new NotExistExceptions();
+        int index = DataSource.ProductsList.FindIndex(p => p.ID == product.ID);
+        if (index == -1) throw new NotExistExceptions();
+        DataSource.ProductsList[index] = product;
+        return true;
+        
     }
+
     /// <summary>
     /// Deleting a certain product
     /// </summary>
     /// <param name="ID"></param>
     /// <exception cref="NotExistExceptions"></exception>
-    public void Delete(int ID)
+    public void Delete(int id)
     {
-        foreach(Product p in DataSource.ProductsList)
+        try
         {
-            if (p.ID == ID)
-            {
-                DataSource.ProductsList.Remove(p);
-                return;
-            }
+            Product p = DataSource.ProductsList.Where(p => p.ID == id).First();
+            DataSource.ProductsList.Remove(p);
         }
-        throw new NotExistExceptions();
+        catch (InvalidOperationException e)
+        {
+            throw new NotExistExceptions();
+        }
     }
     
     /// <summary>

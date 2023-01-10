@@ -20,7 +20,7 @@ namespace PL
         /// </summary>
         /// <param name="Bl"></param>
         /// <param name="id">in case of update product</param>
-        public ProductWindow(IBl Bl, int? id=null)
+        public ProductWindow(IBl Bl, int? id = null)
         {
             bl = Bl;
             InitializeComponent();
@@ -62,7 +62,7 @@ namespace PL
         private void back_Click(object sender, RoutedEventArgs e)
         {
             new ProductListWindow(bl).Show();
-            this.Hide();
+            this.Close();
         }
         private void NameTXT_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -88,7 +88,7 @@ namespace PL
                     bl.iProduct.Delete(productID);
                     MessageBox.Show("the product was deleted!");
                     new ProductListWindow(bl).Show();
-                    this.Hide();
+                    this.Close();
                 }
                
             }
@@ -114,7 +114,7 @@ namespace PL
                 else
                     bl.iProduct.Add(product);
                 new ProductListWindow(bl).Show();
-                this.Hide();
+                this.Close();
             }
             catch (Dal.DO.DuplicateIdExceptions err)
             {

@@ -2,7 +2,7 @@
 using BlApi;
 using DalApi;
 namespace BlImplementation;
-internal class BlCart:ICart
+internal class BlCart : ICart
 {
     IDal dal = DalApi.Factory.Get();
     /// <summary>
@@ -17,30 +17,28 @@ internal class BlCart:ICart
     {
         try
         {
-            Dal.DO.Product p = dal.iproduct.ReadSingle(p=>p.ID==id);
+            Dal.DO.Product p = dal.iproduct.ReadSingle(p => p.ID == id);
             if (p.InStock <= 0)
                 throw new BO.NotInStockException(p.Name);
-            foreach (BO.OrderItem item in cart.Items)
+            int index = cart.Items.FindIndex(oi => oi.ProductID == id);
+            if (index == -1)
             {
-                if (item.ProductID == id)
-                {
-                    //Updating the existing OrderItem
-                    item.Amount++;
-                    item.TotalPrice += p.Price;
-                    cart.TotalPrice += p.Price;
-                    return cart;
-                }
-            };
-            //creating a new OrderItem:
-            BO.OrderItem OItem = new BO.OrderItem();
-            OItem.ID = Dal.DataSource.Config.OrderItem_ID;
-            OItem.ProductID = p.ID;
-            OItem.Name = p.Name;
-            OItem.Price = p.Price;
-            OItem.Amount = 1;
-            OItem.TotalPrice = p.Price;
-            cart.TotalPrice += p.Price;
-            cart.Items.Add(OItem);
+                BO.OrderItem OItem = new BO.OrderItem();
+                OItem.ProductID = p.ID;
+                OItem.Name = p.Name;
+                OItem.Price = p.Price;
+                OItem.Amount = 1;
+                OItem.TotalPrice = p.Price;
+                cart.TotalPrice += p.Price;
+                cart.Items.Add(OItem);
+            }
+            else
+            {
+                cart.Items[index].Amount++;
+                cart.Items[index].TotalPrice += p.Price;
+                cart.TotalPrice += p.Price;
+            }
+
             return cart;
         }
         catch (Dal.DO.NotExistExceptions ex)
@@ -58,22 +56,22 @@ internal class BlCart:ICart
     /// <exception cref="BO.NotExistExceptions"></exception>
     public BO.Cart UpdateOrderItem(BO.Cart cart, int id, int quantity)
     {
-            BO.OrderItem OItem = cart.Items.Find(OItem => OItem.ProductID == id);
-            if(OItem == null)
-                throw new BO.NotExistExceptions();
-            if (quantity == 0)
-            {
-                cart.TotalPrice -= OItem.TotalPrice;
-                cart.Items.Remove(OItem);
-            }
-            else if (OItem.Amount > quantity || OItem.Amount < quantity)
-            {
-                double lastTotalPrice = OItem.TotalPrice;
-                OItem.Amount = quantity;
-                OItem.TotalPrice = quantity * OItem.Price;
-                cart.TotalPrice = cart.TotalPrice - lastTotalPrice + OItem.TotalPrice;
-            }
-            return cart;
+        BO.OrderItem OItem = cart.Items.Find(OItem => OItem.ProductID == id);
+        if (OItem == null)
+            throw new BO.NotExistExceptions();
+        if (quantity == 0)
+        {
+            cart.TotalPrice -= OItem.TotalPrice;
+            cart.Items.Remove(OItem);
+        }
+        else if (OItem.Amount > quantity || OItem.Amount < quantity)
+        {
+            double lastTotalPrice = OItem.TotalPrice;
+            OItem.Amount = quantity;
+            OItem.TotalPrice = quantity * OItem.Price;
+            cart.TotalPrice = cart.TotalPrice - lastTotalPrice + OItem.TotalPrice;
+        }
+        return cart;
     }
     /// <summary>
     /// submitting the cart and creating a new order
@@ -91,41 +89,43 @@ internal class BlCart:ICart
         newOrder.Customer_Address = CustomerAddress;
         newOrder.Customer_Name = CustomerName;
         newOrder.Customer_Email = CustomerEmail;
-        newOrder.Order_Date= DateTime.Now;
+        newOrder.Order_Date = DateTime.Now;
         newOrder.Ship_Date = DateTime.MinValue;
         newOrder.Delivery_Date = DateTime.MinValue;
         int id = dal.iorder.Create(newOrder);
+        try
+        {
 
-        foreach(BO.OrderItem BOoi in cart.Items)
-            {
-            try
+            cart.Items.ForEach(BOoi =>
             {
                 Dal.DO.OrderItem DOoi = new Dal.DO.OrderItem();
                 DOoi.Order_ID = id;
                 DOoi.Product_Price = BOoi.Price;
                 DOoi.Product_ID = BOoi.ProductID;
-                DOoi.Product_Amount= BOoi.Amount;
+                DOoi.Product_Amount = BOoi.Amount;
                 dal.iorderItem.Create(DOoi);
-                Dal.DO.Product product= dal.iproduct.ReadSingle(p=>p.ID==DOoi.Product_ID);
+                Dal.DO.Product product = dal.iproduct.ReadSingle(p => p.ID == DOoi.Product_ID);
                 product.InStock -= DOoi.Product_Amount;
                 dal.iproduct.Update(product);
-            }
-            catch (Dal.DO.NotExistExceptions ex)
-            {
-                throw new BO.DataError(ex);
-            }
-            catch (BO.NotInStockException ex)
-            {
-                throw ex;
-            }
-            catch (BO.PropertyInValidException ex)
-            {
-                throw ex;
-            }
-
+            });
+        }
+        catch (Dal.DO.NotExistExceptions ex)
+        {
+            throw new BO.DataError(ex);
+        }
+        catch (BO.NotInStockException ex)
+        {
+            throw ex;
+        }
+        catch (BO.PropertyInValidException ex)
+        {
+            throw ex;
         }
 
     }
+
+
+
     /// <summary>
     /// checks if the cart has valid values
     /// </summary>
@@ -138,11 +138,11 @@ internal class BlCart:ICart
     /// <exception cref="BO.DataError"></exception>
     public void IsValidCart(BO.Cart cart, string CustomerName, string CustomerEmail, string CustomerAddress)
     {
-        foreach (BO.OrderItem OItem in cart.Items)
+        try
         {
-            try
+            cart.Items.ForEach(OItem =>
             {
-                Dal.DO.Product product = dal.iproduct.ReadSingle(p=>p.ID==OItem.ProductID);
+                Dal.DO.Product product = dal.iproduct.ReadSingle(p => p.ID == OItem.ProductID);
                 if (OItem.Amount < 0)
                 {
                     throw new BO.PropertyInValidException("Amount");
@@ -151,18 +151,19 @@ internal class BlCart:ICart
                 {
                     throw new BO.NotInStockException(product.Name);
                 }
-            }
-            catch (Dal.DO.NotExistExceptions ex)
-            {
-                throw new BO.DataError(ex);
-            }
+            });
         }
+        catch (Dal.DO.NotExistExceptions ex)
+        {
+            throw new BO.DataError(ex);
+        }
+
 
         if (!IsValidEmail(CustomerEmail))
         {
             throw new BO.PropertyInValidException("Email");
         }
-        if (CustomerAddress == "") 
+        if (CustomerAddress == "")
             throw new BO.PropertyInValidException("address");
         if (CustomerName == "")
             throw new BO.PropertyInValidException("name");

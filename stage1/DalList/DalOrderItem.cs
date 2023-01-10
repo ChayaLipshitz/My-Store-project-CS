@@ -18,45 +18,41 @@ namespace Dal
         }
         public void Delete(int ID)
         {
-            foreach (OrderItem order in DataSource.OrderItemsList)
+            try
             {
-                if (order.OrderItem_ID == ID)
-                {
-                    DataSource.OrderItemsList.Remove(order);
-                    return;
-                }
+                OrderItem oi = DataSource.OrderItemsList.Where(oi => oi.OrderItem_ID == ID).First();
+                DataSource.OrderItemsList.Remove(oi);
             }
-            throw new NotExistExceptions();
+            catch (InvalidOperationException e)
+            {
+                throw new NotExistExceptions();
+            }
         }
         public bool Update(OrderItem order_item)
         {
-            for (int i = 0; i < DataSource.OrderItemsList.Count(); i++)
-            {
-                if (DataSource.OrderItemsList[i].OrderItem_ID == order_item.OrderItem_ID)
-                {
-                    DataSource.OrderItemsList[i] = order_item;
-                    return true;
-                }
-            }
-            throw new NotExistExceptions();
+            int index = DataSource.OrderItemsList.FindIndex(oi => order_item.OrderItem_ID == oi.OrderItem_ID);
+            if (index == -1) throw new NotExistExceptions();
+            DataSource.OrderItemsList[index] = order_item;
+            return true;
         }
         public OrderItem Read_item_by_product_order(int order_id, int product_id)
         {
-            foreach (OrderItem oi in DataSource.OrderItemsList)
+            try
             {
-                if (oi.Order_ID == order_id && oi.Product_ID == product_id)
-                {
-                    return oi;
-                }
+                return DataSource.OrderItemsList.Where((oi) => oi.Order_ID == order_id && oi.Product_ID == product_id).First();
+                
             }
-            throw new Exception("the order item does not exist!\n");
+            catch (InvalidOperationException e)
+            {
+                throw new NotExistExceptions();
+            }
         }
 
         private IEnumerable<OrderItem> all_order_items()
         {
             return DataSource.OrderItemsList;
         }
-        
+
         public IEnumerable<OrderItem> ReadByFilter(Func<OrderItem, bool> f = null)
         {
 
@@ -73,7 +69,7 @@ namespace Dal
 
             try
             {
-                OrderItem oi= all_order_items().Where(f).First();
+                OrderItem oi = all_order_items().Where(f).First();
                 return oi;
             }
             catch (Exception ex)

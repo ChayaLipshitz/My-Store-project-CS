@@ -27,7 +27,7 @@ namespace PL
         private void AddProductBTN_Click(object sender, RoutedEventArgs e)
         {
             new ProductWindow(bl).Show();
-            this.Hide();
+            this.Close();
         }
 
         /// <summary> 
@@ -51,7 +51,7 @@ namespace PL
         {
            
            new ProductWindow(bl,((BO.ProductForList)ProductsListview.SelectedItem).ID).Show();
-            this.Hide();
+            this.Close();
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace PL
         private void back_Click(object sender, RoutedEventArgs e)
         {
             new MainWindow().Show();
-            this.Hide();
+            this.Close();
         }
 
         private void ProductsListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
