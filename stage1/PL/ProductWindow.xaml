@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="ProductWindow" Height="450" Width="800">
     <Grid>
-        <Button x:Name="Back" Content="Back to products list" HorizontalAlignment="Left" Margin="636,18,0,0" VerticalAlignment="Top" Height="34" Width="136" Click="back_Click" Background="Black" Foreground="#FFF4F9F1" />
+        <Button x:Name="Back" Content="Back" HorizontalAlignment="Left" Margin="636,18,0,0" VerticalAlignment="Top" Height="34" Width="136" Click="back_Click" Background="Black" Foreground="#FFF4F9F1" />
 
         <Label Content="enter the product details:" HorizontalAlignment="Left" Margin="344,40,0,0" VerticalAlignment="Top" Width="196" Height="40"/>
         <Label Content="enter the product name" HorizontalAlignment="Left" Margin="200,101,0,0" VerticalAlignment="Top" Width="137" Height="33"/>

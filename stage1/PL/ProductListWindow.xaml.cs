@@ -74,14 +74,16 @@ namespace PL
 
         private void productsListBTN_Click(object sender, RoutedEventArgs e)
         {
+            CategorySelector.Visibility = Visibility.Visible;
+            CategoryLBL.Visibility = Visibility.Visible;
             OrdesListview.Visibility = Visibility.Collapsed;
             ProductsListview.Visibility = Visibility.Visible;
         }
 
         private void ordersListBTN_Click(object sender, RoutedEventArgs e)
         {
-
-           
+            CategoryLBL.Visibility = Visibility.Collapsed;
+            CategorySelector.Visibility = Visibility.Collapsed;
             OrdesListview.Visibility = Visibility.Visible;
             ProductsListview.Visibility = Visibility.Collapsed;
         }

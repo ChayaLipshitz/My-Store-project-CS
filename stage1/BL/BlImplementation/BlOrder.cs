@@ -1,5 +1,6 @@
 ﻿
 using BlApi;
+using BO;
 using DalApi;
 using System.Linq;
 
@@ -178,6 +179,45 @@ internal class BlOrder : IOrder
             throw (new BO.DataError(ex));
         }
     }
+    private void checkObjValidation(BO.Order order)
+    {
+        if (order.Delivery_Date != DateTime.MinValue)
+            throw new OrderAlreadyException("delivered");
+        double sum = order.Items.Sum(oi => oi.TotalPrice);
+        if (order.TotalPrice != sum)
+            throw new PropertyInValidException("total price");
 
+        //order.Items.ForEach(oi =>
+        //{
+        //    if (oi.Amount < 0)
+        //        throw new PropertyInValidException("amount");
+        //    if (oi.Price < 0)
+        //        throw new PropertyInValidException("price");
+        //    if (oi.Amount > dal.iproduct.ReadSingle(p => p.ID == oi.ProductID).InStock)
+        //        throw new NotInStockException(oi.Name);
+        //    sum += oi.TotalPrice;
+        //    });
 
+    }
+
+    public void Update(BO.Order order)
+    {
+        try
+        {
+            checkObjValidation(order);
+           Dal.DO.Order DOorder = new();
+            DOorder.ID = order.OrderID;
+            DOorder.Order_Date = order.Order_Date;
+            DOorder.Ship_Date = order.Ship_Date;
+            DOorder.Customer_Email = order.CustomerEmail;
+            DOorder.Customer_Address = order.CustomerAddress;
+            DOorder.Customer_Name = order.CustomerName;
+            DOorder.Delivery_Date = order.Delivery_Date;
+            dal.iorder.Update(DOorder);
+        }
+        catch(Exception ex)
+        {
+            throw ex;
+        }
+    }
 }

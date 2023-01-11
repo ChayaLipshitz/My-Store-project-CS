@@ -24,7 +24,7 @@
             <Button x:Name="NonFilter" Grid.Column="3" Content="X" HorizontalAlignment="Left" Margin="190,138,0,0" VerticalAlignment="Top" Height="31" Width="34" FontSize="22" Click="NonFilter_Click" FontWeight="Bold" FontFamily="ISOCTEUR"/>
         </Grid>
 
-        <Label Content="filter by category:&#xA;" HorizontalAlignment="Left" Margin="592,141,0,0" VerticalAlignment="Top" Height="31" Grid.Column="0" Width="144" FontSize="16" FontFamily="Sling"/>
+        <Label  x:Name="CategoryLBL" Content="filter by category:&#xA;" HorizontalAlignment="Left" Margin="592,141,0,0" VerticalAlignment="Top" Height="31" Grid.Column="0" Width="144" FontSize="16" FontFamily="Sling"/>
 
         <ListView Visibility="Collapsed"  x:Name="ProductsListview" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="ProductsListview_SelectionChanged" HorizontalAlignment="Center" Margin="0,198,0,10" Grid.RowSpan="2" Width="1000" MouseDoubleClick="ProductsListview_MouseDoubleClick">
             <ListView.View>
