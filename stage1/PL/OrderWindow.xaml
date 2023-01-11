@@ -7,13 +7,13 @@
         mc:Ignorable="d"
         Title="OrderWindow" Height="450" Width="800">
     <Grid>
-        <ListView x:Name="orderItemsview"    HorizontalAlignment="Left" Height="313" Margin="550,88,0,0" VerticalAlignment="Top" Width="210" d:ItemsSource="{d:SampleData ItemCount=5}">
+        <ListView x:Name="orderItemsview"    HorizontalAlignment="Left" Height="376" Margin="442,48,0,0" VerticalAlignment="Top" Width="334" d:ItemsSource="{d:SampleData ItemCount=5}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=ID}" Header="ID" Width="250"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="Name" Width="250"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=ProductID}" Header="Product ID" Width="250"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Price}" Header="Price" Width="250"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ID}" Header="ID" Width="70"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="Name" Width="70"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ProductID}" Header="Product ID" Width="70"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Price}" Header="Price" Width="70"/>
 
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Amount}" Header="Amount" Width="250"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=TotalPrice}" Header="Total price" Width="250"/>
@@ -21,7 +21,8 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Label Content="the order items in the order:" HorizontalAlignment="Left" Height="32" Margin="587,32,0,0" VerticalAlignment="Top" Width="162"/>
+        <Label Content="the order items in the order:" HorizontalAlignment="Left" Height="32" Margin="550,11,0,0" VerticalAlignment="Top" Width="162"/>
+        <Label Content="Label" HorizontalAlignment="Left" Height="30" Margin="10,64,0,0" VerticalAlignment="Top" Width="139"/>
 
     </Grid>
 </Window>

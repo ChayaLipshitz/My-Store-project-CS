@@ -27,7 +27,8 @@ namespace PL
         {
             InitializeComponent();
             bl= BL;
-            orderItemsview.ItemsSource = (System.Collections.IEnumerable)bl.iOrder.Read(orderId);
+            BO.Order order = bl.iOrder.Read(orderId);
+            orderItemsview.ItemsSource = order.Items;
         }
 
         public OrderWindow(IBl bl, object selectedItem)

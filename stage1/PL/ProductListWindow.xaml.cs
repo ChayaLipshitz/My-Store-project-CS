@@ -54,12 +54,7 @@ namespace PL
            new ProductWindow(bl,((BO.ProductForList)ProductsListview.SelectedItem).ID).Show();
             this.Close();
         }
-        private void OrdesListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-
-            new OrderWindow(bl, 111111);
-            this.Close();
-        }
+       
         /// <summary>
         /// go back to main window
         /// </summary>
@@ -99,6 +94,12 @@ namespace PL
         private void ProductsListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void OrdesListview_MouseDoubleClick_1(object sender, MouseButtonEventArgs e)
+        {
+            new OrderWindow(bl,111111 ).Show();
+            this.Close();
         }
     }
 }
