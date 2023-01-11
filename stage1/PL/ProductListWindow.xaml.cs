@@ -23,6 +23,7 @@ namespace PL
             bl = Bl;
             ProductsListview.ItemsSource = bl.iProduct.ReadAll();
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.eCategory));
+            OrdesListview.ItemsSource=bl.iOrder.ReadAll();  
         }      
         private void AddProductBTN_Click(object sender, RoutedEventArgs e)
         {
@@ -53,7 +54,12 @@ namespace PL
            new ProductWindow(bl,((BO.ProductForList)ProductsListview.SelectedItem).ID).Show();
             this.Close();
         }
+        private void OrdesListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
 
+            new OrderWindow(bl, 111111);
+            this.Close();
+        }
         /// <summary>
         /// go back to main window
         /// </summary>
@@ -65,14 +71,34 @@ namespace PL
             this.Close();
         }
 
-        private void ProductsListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
+      
+        private void NonFilter_Click(object sender, RoutedEventArgs e)
+        {
+            ProductsListview.ItemsSource =bl.iProduct.ReadAll();
+        }
+
+        private void productsListBTN_Click(object sender, RoutedEventArgs e)
+        {
+            OrdesListview.Visibility = Visibility.Collapsed;
+            ProductsListview.Visibility = Visibility.Visible;
+        }
+
+        private void ordersListBTN_Click(object sender, RoutedEventArgs e)
+        {
+
+           
+            OrdesListview.Visibility = Visibility.Visible;
+            ProductsListview.Visibility = Visibility.Collapsed;
+        }
+
+        private void OrdesListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
 
-        private void NonFilter_Click(object sender, RoutedEventArgs e)
+        private void ProductsListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ProductsListview.ItemsSource =bl.iProduct.ReadAll();
+
         }
     }
 }

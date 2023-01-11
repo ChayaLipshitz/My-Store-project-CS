@@ -15,14 +15,17 @@ public partial class MainWindow : Window
         bl = Factory.Get();
         InitializeComponent();
     }
+
+    private void AdminBTN_Click(object sender, RoutedEventArgs e)
+    {
+        new ProductListWindow(bl).Show();
+        this.Close();
+    }
+
     /// <summary>
     /// button to the product window
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void ProductBTN_Click(object sender, RoutedEventArgs e)
-    {
-        new ProductListWindow(bl).Show();
-        this.Close();
-    }
+
 }
