@@ -1,0 +1,19 @@
+﻿<Window x:Class="PL.OrderTracking"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="OrderTracking" Height="450" Width="800">
+    <Grid>
+        <Label Content="order id" HorizontalAlignment="Left" Height="47" Margin="94,94,0,0" VerticalAlignment="Top" Width="162"/>
+        <Label Content="status" HorizontalAlignment="Left" Height="51" Margin="94,166,0,0" VerticalAlignment="Top" Width="149"/>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="47" Margin="76,94,0,0" VerticalAlignment="Top" Width="131"/>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="49" Margin="76,168,0,0" VerticalAlignment="Top" Width="131"/>
+        <Label x:Name="orderIDLBL" Content="" HorizontalAlignment="Left" Height="47" Margin="282,94,0,0" VerticalAlignment="Top" Width="118"/>
+        <Label x:Name="OrderStatusLBL" Content="" HorizontalAlignment="Left" Height="49" Margin="282,168,0,0" VerticalAlignment="Top" Width="118"/>
+        <Button x:Name="OrderDetailsBTN" Content="Order details" HorizontalAlignment="Left" Height="94" Margin="256,291,0,0" VerticalAlignment="Top" Width="254" FontSize="24" Background="#FF61EB20" Click="OrderDetailsBTN_Click"/>
+
+    </Grid>
+</Window>
