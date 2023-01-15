@@ -15,7 +15,7 @@
         <Label Content="enter the product instock" HorizontalAlignment="Left" Margin="200,199,0,0" VerticalAlignment="Top" Width="144" Height="33"/>
         <Label Content="choose the product category" HorizontalAlignment="Left" Margin="192,255,0,0" VerticalAlignment="Top" Width="165"/>
         <ComboBox  x:Name="categorySelector" HorizontalAlignment="Left" Margin="362,255,0,0" VerticalAlignment="Top" Width="120" Height="26" SelectionChanged="categorySelector_SelectionChanged"/>
-        <TextBox  x:Name="NameTXT" HorizontalAlignment="Left" Margin="362,101,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="29" TextChanged="NameTXT_TextChanged"/>
+        <TextBox  x:Name="NameTXT" Text="{Binding Path=Name}" HorizontalAlignment="Left" Margin="362,101,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="29" TextChanged="NameTXT_TextChanged"/>
         <TextBox x:Name="PriceTXT" HorizontalAlignment="Left" Margin="362,153,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="29" TextChanged="PriceTXT_TextChanged" />
         <TextBox x:Name="InStockTXT" HorizontalAlignment="Left" Margin="362,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" Height="29" TextChanged="InStockTXT_TextChanged"/>
         <Button x:Name="deleteBTN" Visibility="Collapsed" Content="delete the product" HorizontalAlignment="Left" Margin="192,338,0,0" VerticalAlignment="Top" Height="35" Width="139" Click="deleteBTN_Click"/>
