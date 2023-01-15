@@ -38,20 +38,20 @@ public partial class CartWindow : Window
         this.Close();
     }
 
-                    //  <GridViewColumn Header = "Amount" Width="80" x:Name="newAmountColounm">
-                    //    <GridViewColumn.CellTemplate >
-                    //        <DataTemplate>
-                    //            <TextBox Text = "{Binding Path=Amount, Mode=TwoWay}" x:Name="newAmountTxt" Width="80"/>
-                    //        </DataTemplate>
-                    //    </GridViewColumn.CellTemplate>
-                    //</GridViewColumn>
+    //  <GridViewColumn Header = "Amount" Width="80" x:Name="newAmountColounm">
+    //<GridViewColumn.CellTemplate >
+    //    <DataTemplate>
+    //        <TextBox Text = "{Binding Path=Amount, Mode=TwoWay}" x:Name="newAmountTxt" Width="80"/>
+    //    </DataTemplate>
+    //</GridViewColumn.CellTemplate>
+    //</GridViewColumn>
 
 
-                    //<GridViewColumn Header = "update new amount" Width="150">
-                    //    <GridViewColumn.CellTemplate >
-                    //        <DataTemplate>
-                    //            <Button x:Name="updateNewAmount" Click="updateAmount_Button_Click" Width="150" ></Button>
-                    //        </DataTemplate>
-                    //    </GridViewColumn.CellTemplate>
-                    //</GridViewColumn>
+    //<GridViewColumn Header = "update new amount" Width="150">
+    //    <GridViewColumn.CellTemplate >
+    //        <DataTemplate>
+    //            <Button x:Name="updateNewAmount" Click="updateAmount_Button_Click" Width="150" ></Button>
+    //        </DataTemplate>
+    //    </GridViewColumn.CellTemplate>
+    //</GridViewColumn>
 }
