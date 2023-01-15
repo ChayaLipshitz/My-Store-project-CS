@@ -37,6 +37,27 @@ public partial class CartWindow : Window
         new MainWindow().Show();
         this.Close();
     }
+    
+    private void ProductsView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+
+    }
+
+    private void DeleteBTN_Click_1(object sender, RoutedEventArgs e)
+    {
+        /////////////////
+        ///
+        try
+        {
+            int id = ((BO.OrderItem)ProductsView.SelectedItem).ID;
+            bl.iCart.UpdateOrderItem(cart, id, 0);
+
+        }catch  (Exception ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
+
+    }
 
     //  <GridViewColumn Header = "Amount" Width="80" x:Name="newAmountColounm">
     //<GridViewColumn.CellTemplate >

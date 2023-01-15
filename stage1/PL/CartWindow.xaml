@@ -14,7 +14,7 @@
         <TextBox x:Name="CustomerEmailTXT" HorizontalAlignment="Left" Height="27" Margin="162,103,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="110"/>
         <Label Content="Customer Address" HorizontalAlignment="Left" Height="26" Margin="38,152,0,0" VerticalAlignment="Top" Width="102"/>
         <TextBox x:Name="CustomerAddressTXT" HorizontalAlignment="Left" Height="26" Margin="162,152,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="110"/>
-        <ListView x:Name="ProductsView" HorizontalAlignment="Left" Height="184" Margin="294,61,0,0" VerticalAlignment="Top" Width="496" d:ItemsSource="{d:SampleData ItemCount=5}">
+        <ListView x:Name="ProductsView" HorizontalAlignment="Left" Height="184" Margin="174,61,0,0" VerticalAlignment="Top" Width="616" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="ProductsView_SelectionChanged">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=ID}" Header="ID" Width="80"/>
@@ -26,15 +26,14 @@
                         <GridViewColumn.CellTemplate >
                             <DataTemplate>
                                 <TextBox Text = "{Binding Path=Amount, Mode=TwoWay}" x:Name="newAmountTxt" Width="80"/>
-                                
+
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Header = "delete" Width="80" >
                         <GridViewColumn.CellTemplate >
                             <DataTemplate>
-                                <Button Content = "❌" x:Name="newAmountTxt" Width="80"/>
-
+                                <Button Content = "❌" x:Name="DeleteBTN" Width="80" Click="DeleteBTN_Click_1"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
