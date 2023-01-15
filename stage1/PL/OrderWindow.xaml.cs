@@ -30,16 +30,12 @@ namespace PL
             InitializeComponent();
             bl = BL;
             order = bl.iOrder.Read(orderId);
-            StatusLBL.Content = order.Status.ToString();
+            DataContext = order;
             orderItemsview.ItemsSource = order.Items;
-            OrderIDLBL.Content = order.OrderID.ToString();
-            NameTXT.Text = order.CustomerName;
+       
             OrderDateLBL.Content = order.Order_Date.ToString();
-            EmailTXT.Text = order.CustomerEmail;
-            AddressTXT.Text = order.CustomerAddress;
-            TotalPriceTXT.Text = order.TotalPrice.ToString();
-            ShipDateLBL.Content = order.Ship_Date.ToString();
-            DeliveryDateLBL.Content = order.Delivery_Date.ToString();
+            //ShipDateLBL.Content = order.Ship_Date.ToString();
+            //DeliveryDateLBL.Content = order.Delivery_Date.ToString();
         }
 
         public OrderWindow(IBl bl, object selectedItem)

@@ -35,10 +35,6 @@ namespace PL
                 deleteBTN.Visibility = Visibility.Visible;    
                 product = bl.iProduct.ProductDetails((int)id);
                 DataContext= product;   
-               // NameTXT.Text = product.Name;
-                PriceTXT.Text = product.Price.ToString();
-               InStockTXT.Text = product.InStock.ToString();
-                categorySelector.Text = product.Category.ToString();
                 AddUpdateBTN.Content = "update the product";
             }
             else
