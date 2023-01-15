@@ -216,5 +216,21 @@ internal class BlProduct : IProduct
                                                         };
         return productForList;
     }
+
+    public IEnumerable<ProductItem> ReadCatalog()
+    {
+        IEnumerable<Dal.DO.Product> allProduct = dal.iproduct.ReadByFilter();
+        IEnumerable<ProductItem> productItems = from product in allProduct
+                                                select new BO.ProductItem
+                                                {
+                                                    ID = product.ID,
+                                                    Name = product.Name,
+                                                    Price = product.Price,
+                                                    Category = (BO.eCategory)product.Category,
+                                                    InStock = product.InStock > 0,
+                                                    Amount = product.InStock
+                                                };
+        return productItems;
+    }
 }
 

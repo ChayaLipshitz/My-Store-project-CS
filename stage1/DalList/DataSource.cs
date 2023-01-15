@@ -56,10 +56,12 @@ public class DataSource
             order.Customer_Address = Customer_Address[addressIndex];
             order.ID = Config.Order_ID;
             order.Order_Date = DateTime.MinValue;
-            TimeSpan shipDelay = TimeSpan.FromDays(2);
-            TimeSpan deliveryDelay = TimeSpan.FromDays(2);
+            int randShipped = (int)rand.NextInt64(0, 3);
+            int randDelivered = (int)rand.NextInt64(0, 3);
+            TimeSpan shipDelay = TimeSpan.FromDays(randShipped*2);
+            TimeSpan deliveryDelay = TimeSpan.FromDays(randDelivered*(randShipped * 2)*4);
             order.Ship_Date =  order.Order_Date + shipDelay;
-            order.Delivery_Date = order.Ship_Date + deliveryDelay;
+            order.Delivery_Date = order.Order_Date + deliveryDelay;
             OrdersList.Add(order);
         }
     }

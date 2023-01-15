@@ -7,11 +7,12 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button x:Name="AdminBTN" Content="Admin" HorizontalAlignment="Left" Margin="150,216,0,0" VerticalAlignment="Top" Height="64" Width="129" Click="AdminBTN_Click" FontSize="16"/>
+        <Button x:Name="AdminBTN" Content="Admin" HorizontalAlignment="Left" Margin="150,216,0,0" VerticalAlignment="Top" Height="64" Width="129" Click="AdminBTN_Click" FontSize="20"/>
         <Button  x:Name="TrackBTN" Content="Track" HorizontalAlignment="Left" Margin="559,226,0,0" VerticalAlignment="Top" Height="66" Width="129" FontSize="16" Click="TrackBTN_Click"/>
         <TextBox x:Name="OrderNumTXT" HorizontalAlignment="Left" Height="30" Margin="559,191,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="129"/>
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="158" Margin="474,163,0,0" VerticalAlignment="Top" Width="230">
             <Label Content="order num:" HorizontalAlignment="Left" Height="28" Margin="9,39,0,0" VerticalAlignment="Top" Width="70"/>
         </Border>
+        <Button x:Name="NewOrderBTN" Content="New order" HorizontalAlignment="Left" Height="74" Margin="150,89,0,0" VerticalAlignment="Top" Width="129" FontSize="20" Click="NewOrderBTN_Click"/>
     </Grid>
 </Window>

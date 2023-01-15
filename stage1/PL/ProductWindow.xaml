@@ -19,7 +19,8 @@
         <TextBox x:Name="PriceTXT" HorizontalAlignment="Left" Margin="362,153,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="29" TextChanged="PriceTXT_TextChanged" />
         <TextBox x:Name="InStockTXT" HorizontalAlignment="Left" Margin="362,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" Height="29" TextChanged="InStockTXT_TextChanged"/>
         <Button x:Name="deleteBTN" Visibility="Collapsed" Content="delete the product" HorizontalAlignment="Left" Margin="192,338,0,0" VerticalAlignment="Top" Height="35" Width="139" Click="deleteBTN_Click"/>
-        <Button x:Name="AddUpdateBTN" HorizontalAlignment="Left" Margin="362,338,0,0" VerticalAlignment="Top" Height="35" Width="140" Click="AddUpdateBTN_Click"/>
+        <Button x:Name="AddUpdateBTN" HorizontalAlignment="Left" Margin="362,338,0,0" VerticalAlignment="Top" Height="35" Width="140" Click="AddUpdateBTN_Click" FontSize="18"/>
+        <Button x:Name="AddToCartBTN" Content="Add to cart" HorizontalAlignment="Left" Height="35" Margin="554,338,0,0" VerticalAlignment="Top" Width="136" Click="AddToCartBTN_Click_1"/>
 
     </Grid>
 </Window>

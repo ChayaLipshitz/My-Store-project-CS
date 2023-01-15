@@ -205,7 +205,7 @@ internal class BlOrder : IOrder
         try
         {
             checkObjValidation(order);
-           Dal.DO.Order DOorder = new();
+            Dal.DO.Order DOorder = new();
             DOorder.ID = order.OrderID;
             DOorder.Order_Date = order.Order_Date;
             DOorder.Ship_Date = order.Ship_Date;

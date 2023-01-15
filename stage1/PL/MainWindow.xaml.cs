@@ -11,11 +11,15 @@ namespace PL;
 public partial class MainWindow : Window
 {
     private IBl bl;
-
+    public Cart cart { get; set; } 
     public MainWindow()
     {
         bl = Factory.Get();
         InitializeComponent();
+        if(cart==null)
+        {
+            cart = new();
+        }
     }
 
     private void AdminBTN_Click(object sender, RoutedEventArgs e)
@@ -44,6 +48,12 @@ public partial class MainWindow : Window
 
         }
 
+    }
+
+    private void NewOrderBTN_Click(object sender, RoutedEventArgs e)
+    {
+        new NewOrderWindow(bl,cart).Show();
+        this.Close();
     }
 
     /// <summary>

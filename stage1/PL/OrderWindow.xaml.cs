@@ -29,18 +29,17 @@ namespace PL
         {
             InitializeComponent();
             bl = BL;
-            StatusSelect.ItemsSource = Enum.GetValues(typeof( BO.eOrderStatus));
             order = bl.iOrder.Read(orderId);
+            StatusLBL.Content = order.Status.ToString();
             orderItemsview.ItemsSource = order.Items;
-            IDTXT.Text = order.OrderID.ToString();
+            OrderIDLBL.Content = order.OrderID.ToString();
             NameTXT.Text = order.CustomerName;
-            OrderDateTXT.Text = order.Order_Date.ToString();
+            OrderDateLBL.Content = order.Order_Date.ToString();
             EmailTXT.Text = order.CustomerEmail;
             AddressTXT.Text = order.CustomerAddress;
             TotalPriceTXT.Text = order.TotalPrice.ToString();
-            ShipDatetxt.Text = order.Ship_Date.ToString();
-            DeliveryDateTXT.Text = order.Delivery_Date.ToString();
-           StatusSelect.Text = order.Status.ToString();
+            ShipDateLBL.Content = order.Ship_Date.ToString();
+            DeliveryDateLBL.Content = order.Delivery_Date.ToString();
         }
 
         public OrderWindow(IBl bl, object selectedItem)
@@ -86,13 +85,9 @@ namespace PL
             try
             {
                 order.TotalPrice = TotalPriceTXT.Text == "" ? -1 : Convert.ToDouble(TotalPriceTXT.Text);
-                order.Status = (BO.eOrderStatus)StatusSelect.SelectedItem;
                 order.CustomerName = NameTXT.Text;
                 order.CustomerEmail= EmailTXT.Text;
                 order.CustomerAddress= AddressTXT.Text;
-                order.Order_Date = Convert.ToDateTime(OrderDateTXT.Text);
-                order.Ship_Date = Convert.ToDateTime(ShipDatetxt.Text);
-                order.Delivery_Date = Convert.ToDateTime(DeliveryDateTXT.Text);
                 bl.iOrder.Update(order);
             }
             catch (Exception ex)
