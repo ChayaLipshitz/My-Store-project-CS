@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         Title="CartWindow" Height="450" Width="800">
     <Grid>
+        <Button x:Name="Back" Content="Back" HorizontalAlignment="Left" Margin="638,14,0,0" VerticalAlignment="Top" Height="34" Width="136" Click="back_Click" Background="Black" Foreground="#FFF4F9F1" FontSize="20" />
+
         <Label Content="Customer name:" HorizontalAlignment="Left" Height="30" Margin="38,59,0,0" VerticalAlignment="Top" Width="119"/>
         <Label Content="Please enter your details" HorizontalAlignment="Left" Height="28" Margin="38,18,0,0" VerticalAlignment="Top" Width="203" FontWeight="Bold" FontSize="16"/>
         <TextBox x:Name="CustomerNameTXT" HorizontalAlignment="Left" Height="28" Margin="162,61,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="110"/>
@@ -33,7 +35,7 @@
                     <GridViewColumn Header = "delete" Width="80" >
                         <GridViewColumn.CellTemplate >
                             <DataTemplate>
-                                <Button Content = "❌" x:Name="DeleteBTN" Width="80" Click="DeleteBTN_Click_1"/>
+                                <Button Content = "❌" x:Name="DeleteBTN" Width="80" Click="DeleteBTN_Click"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

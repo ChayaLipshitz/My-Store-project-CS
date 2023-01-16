@@ -33,7 +33,7 @@ namespace PL
             orderID = orderTracking.ID;
             orderIDLBL.Content = orderID;
             OrderStatusLBL.Content = orderTracking.Status.ToString();
-            DateStatusView.ItemsSource = new ObservableCollection<(DateTime?,eOrderStatus?)>(orderTracking.dateAndStatus);
+            DateStatusView.ItemsSource = new ObservableCollection<(DateTime?,eOrderStatus?)>(orderTracking?.dateAndStatus);
             
         }
 

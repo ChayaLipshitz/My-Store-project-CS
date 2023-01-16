@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 
 namespace PL;
 
@@ -43,20 +44,28 @@ public partial class CartWindow : Window
 
     }
 
-    private void DeleteBTN_Click_1(object sender, RoutedEventArgs e)
+    private void DeleteBTN_Click(object sender, RoutedEventArgs e)
     {
-        /////////////////
         ///
         try
         {
-            int id = ((BO.OrderItem)ProductsView.SelectedItem).ID;
-            bl.iCart.UpdateOrderItem(cart, id, 0);
+            BO.OrderItem obj = ((FrameworkElement)sender).DataContext as BO.OrderItem;
+            int id = obj.ProductID;
+            cart = bl.iCart.UpdateOrderItem(cart, id, 0);
+            MessageBox.Show("The product has been successfully removed from the cart");
 
-        }catch  (Exception ex)
+        }
+        catch  (Exception ex)
         {
             MessageBox.Show(ex.Message);
         }
 
+    }
+
+    private void back_Click(object sender, RoutedEventArgs e)
+    {
+        new NewOrderWindow(bl, cart).Show();
+        this.Close();
     }
 
     //  <GridViewColumn Header = "Amount" Width="80" x:Name="newAmountColounm">
