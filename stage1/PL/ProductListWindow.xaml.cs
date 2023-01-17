@@ -12,22 +12,22 @@ namespace PL
     /// </summary>
     public partial class ProductListWindow : Window
     {
-        private IBl bl;   
+        private IBl bl;
         /// <summary>
         /// ctor of this page
         /// </summary>
         /// <param name="Bl"></param>
-        public ProductListWindow(IBl Bl )
+        public ProductListWindow(IBl Bl)
         {
             InitializeComponent();
             bl = Bl;
             ProductsListview.ItemsSource = bl.iProduct.ReadAll();
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.eCategory));
-            OrdesListview.ItemsSource=bl.iOrder.ReadAll();  
-        }      
+            OrdesListview.ItemsSource = bl.iOrder.ReadAll();
+        }
         private void AddProductBTN_Click(object sender, RoutedEventArgs e)
         {
-            new ProductWindow(bl).Show();
+            new ProductWindow(bl, this).Show();
             this.Close();
         }
 
@@ -50,11 +50,11 @@ namespace PL
         /// <param name="e"></param>
         private void ProductsListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-           
-           new ProductWindow(bl,((BO.ProductForList)ProductsListview.SelectedItem).ID).Show();
+
+            new ProductWindow(bl, this, ((BO.ProductForList)ProductsListview.SelectedItem).ID).Show();
             this.Close();
         }
-       
+
         /// <summary>
         /// go back to main window
         /// </summary>
@@ -66,10 +66,10 @@ namespace PL
             this.Close();
         }
 
-      
+
         private void NonFilter_Click(object sender, RoutedEventArgs e)
         {
-            ProductsListview.ItemsSource =bl.iProduct.ReadAll();
+            ProductsListview.ItemsSource = bl.iProduct.ReadAll();
         }
 
         private void productsListBTN_Click(object sender, RoutedEventArgs e)
@@ -100,7 +100,7 @@ namespace PL
 
         private void OrdesListview_MouseDoubleClick_1(object sender, MouseButtonEventArgs e)
         {
-            new OrderWindow(bl,((BO.OrderForList)OrdesListview.SelectedItem).ID).Show();
+            new OrderWindow(bl, ((BO.OrderForList)OrdesListview.SelectedItem).ID).Show();
             this.Close();
         }
     }

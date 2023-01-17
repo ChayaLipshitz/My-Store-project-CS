@@ -41,14 +41,14 @@ namespace PL
 
         private void CatalogView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-           new ProductWindow(bl, ((BO.ProductItem)CatalogView.SelectedItem).ID, cart).Show();
-            this.Close();
+           new ProductWindow(bl,this, ((BO.ProductItem)CatalogView.SelectedItem).ID, cart).Show();
+            this.Hide();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            new CartWindow(bl, cart).Show();
-            this.Close();
+            new CartWindow(bl,this, cart).Show();
+            this.Hide();
         }
     }
 }

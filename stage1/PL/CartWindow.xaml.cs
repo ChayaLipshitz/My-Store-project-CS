@@ -24,11 +24,13 @@ public partial class CartWindow : Window
 {
     public IBl bl { get; set; }
     public Cart cart { get; set; }
-    public CartWindow(IBl BL,Cart cart_)
+    public Window window { get; set; }
+    public CartWindow(IBl BL, Window window_, Cart cart_)
     {
         InitializeComponent();
-        bl= BL; 
-        cart= cart_;
+        bl = BL;
+        cart = cart_;
+        window = window_;
         ProductsView.ItemsSource = cart_.Items;
     }
 
@@ -38,11 +40,8 @@ public partial class CartWindow : Window
         new MainWindow().Show();
         this.Close();
     }
-    
-    private void ProductsView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
 
-    }
+
 
     private void DeleteBTN_Click(object sender, RoutedEventArgs e)
     {
@@ -55,7 +54,7 @@ public partial class CartWindow : Window
             MessageBox.Show("The product has been successfully removed from the cart");
 
         }
-        catch  (Exception ex)
+        catch (Exception ex)
         {
             MessageBox.Show(ex.Message);
         }
@@ -64,9 +63,42 @@ public partial class CartWindow : Window
 
     private void back_Click(object sender, RoutedEventArgs e)
     {
-        new NewOrderWindow(bl, cart).Show();
+        window.Show();
+        this.Hide();
+    }
+
+    private void ProductsView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+
+    }
+
+    private void MinusBTN_Click(object sender, RoutedEventArgs e)
+    {
+        BO.OrderItem orderItem = ((FrameworkElement)sender).DataContext as BO.OrderItem;
+        int index = cart.Items.FindIndex(oi => oi.ProductID == orderItem.ProductID);
+        if (index == -1) throw new NotExistExceptions();
+        orderItem = cart.Items[index];
+        if (orderItem.Amount <= 1) cart.Items.Remove(orderItem);
+        else cart.Items[index].Amount--;
+        new CartWindow(bl,window, cart).Show();
         this.Close();
     }
+
+    private void PlusBTN_Click(object sender, RoutedEventArgs e)
+    {
+        BO.OrderItem? orderItem = ((FrameworkElement?)sender)?.DataContext as BO.OrderItem;
+        int index = cart.Items.FindIndex(oi => oi.ProductID == orderItem.ProductID);
+        if (index == -1) throw new NotExistExceptions();
+        orderItem = cart.Items[index];
+        BO.Product product = bl.iProduct.ProductDetails(orderItem.ProductID);
+        if (orderItem.Amount < product.InStock)
+        {
+            cart.Items[index].Amount++;
+            new CartWindow(bl, window, cart).Show();
+            this.Close();
+        }
+    }
+
 
     //  <GridViewColumn Header = "Amount" Width="80" x:Name="newAmountColounm">
     //<GridViewColumn.CellTemplate >

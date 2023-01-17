@@ -16,7 +16,7 @@
         <TextBox x:Name="CustomerEmailTXT" HorizontalAlignment="Left" Height="27" Margin="162,103,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="110"/>
         <Label Content="Customer Address" HorizontalAlignment="Left" Height="26" Margin="38,152,0,0" VerticalAlignment="Top" Width="102"/>
         <TextBox x:Name="CustomerAddressTXT" HorizontalAlignment="Left" Height="26" Margin="162,152,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="110"/>
-        <ListView x:Name="ProductsView" HorizontalAlignment="Left" Height="184" Margin="174,61,0,0" VerticalAlignment="Top" Width="616" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="ProductsView_SelectionChanged">
+        <ListView x:Name="ProductsView" HorizontalAlignment="Left" Height="184" Margin="162,60,0,0" VerticalAlignment="Top" Width="616" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="ProductsView_SelectionChanged">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=ID}" Header="ID" Width="80"/>
@@ -24,11 +24,14 @@
                     <GridViewColumn DisplayMemberBinding="{Binding Path=ProductID}" Header="ProductID" Width="80"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Price}" Header="Price" Width="80"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=TotalPrice}" Header="TotalPrice" Width="80"/>
-                    <GridViewColumn Header = "Amount" Width="80" >
+                    <GridViewColumn Header = "Amount" Width="120" >
                         <GridViewColumn.CellTemplate >
                             <DataTemplate>
-                                <TextBox Text = "{Binding Path=Amount, Mode=TwoWay}" x:Name="newAmountTxt" Width="80"/>
-
+                                <StackPanel Orientation="Horizontal">
+                                    <Button x:Name="MinusBTN" Content="-" Height="17" Width="17" Click="MinusBTN_Click" />
+                                    <TextBox Text = "{Binding Path=Amount, Mode=TwoWay}" Height="17" x:Name="newAmountTxt" Width="70"/>
+                                    <Button x:Name="PlusBTN" Content="+" Height="17" Width="17" Click="PlusBTN_Click" />
+                                </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
