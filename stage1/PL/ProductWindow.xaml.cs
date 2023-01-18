@@ -53,7 +53,7 @@ public partial class ProductWindow : Window
         else
         {
             AddUpdateBTN.Content = "Add the product";
-            categorySelector.Text = ((BO.eCategory)0).ToString();
+            categorySelector.Text = "kkkk";// ((BO.eCategory)0).ToString();
         }
     }
 
@@ -67,7 +67,7 @@ public partial class ProductWindow : Window
     /// <param name="e"></param>
     private void back_Click(object sender, RoutedEventArgs e)
     {
-        window.Show();
+         window.Show();
         this.Hide();
     }
     private void deleteBTN_Click(object sender, RoutedEventArgs e)

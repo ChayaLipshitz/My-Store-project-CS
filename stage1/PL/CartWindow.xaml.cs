@@ -2,6 +2,7 @@
 using BO;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +26,8 @@ public partial class CartWindow : Window
     public IBl bl { get; set; }
     public Cart cart { get; set; }
     public Window window { get; set; }
+    private ObservableCollection<BO.OrderItem> cl { get; set; }
+
     public CartWindow(IBl BL, Window window_, Cart cart_)
     {
         InitializeComponent();
@@ -32,6 +35,10 @@ public partial class CartWindow : Window
         cart = cart_;
         window = window_;
         ProductsView.ItemsSource = cart_.Items;
+        ProductsView.DataContext = cl;
+        cl = cart?.Items == null ? new() : new(cart.Items);
+
+
     }
 
     private void SubmitOrderBTN_Click(object sender, RoutedEventArgs e)
@@ -48,9 +55,12 @@ public partial class CartWindow : Window
         ///
         try
         {
-            BO.OrderItem obj = ((FrameworkElement)sender).DataContext as BO.OrderItem;
-            int id = obj.ProductID;
+            BO.OrderItem p = (BO.OrderItem)((Button)sender).DataContext;
+           // BO.OrderItem obj = ((FrameworkElement)sender).DataContext as BO.OrderItem;
+            int id = p.ProductID;
             cart = bl.iCart.UpdateOrderItem(cart, id, 0);
+            cl.Remove(p);
+            ProductsView.DataContext = cl;
             MessageBox.Show("The product has been successfully removed from the cart");
 
         }
