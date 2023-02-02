@@ -6,7 +6,7 @@ using System.Windows;
 namespace PL;
 
 /// <summary>
-/// Interaction logical for MainWindow.xaml
+/// Interaction log for MainWindow.xaml
 /// </summary>
 public partial class MainWindow : Window
 {
