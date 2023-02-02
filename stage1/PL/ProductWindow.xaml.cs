@@ -79,7 +79,7 @@ public partial class ProductWindow : Window
                 bl.iProduct.Delete(productID);
                 MessageBox.Show("the product was deleted!");
                 new ProductListWindow(bl).Show();
-                this.Close();
+                this.Hide();
             }
 
         }
@@ -95,7 +95,7 @@ public partial class ProductWindow : Window
     /// the function takes the properties from the user and update/create the product
     /// </summary>
 
-    private void AddUpdateBTN_Click(object sender, RoutedEventArgs e)
+    private void AddToStore_Or_UpdateBTN_Click(object sender, RoutedEventArgs e)
     {
         try
         {
@@ -130,9 +130,16 @@ public partial class ProductWindow : Window
 
     private void AddToCartBTN_Click_1(object sender, RoutedEventArgs e)
     {
-        bl.iCart.addOrderItem(cart, productID);
-        new NewOrderWindow(bl, cart).Show();
-        this.Hide();
+        try
+        {
+
+            bl.iCart.addOrderItem(cart, productID);
+            new NewOrderWindow(bl, cart).Show();
+            this.Hide();
+        }catch(Exception ex)
+        {
+            MessageBox.Show(ex.Message);    
+        }
     }
 
     /// <summary>

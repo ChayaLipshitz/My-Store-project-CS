@@ -25,7 +25,7 @@ public partial class MainWindow : Window
     private void AdminBTN_Click(object sender, RoutedEventArgs e)
     {
         new ProductListWindow(bl).Show();
-        this.Close();
+        this.Hide();
     }
 
     private void TrackBTN_Click(object sender, RoutedEventArgs e)
@@ -36,7 +36,7 @@ public partial class MainWindow : Window
             id = OrderNumTXT.Text==""? throw new Exception("please enter order id!"): Convert.ToInt32(OrderNumTXT.Text);
             BO.OrderTracking orderTracking = bl.iOrder.Tracking(id);
             new OrderTracking(bl, orderTracking).Show();
-            this.Close();
+            this.Hide();
         }
         catch(NotExistExceptions ex)
         {
@@ -53,7 +53,7 @@ public partial class MainWindow : Window
     private void NewOrderBTN_Click(object sender, RoutedEventArgs e)
     {
         new NewOrderWindow(bl,cart).Show();
-        this.Close();
+        this.Hide();
     }
 
     /// <summary>

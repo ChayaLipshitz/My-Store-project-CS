@@ -42,7 +42,7 @@
 
             </ListView.View>
         </ListView>
-        <ListView Visibility="Visible" x:Name="OrdesListview" HorizontalAlignment="Center" Height="217" VerticalAlignment="Top" Width="1020" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="OrdesListview_SelectionChanged" Margin="0,199,0,0" Grid.RowSpan="2" MouseDoubleClick="OrdesListview_MouseDoubleClick_1">
+        <ListView Visibility="Collapsed" x:Name="OrdesListview" HorizontalAlignment="Center" Height="217" VerticalAlignment="Top" Width="1020" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="OrdesListview_SelectionChanged" Margin="0,199,0,0" Grid.RowSpan="2" MouseDoubleClick="OrdesListview_MouseDoubleClick_1">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=ID}" Header="ID" Width="200"/>

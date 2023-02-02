@@ -47,7 +47,7 @@ namespace PL
         private void back_Click(object sender, RoutedEventArgs e)
         {
             new ProductListWindow(bl).Show();
-            this.Close();
+            this.Hide();
         }
 
         private void updateShipping_Click(object sender, RoutedEventArgs e)

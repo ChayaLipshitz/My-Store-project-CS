@@ -28,7 +28,7 @@ namespace PL
         private void AddProductBTN_Click(object sender, RoutedEventArgs e)
         {
             new ProductWindow(bl, this).Show();
-            this.Close();
+            this.Hide();
         }
 
         /// <summary> 
@@ -52,7 +52,7 @@ namespace PL
         {
 
             new ProductWindow(bl, this, ((BO.ProductForList)ProductsListview.SelectedItem).ID).Show();
-            this.Close();
+            this.Hide();
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace PL
         private void back_Click(object sender, RoutedEventArgs e)
         {
             new MainWindow().Show();
-            this.Close();
+            this.Hide();
         }
 
 
@@ -101,7 +101,7 @@ namespace PL
         private void OrdesListview_MouseDoubleClick_1(object sender, MouseButtonEventArgs e)
         {
             new OrderWindow(bl, ((BO.OrderForList)OrdesListview.SelectedItem).ID).Show();
-            this.Close();
+            this.Hide();
         }
     }
 }

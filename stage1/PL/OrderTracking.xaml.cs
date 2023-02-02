@@ -40,7 +40,7 @@ namespace PL
         private void OrderDetailsBTN_Click(object sender, RoutedEventArgs e)
         {
             new OrderWindow(bl, orderID).Show();
-            this.Close();
+            this.Hide();
         }
 
         private void DateStatusView_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -43,9 +43,22 @@ public partial class CartWindow : Window
 
     private void SubmitOrderBTN_Click(object sender, RoutedEventArgs e)
     {
-        bl.iCart.SubmitOrder(cart, CustomerNameTXT.Text, CustomerEmailTXT.Text, CustomerAddressTXT.Text);
-        new MainWindow().Show();
-        this.Close();
+        if (cart.TotalPrice==0)
+        {
+            MessageBox.Show("the cart is empty!");
+            return;
+        }
+        try
+        {
+            bl.iCart.SubmitOrder(cart, CustomerNameTXT.Text, CustomerEmailTXT.Text, CustomerAddressTXT.Text);
+            new MainWindow().Show();
+            this.Close();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
+       
     }
 
 
