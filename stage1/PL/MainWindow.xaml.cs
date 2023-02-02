@@ -52,7 +52,7 @@ public partial class MainWindow : Window
 
     private void NewOrderBTN_Click(object sender, RoutedEventArgs e)
     {
-        new NewOrderWindow(bl,cart).Show();
+        new NewOrderWindow(bl,this,cart).Show();
         this.Hide();
     }
 

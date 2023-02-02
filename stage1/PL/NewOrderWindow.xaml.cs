@@ -24,15 +24,17 @@ namespace PL
     {
         public IBl bl;
         public BO.Cart cart { get; set; }
-        public NewOrderWindow(IBl BL,Cart cart_)
+        Window window;
+        public NewOrderWindow(IBl BL, Window window_, Cart cart_)
         {
             InitializeComponent();
             bl = BL;
             cart = cart_;
             CatalogView.ItemsSource = bl.iProduct.ReadCatalog();
+            window = window_;
         }
 
-        
+
 
         private void CatalogView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -41,14 +43,20 @@ namespace PL
 
         private void CatalogView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-           new ProductWindow(bl,this, ((BO.ProductItem)CatalogView.SelectedItem).ID, cart).Show();
+            new ProductWindow(bl, this, ((BO.ProductItem)CatalogView.SelectedItem).ID, cart).Show();
             this.Hide();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            new CartWindow(bl,this, cart).Show();
+            new CartWindow(bl, this, cart).Show();
             this.Hide();
+        }
+
+        private void back_Click(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            window.Show();
         }
     }
 }

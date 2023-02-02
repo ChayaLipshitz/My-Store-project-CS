@@ -134,7 +134,7 @@ public partial class ProductWindow : Window
         {
 
             bl.iCart.addOrderItem(cart, productID);
-            new NewOrderWindow(bl, cart).Show();
+            new NewOrderWindow(bl,this, cart).Show();
             this.Hide();
         }catch(Exception ex)
         {

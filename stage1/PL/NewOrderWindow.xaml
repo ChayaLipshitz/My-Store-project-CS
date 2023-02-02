@@ -22,6 +22,7 @@
         </ListView>
         <Label Content="Products catalog:" HorizontalAlignment="Left" Height="35" Margin="70,18,0,0" VerticalAlignment="Top" Width="211" FontSize="18"/>
         <Button x:Name="CartBTN" Content="view cart" HorizontalAlignment="Left" Height="63" Margin="284,342,0,0" VerticalAlignment="Top" Width="187" FontSize="24" FontWeight="Bold" Click="Button_Click"/>
+        <Button x:Name="Back" Content="Back" HorizontalAlignment="Left" Margin="636,18,0,0" VerticalAlignment="Top" Height="34" Width="136" Click="back_Click" Background="Black" Foreground="#FFF4F9F1"/>
 
     </Grid>
 </Window>
