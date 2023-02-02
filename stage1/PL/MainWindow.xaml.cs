@@ -57,7 +57,7 @@ public partial class MainWindow : Window
     }
 
     /// <summary>
-    /// button to the product window
+    /// button to the product window!!
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
