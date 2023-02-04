@@ -35,7 +35,7 @@ public partial class MainWindow : Window
         {
             id = OrderNumTXT.Text==""? throw new Exception("please enter order id!"): Convert.ToInt32(OrderNumTXT.Text);
             BO.OrderTracking orderTracking = bl.iOrder.Tracking(id);
-            new OrderTracking(bl, orderTracking).Show();
+            new OrderTracking(bl,this, orderTracking).Show();
             this.Hide();
         }
         catch(NotExistExceptions ex)

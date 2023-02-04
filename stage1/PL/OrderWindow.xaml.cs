@@ -25,10 +25,12 @@ namespace PL
         private IBl bl;
         private object selectedItem;
         private BO.Order order;
-        public OrderWindow(IBl BL, int orderId)
+        Window window;
+        public OrderWindow(IBl BL,Window window_, int orderId)
         {
             InitializeComponent();
             bl = BL;
+            window = window_;
             order = bl.iOrder.Read(orderId);
             DataContext = order;
             orderItemsview.ItemsSource = order.Items;
@@ -38,15 +40,17 @@ namespace PL
             //DeliveryDateLBL.Content = order.Delivery_Date.ToString();
         }
 
-        public OrderWindow(IBl bl, object selectedItem)
+        public OrderWindow(IBl bl,Window window_,  object selectedItem)
         {
+            InitializeComponent();
             this.bl = bl;
+            this.window = window_;  
             this.selectedItem = selectedItem;
         }
 
         private void back_Click(object sender, RoutedEventArgs e)
         {
-            new ProductListWindow(bl).Show();
+            window.Show();
             this.Hide();
         }
 

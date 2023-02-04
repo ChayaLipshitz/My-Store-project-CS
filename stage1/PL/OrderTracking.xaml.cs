@@ -24,28 +24,36 @@ namespace PL
     public partial class OrderTracking : Window
     {
         BO.OrderTracking orderTracking;
+        Window window;
         int orderID;
         public IBl bl { get; set; }
-        public OrderTracking(IBl BL, BO.OrderTracking orderTracking)
+        public OrderTracking(IBl BL,Window window_, BO.OrderTracking orderTracking)
         {
             InitializeComponent();
             bl = BL;
+            window = window_;
             orderID = orderTracking.ID;
             orderIDLBL.Content = orderID;
             OrderStatusLBL.Content = orderTracking.Status.ToString();
-            DateStatusView.ItemsSource = new ObservableCollection<(DateTime?,eOrderStatus?)>(orderTracking?.dateAndStatus);
+            DateStatusView.ItemsSource = new ObservableCollection<Tuple<DateTime?,eOrderStatus?>>(orderTracking?.dateAndStatus);
             
         }
 
         private void OrderDetailsBTN_Click(object sender, RoutedEventArgs e)
         {
-            new OrderWindow(bl, orderID).Show();
+            new OrderWindow(bl,this,  orderID).Show();
             this.Hide();
         }
 
         private void DateStatusView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void back_Click(object sender, RoutedEventArgs e)
+        {
+            window.Show();
+            this.Hide();
         }
     }
 }

@@ -167,11 +167,11 @@ internal class BlOrder : IOrder
             orderTracking.ID = order.ID;
             orderTracking.Status = calculateOrderStatus(order.Ship_Date, order.Delivery_Date);
             if (order.Order_Date != DateTime.MinValue)
-                orderTracking.dateAndStatus.Add((order.Order_Date, BO.eOrderStatus.ORDERED));
+                orderTracking.dateAndStatus.Add(new Tuple<DateTime?,eOrderStatus?>( order.Order_Date, BO.eOrderStatus.ORDERED));
             if (order.Ship_Date != DateTime.MinValue)
-                orderTracking.dateAndStatus.Add((order.Ship_Date, BO.eOrderStatus.SHIPPED));
+                orderTracking.dateAndStatus.Add(new Tuple<DateTime?, eOrderStatus?>(order.Ship_Date, BO.eOrderStatus.SHIPPED));
             if (order.Delivery_Date != DateTime.MinValue)
-                orderTracking.dateAndStatus.Add((order.Delivery_Date, BO.eOrderStatus.DELIVERED));
+                orderTracking.dateAndStatus.Add(new Tuple<DateTime?, eOrderStatus?>(order.Delivery_Date, BO.eOrderStatus.DELIVERED));
             return orderTracking;
         }
         catch (Dal.DO.NotExistExceptions ex)

@@ -1,6 +1,7 @@
 ﻿using BlApi;
 using BO;
 using System;
+using System.Collections;
 using System.Windows;
 using System.Windows.Controls;
 namespace PL;
@@ -12,9 +13,11 @@ public partial class ProductWindow : Window
 {
     public BO.Product product { get; set; } = new();
     public Cart cart { get; set; }
+
     private IBl bl;
     public int productID { get; set; }
     private bool ToUpdate { get; set; } = false;
+    private bool ToAdd { get; set; } = false;
     public Window window { get; set; }
 
     /// <summary>
@@ -22,29 +25,28 @@ public partial class ProductWindow : Window
     /// </summary>
     /// <param name="Bl"></param>
     /// <param name="id">in case of update product</param>
-    public ProductWindow(IBl Bl,Window window_, int? id = null, BO.Cart cart_ = null)
+    public ProductWindow(IBl Bl, Window window_, int? id = null, BO.Cart cart_ = null)
     {
         bl = Bl;
         cart = cart_;
         window = window_;
         InitializeComponent();
-        categorySelector.ItemsSource = Enum.GetValues(typeof(BO.eCategory));
+        Array temp = Enum.GetValues(typeof(BO.eCategory));
+        categorySelector.ItemsSource =temp ;
+        categorySelector.SelectedItem = temp.GetValue(0)?.ToString();
         if (id != null)
         {
+            productID = (int)id;
+            product = bl.iProduct.ProductDetails((int)id);
+            DataContext = product;
             if (cart == null)
             {
-                productID = (int)id;
                 ToUpdate = true;
                 deleteBTN.Visibility = Visibility.Visible;
-                product = bl.iProduct.ProductDetails((int)id);
-                DataContext = product;
                 AddUpdateBTN.Content = "Update the product";
             }
             else
             {
-                productID = (int)id;
-                product = bl.iProduct.ProductDetails((int)id);
-                DataContext = product;
                 AddToCartBTN.Visibility = Visibility.Visible;
                 AddUpdateBTN.Visibility = Visibility.Hidden;
             }
@@ -52,8 +54,9 @@ public partial class ProductWindow : Window
         }
         else
         {
+            ToAdd = true;
             AddUpdateBTN.Content = "Add the product";
-            categorySelector.Text = "kkkk";// ((BO.eCategory)0).ToString();
+            categorySelector.Text = "ghgh";// ((BO.eCategory)0).ToString();
         }
     }
 
@@ -67,7 +70,7 @@ public partial class ProductWindow : Window
     /// <param name="e"></param>
     private void back_Click(object sender, RoutedEventArgs e)
     {
-         window.Show();
+        window.Show();
         this.Hide();
     }
     private void deleteBTN_Click(object sender, RoutedEventArgs e)
@@ -134,11 +137,12 @@ public partial class ProductWindow : Window
         {
 
             bl.iCart.addOrderItem(cart, productID);
-            new NewOrderWindow(bl,this, cart).Show();
+            new NewOrderWindow(bl, this, cart).Show();
             this.Hide();
-        }catch(Exception ex)
+        }
+        catch (Exception ex)
         {
-            MessageBox.Show(ex.Message);    
+            MessageBox.Show(ex.Message);
         }
     }
 
@@ -161,7 +165,7 @@ public partial class ProductWindow : Window
     {
 
     }
-
+    //IsEnabled="{Binding ElementName=DataGridData, Path=DataContext.IsEditable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
     private void InStockTXT_TextChanged(object sender, TextChangedEventArgs e)
     {
 

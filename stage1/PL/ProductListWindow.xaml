@@ -28,18 +28,12 @@
 
         <ListView Visibility="Collapsed"  x:Name="ProductsListview" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="ProductsListview_SelectionChanged" HorizontalAlignment="Center" Margin="0,198,0,10" Grid.RowSpan="2" Width="1000" MouseDoubleClick="ProductsListview_MouseDoubleClick">
             <ListView.View>
-
                 <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Employee Information">
-
                     <GridViewColumn DisplayMemberBinding="{Binding Path=ID}" Header="ID" Width="250"/>
-
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="Name" Width="250"/>
-
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Price}" Header="Price" Width="250"/>
-
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Category}" Header="Category" Width="250"/>
                 </GridView>
-
             </ListView.View>
         </ListView>
         <ListView Visibility="Collapsed" x:Name="OrdesListview" HorizontalAlignment="Center" Height="217" VerticalAlignment="Top" Width="1020" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="OrdesListview_SelectionChanged" Margin="0,199,0,0" Grid.RowSpan="2" MouseDoubleClick="OrdesListview_MouseDoubleClick_1">
@@ -50,15 +44,11 @@
                     <GridViewColumn DisplayMemberBinding="{Binding Path=AmountOfItems}" Header="Amount of Items" Width="200"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Status}" Header="Status" Width="200"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=TotalPrice}" Header="Total price" Width="200"/>
-
                 </GridView>
             </ListView.View>
-
         </ListView>
         <Button x:Name="AddProductBTN" Content="Add new Product" Grid.Row="2" HorizontalAlignment="Left" Margin="533,48,0,104" Padding="5" Width="238" Click="AddProductBTN_Click"/>
         <Button x:Name="ordersListBTN" Content="orders list" HorizontalAlignment="Left" Height="67" Margin="77,23,0,0" VerticalAlignment="Top" Width="166" RenderTransformOrigin="0.5,0.5" Click="ordersListBTN_Click"/>
-
-
         <Button x:Name="productsListBTN" Content="products list" HorizontalAlignment="Left" Height="67" Margin="262,25,0,0" VerticalAlignment="Top" Width="168" Click="productsListBTN_Click"/>
     </Grid>
 </Window>

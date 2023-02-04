@@ -100,7 +100,7 @@ namespace PL
 
         private void OrdesListview_MouseDoubleClick_1(object sender, MouseButtonEventArgs e)
         {
-            new OrderWindow(bl, ((BO.OrderForList)OrdesListview.SelectedItem).ID).Show();
+            new OrderWindow(bl,this, ((BO.OrderForList)OrdesListview.SelectedItem).ID).Show();
             this.Hide();
         }
     }

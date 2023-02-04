@@ -14,15 +14,16 @@
         <Label x:Name="orderIDLBL" Content="" HorizontalAlignment="Left" Height="47" Margin="282,94,0,0" VerticalAlignment="Top" Width="118"/>
         <Label x:Name="OrderStatusLBL" Content="" HorizontalAlignment="Left" Height="49" Margin="282,168,0,0" VerticalAlignment="Top" Width="118"/>
         <Button x:Name="OrderDetailsBTN" Content="Order details" HorizontalAlignment="Left" Height="94" Margin="256,291,0,0" VerticalAlignment="Top" Width="254" FontSize="24" Background="#FF61EB20" Click="OrderDetailsBTN_Click"/>
-        <ListView x:Name="DateStatusView" HorizontalAlignment="Left" Height="207" Margin="510,10,0,0" VerticalAlignment="Top" Width="267" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="DateStatusView_SelectionChanged">
+        <ListView x:Name="DateStatusView" HorizontalAlignment="Left" Height="207" Margin="355,72,0,0" VerticalAlignment="Top" Width="413" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="DateStatusView_SelectionChanged">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Item1}" Header="Date" Width="140"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Item2}" Header="Status" Width="140"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Item1}" Header="Date" Width="205"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Item2}" Header="Status" Width="205"/>
 
                 </GridView>
             </ListView.View>
         </ListView>
+        <Button  x:Name="Back" Content="Back" HorizontalAlignment="Left" Margin="638,14,0,0" VerticalAlignment="Top" Height="34" Width="136" Click="back_Click" Background="Black" Foreground="#FFF4F9F1" FontSize="20" />
 
     </Grid>
 </Window>
