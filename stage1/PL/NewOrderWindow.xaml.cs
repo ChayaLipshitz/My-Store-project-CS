@@ -34,25 +34,33 @@ namespace PL
             window = window_;
         }
 
-
-
-        private void CatalogView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
+        /// <summary>
+        /// Displays the selected product
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CatalogView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             new ProductWindow(bl, this, ((BO.ProductItem)CatalogView.SelectedItem).ID, cart).Show();
             this.Hide();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Diplays the cart
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CartBTN_Click(object sender, RoutedEventArgs e)
         {
             new CartWindow(bl, this, cart).Show();
             this.Hide();
         }
 
+        /// <summary>
+        /// Displays the latest window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void back_Click(object sender, RoutedEventArgs e)
         {
             this.Hide();

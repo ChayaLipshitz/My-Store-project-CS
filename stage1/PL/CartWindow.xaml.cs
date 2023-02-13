@@ -1,5 +1,6 @@
 ﻿using BlApi;
 using BO;
+using Dal.DO;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -34,18 +35,15 @@ public partial class CartWindow : Window
         bl = BL;
         cart = cart_;
         window = window_;
-        ProductsView.ItemsSource = cart_.Items;
-        ProductsView.DataContext = cl;
-        cl = cart?.Items == null ? new() : new(cart.Items);
-
-
+        cl = cart?.Items == null ? new() : new(cart?.Items);
+        ProductsView.ItemsSource = cl;
     }
 
     private void SubmitOrderBTN_Click(object sender, RoutedEventArgs e)
     {
-        if (cart.TotalPrice==0)
+        if (cart.TotalPrice == 0)
         {
-            MessageBox.Show("the cart is empty!");
+            MessageBox.Show("There are no items in the cart", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             return;
         }
         try
@@ -56,30 +54,23 @@ public partial class CartWindow : Window
         }
         catch (Exception ex)
         {
-            MessageBox.Show(ex.Message);
+            MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
         }
-       
     }
-
-
-
     private void DeleteBTN_Click(object sender, RoutedEventArgs e)
     {
         ///
         try
         {
-            BO.OrderItem p = (BO.OrderItem)((Button)sender).DataContext;
-           // BO.OrderItem obj = ((FrameworkElement)sender).DataContext as BO.OrderItem;
-            int id = p.ProductID;
-            cart = bl.iCart.UpdateOrderItem(cart, id, 0);
-            cl.Remove(p);
-            ProductsView.DataContext = cl;
-            MessageBox.Show("The product has been successfully removed from the cart");
-
+            BO.OrderItem orderItem = (BO.OrderItem)((Button)sender).DataContext;
+            cart = bl.iCart.UpdateOrderItem(cart, orderItem.ProductID, 0);
+            cl.Remove(orderItem);
+            ProductsView.ItemsSource = cl;
+            MessageBox.Show($"The product {orderItem.Name} has been successfully removed from the cart", $"Delete {orderItem.Name}", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         catch (Exception ex)
         {
-            MessageBox.Show(ex.Message);
+            MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
     }
@@ -89,60 +80,41 @@ public partial class CartWindow : Window
         window.Show();
         this.Hide();
     }
-
-    private void ProductsView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-
-    }
-
     private void MinusBTN_Click(object sender, RoutedEventArgs e)
     {
         try
         {
-            BO.OrderItem orderItem = ((FrameworkElement)sender).DataContext as BO.OrderItem;
-            int index = cart.Items.FindIndex(oi => oi.ProductID == orderItem.ProductID);
-            if (index == -1) throw new NotExistExceptions();
-            orderItem = cart.Items[index];
-            if (orderItem.Amount <= 1) cart.Items.Remove(orderItem);
-            else cart.Items[index].Amount--;
-            new CartWindow(bl,window, cart).Show();
-             this.Close();
-        }catch (Exception ex)
+            BO.OrderItem? orderItem = ((FrameworkElement)sender).DataContext as BO.OrderItem;
+            cl.Remove(orderItem);
+            cart = bl.iCart.UpdateOrderItem(cart, orderItem.ProductID, --orderItem.Amount);
+            cl.Add(orderItem);
+            ProductsView.ItemsSource = cl;
+
+        }
+        catch (Exception ex)
         {
-            MessageBox.Show(ex.Message);
+            MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void PlusBTN_Click(object sender, RoutedEventArgs e)
     {
-        BO.OrderItem? orderItem = ((FrameworkElement?)sender)?.DataContext as BO.OrderItem;
-        int index = cart.Items.FindIndex(oi => oi.ProductID == orderItem.ProductID);
-        if (index == -1) throw new NotExistExceptions();
-        orderItem = cart.Items[index];
-        BO.Product product = bl.iProduct.ProductDetails(orderItem.ProductID);
-        if (orderItem.Amount < product.InStock)
+        try
         {
-            cart.Items[index].Amount++;
-            new CartWindow(bl, window, cart).Show();
-            this.Close();
+            BO.OrderItem orderItem = ((FrameworkElement)sender).DataContext as BO.OrderItem;
+            cl.Remove(orderItem);
+            cart = bl.iCart.UpdateOrderItem(cart, orderItem.ProductID, ++orderItem.Amount);
+            cl.Add(orderItem);
+            ProductsView.ItemsSource = cl;
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
-
-
-    //  <GridViewColumn Header = "Amount" Width="80" x:Name="newAmountColounm">
-    //<GridViewColumn.CellTemplate >
-    //    <DataTemplate>
-    //        <TextBox Text = "{Binding Path=Amount, Mode=TwoWay}" x:Name="newAmountTxt" Width="80"/>
-    //    </DataTemplate>
-    //</GridViewColumn.CellTemplate>
-    //</GridViewColumn>
-
-
-    //<GridViewColumn Header = "update new amount" Width="150">
-    //    <GridViewColumn.CellTemplate >
-    //        <DataTemplate>
-    //            <Button x:Name="updateNewAmount" Click="updateAmount_Button_Click" Width="150" ></Button>
-    //        </DataTemplate>
-    //    </GridViewColumn.CellTemplate>
-    //</GridViewColumn>
 }

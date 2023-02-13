@@ -42,9 +42,9 @@
         <Label x:Name="OrderIDLBL" Content="{Binding Path=OrderID}"   HorizontalAlignment="Left" Height="29" Margin="130,12,0,0" VerticalAlignment="Top" Width="117"/>
         <Label x:Name="StatusLBL" Content="{Binding Path=Status}" HorizontalAlignment="Left" Height="33" Margin="131,254,0,0" VerticalAlignment="Top" Width="116"/>
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="134" Margin="8,290,0,0" VerticalAlignment="Top" Width="269"/>
-        <Label x:Name="OrderDateLBL" Content="{Binding Path=Order_Date}"  HorizontalAlignment="Left" Height="33" Margin="131,304,0,0" VerticalAlignment="Top" Width="146"/>
-        <Label x:Name="ShipDateLBL" Content="{Binding Path=Ship_Date}" HorizontalAlignment="Left" Height="29" Margin="124,350,0,0" VerticalAlignment="Top" Width="153"/>
-        <Label x:Name="DeliveryDateLBL"  Content="{Binding Path=Delivery_Date}" HorizontalAlignment="Left" Height="24" Margin="126,388,0,0" VerticalAlignment="Top" Width="118"/>
+        <Label x:Name="OrderDateLBL" Content="{Binding Path=Order_Date, Mode=TwoWay}"  HorizontalAlignment="Left" Height="33" Margin="131,304,0,0" VerticalAlignment="Top" Width="146"/>
+        <Label x:Name="ShipDateLBL" Content="{Binding Path=Ship_Date, Mode=TwoWay}" HorizontalAlignment="Left" Height="29" Margin="124,350,0,0" VerticalAlignment="Top" Width="153"/>
+        <Label x:Name="DeliveryDateLBL"  Content="{Binding Path=Delivery_Date, Mode=TwoWay}" HorizontalAlignment="Left" Height="24" Margin="126,388,0,0" VerticalAlignment="Top" Width="118"/>
 
     </Grid>
 </Window>

@@ -26,7 +26,7 @@
 
         <Label  x:Name="CategoryLBL" Content="filter by category:&#xA;" HorizontalAlignment="Left" Margin="592,141,0,0" VerticalAlignment="Top" Height="31" Grid.Column="0" Width="144" FontSize="16" FontFamily="Sling"/>
 
-        <ListView Visibility="Collapsed"  x:Name="ProductsListview" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="ProductsListview_SelectionChanged" HorizontalAlignment="Center" Margin="0,198,0,10" Grid.RowSpan="2" Width="1000" MouseDoubleClick="ProductsListview_MouseDoubleClick">
+        <ListView Visibility="Collapsed"  x:Name="ProductsListview" d:ItemsSource="{d:SampleData ItemCount=5}" HorizontalAlignment="Center" Margin="0,198,0,10" Grid.RowSpan="2" Width="1000" MouseDoubleClick="ProductsListview_MouseDoubleClick">
             <ListView.View>
                 <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Employee Information">
                     <GridViewColumn DisplayMemberBinding="{Binding Path=ID}" Header="ID" Width="250"/>
@@ -36,14 +36,14 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <ListView Visibility="Collapsed" x:Name="OrdesListview" HorizontalAlignment="Center" Height="217" VerticalAlignment="Top" Width="1020" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="OrdesListview_SelectionChanged" Margin="0,199,0,0" Grid.RowSpan="2" MouseDoubleClick="OrdesListview_MouseDoubleClick_1">
+        <ListView Visibility="Collapsed" x:Name="OrdersListview" HorizontalAlignment="Center" Height="217" VerticalAlignment="Top" Width="1020" d:ItemsSource="{d:SampleData ItemCount=5}"  Margin="0,199,0,0" Grid.RowSpan="2" MouseDoubleClick="OrdesListview_MouseDoubleClick_1">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=ID}" Header="ID" Width="200"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=CustomerName}" Header="Customer Name" Width="200"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=AmountOfItems}" Header="Amount of Items" Width="200"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Status}" Header="Status" Width="200"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=TotalPrice}" Header="Total price" Width="200"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ID,Mode=TwoWay}" Header="ID" Width="200"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=CustomerName,Mode=TwoWay}" Header="Customer Name" Width="200"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=AmountOfItems,Mode=TwoWay}" Header="Amount of Items" Width="200"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Status,Mode=TwoWay}" Header="Status" Width="200"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=TotalPrice,Mode=TwoWay}" Header="Total price" Width="200"/>
                 </GridView>
             </ListView.View>
         </ListView>

@@ -32,7 +32,7 @@ public partial class ProductWindow : Window
         window = window_;
         InitializeComponent();
         Array temp = Enum.GetValues(typeof(BO.eCategory));
-        categorySelector.ItemsSource =temp ;
+        categorySelector.ItemsSource = temp;
         categorySelector.SelectedItem = temp.GetValue(0)?.ToString();
         if (id != null)
         {
@@ -50,7 +50,6 @@ public partial class ProductWindow : Window
                 AddToCartBTN.Visibility = Visibility.Visible;
                 AddUpdateBTN.Visibility = Visibility.Hidden;
             }
-
         }
         else
         {
@@ -73,31 +72,35 @@ public partial class ProductWindow : Window
         window.Show();
         this.Hide();
     }
+
+    /// <summary>
+    /// Deleting the product
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void deleteBTN_Click(object sender, RoutedEventArgs e)
     {
         try
         {
-            if (MessageBox.Show($"are you sure you want to delete {product.Name}", "", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (MessageBox.Show($"Are you sure you want to delete {product.Name}?", $"Deleting {product.Name}", MessageBoxButton.OKCancel, MessageBoxImage.Question) == MessageBoxResult.OK)
             {
                 bl.iProduct.Delete(productID);
-                MessageBox.Show("the product was deleted!");
+                MessageBox.Show("The product has been successfully deleted!", "", MessageBoxButton.OK, MessageBoxImage.Asterisk);
                 new ProductListWindow(bl).Show();
                 this.Hide();
             }
-
         }
         catch (Exception err)
         {
-            MessageBox.Show(err.Message);
+            MessageBox.Show(err.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
-
-
 
     /// <summary>
     /// the function takes the properties from the user and update/create the product
     /// </summary>
-
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void AddToStore_Or_UpdateBTN_Click(object sender, RoutedEventArgs e)
     {
         try
@@ -115,59 +118,35 @@ public partial class ProductWindow : Window
         }
         catch (Dal.DO.DuplicateIdExceptions err)
         {
-            MessageBox.Show(err.Message);
+            MessageBox.Show(err.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
         }
         catch (BO.PropertyInValidException err)
         {
-            MessageBox.Show(err.Message);
-
+            MessageBox.Show(err.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
         }
         catch (Exception err)
         {
-            MessageBox.Show(err.Message);
+            MessageBox.Show(err.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
         }
-
-
     }
 
-
+    /// <summary>
+    /// The function add the product to the cart.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void AddToCartBTN_Click_1(object sender, RoutedEventArgs e)
     {
         try
         {
-
             bl.iCart.addOrderItem(cart, productID);
             new NewOrderWindow(bl, this, cart).Show();
             this.Hide();
         }
         catch (Exception ex)
         {
-            MessageBox.Show(ex.Message);
+            MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+
         }
-    }
-
-    /// <summary>
-    /// gets the values of the category enums
-    /// </summary>
-    private void categorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-
-        //  product.Category = (BO.eCategory)categorySelector.SelectedItem;
-
-
-    }
-    private void NameTXT_TextChanged(object sender, TextChangedEventArgs e)
-    {
-
-    }
-
-    private void PriceTXT_TextChanged(object sender, TextChangedEventArgs e)
-    {
-
-    }
-    //IsEnabled="{Binding ElementName=DataGridData, Path=DataContext.IsEditable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-    private void InStockTXT_TextChanged(object sender, TextChangedEventArgs e)
-    {
-
-    }
+    }      
 }

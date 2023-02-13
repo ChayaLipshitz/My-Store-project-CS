@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -25,31 +26,49 @@ namespace PL
     {
         BO.OrderTracking orderTracking;
         Window window;
-        int orderID;
         public IBl bl { get; set; }
-        public OrderTracking(IBl BL,Window window_, BO.OrderTracking orderTracking)
+        public OrderTracking(IBl BL,Window window_, int orderTrackingID)
         {
             InitializeComponent();
+            Activated += Render;
             bl = BL;
             window = window_;
-            orderID = orderTracking.ID;
-            orderIDLBL.Content = orderID;
+            orderTracking = bl.iOrder.Tracking(orderTrackingID);
+            orderIDLBL.Content = orderTracking.ID;
             OrderStatusLBL.Content = orderTracking.Status.ToString();
             DateStatusView.ItemsSource = new ObservableCollection<Tuple<DateTime?,eOrderStatus?>>(orderTracking?.dateAndStatus);
             
         }
 
+        /// <summary>
+        /// The function (event) refreshes the status list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Render(object? sender, EventArgs e)
+        {
+            orderTracking = bl.iOrder.Tracking(orderTracking.ID);
+            orderIDLBL.Content = orderTracking.ID;
+            OrderStatusLBL.Content = orderTracking.Status.ToString();
+            DateStatusView.ItemsSource = new ObservableCollection<Tuple<DateTime?, eOrderStatus?>>(orderTracking?.dateAndStatus);
+        }
+
+        /// <summary>
+        /// Displaying a specific order
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OrderDetailsBTN_Click(object sender, RoutedEventArgs e)
         {
-            new OrderWindow(bl,this,  orderID).Show();
+            new OrderWindow(bl,this, orderTracking.ID).Show();
             this.Hide();
         }
 
-        private void DateStatusView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
+        /// <summary>
+        /// Displaying the latest window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void back_Click(object sender, RoutedEventArgs e)
         {
             window.Show();
