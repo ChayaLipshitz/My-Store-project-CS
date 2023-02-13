@@ -19,11 +19,11 @@
         <ListView x:Name="ProductsView" HorizontalAlignment="Left" Height="303" Margin="295,0,0,0" VerticalAlignment="Center" Width="495" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="ProductsView_SelectionChanged">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=ID}" Header="ID" Width="40"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="Name" Width="80"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=ProductID}" Header="ProductID" Width="80"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Price}" Header="Price" Width="80"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=TotalPrice}" Header="TotalPrice" Width="80"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ID, Mode=TwoWay}" Header="ID" Width="40"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name, Mode=TwoWay}" Header="Name" Width="80"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ProductID, Mode=TwoWay}" Header="ProductID" Width="80"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Price, Mode=TwoWay}" Header="Price" Width="80"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=TotalPrice, Mode=TwoWay}" Header="TotalPrice" Width="80"/>
                     <GridViewColumn Header = "Amount" Width="80" >
                         <GridViewColumn.CellTemplate >
                             <DataTemplate>

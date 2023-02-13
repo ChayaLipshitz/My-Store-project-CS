@@ -97,14 +97,20 @@ public partial class CartWindow : Window
 
     private void MinusBTN_Click(object sender, RoutedEventArgs e)
     {
-        BO.OrderItem orderItem = ((FrameworkElement)sender).DataContext as BO.OrderItem;
-        int index = cart.Items.FindIndex(oi => oi.ProductID == orderItem.ProductID);
-        if (index == -1) throw new NotExistExceptions();
-        orderItem = cart.Items[index];
-        if (orderItem.Amount <= 1) cart.Items.Remove(orderItem);
-        else cart.Items[index].Amount--;
-        new CartWindow(bl,window, cart).Show();
-        this.Close();
+        try
+        {
+            BO.OrderItem orderItem = ((FrameworkElement)sender).DataContext as BO.OrderItem;
+            int index = cart.Items.FindIndex(oi => oi.ProductID == orderItem.ProductID);
+            if (index == -1) throw new NotExistExceptions();
+            orderItem = cart.Items[index];
+            if (orderItem.Amount <= 1) cart.Items.Remove(orderItem);
+            else cart.Items[index].Amount--;
+            new CartWindow(bl,window, cart).Show();
+             this.Close();
+        }catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
     }
 
     private void PlusBTN_Click(object sender, RoutedEventArgs e)

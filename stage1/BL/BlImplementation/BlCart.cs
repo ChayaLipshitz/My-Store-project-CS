@@ -83,7 +83,8 @@ internal class BlCart : ICart
     /// <exception cref="BO.DataError">error from the database=dal</exception>
     public void SubmitOrder(BO.Cart cart, string CustomerName, string CustomerEmail, string CustomerAddress)
     {
-
+        if(cart.Items.Count()==0)
+            throw new BO.CartISEmptyException();
         IsValidCart(cart, CustomerName, CustomerEmail, CustomerAddress); //check validation of cart and customer details
         Dal.DO.Order newOrder = new Dal.DO.Order();
         newOrder.Customer_Address = CustomerAddress;
