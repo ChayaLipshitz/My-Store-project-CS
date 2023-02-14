@@ -27,7 +27,7 @@ public partial class CartWindow : Window
     public IBl bl { get; set; }
     public Cart cart { get; set; }
     public Window window { get; set; }
-    private ObservableCollection<BO.OrderItem> cl { get; set; }
+    private ObservableCollection<BO.OrderItem> cl { get; set; } = new();
 
     public CartWindow(IBl BL, Window window_, Cart cart_)
     {
@@ -36,7 +36,7 @@ public partial class CartWindow : Window
         cart = cart_;
         window = window_;
         cl = cart?.Items == null ? new() : new(cart?.Items);
-        ProductsView.ItemsSource = cl;
+        //ProductsView.ItemsSource = cl;
     }
 
     private void SubmitOrderBTN_Click(object sender, RoutedEventArgs e)
@@ -65,7 +65,6 @@ public partial class CartWindow : Window
             BO.OrderItem orderItem = (BO.OrderItem)((Button)sender).DataContext;
             cart = bl.iCart.UpdateOrderItem(cart, orderItem.ProductID, 0);
             cl.Remove(orderItem);
-            ProductsView.ItemsSource = cl;
             MessageBox.Show($"The product {orderItem.Name} has been successfully removed from the cart", $"Delete {orderItem.Name}", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         catch (Exception ex)
@@ -88,7 +87,6 @@ public partial class CartWindow : Window
             cl.Remove(orderItem);
             cart = bl.iCart.UpdateOrderItem(cart, orderItem.ProductID, --orderItem.Amount);
             cl.Add(orderItem);
-            ProductsView.ItemsSource = cl;
 
         }
         catch (Exception ex)
@@ -110,7 +108,6 @@ public partial class CartWindow : Window
             cl.Remove(orderItem);
             cart = bl.iCart.UpdateOrderItem(cart, orderItem.ProductID, ++orderItem.Amount);
             cl.Add(orderItem);
-            ProductsView.ItemsSource = cl;
         }
         catch (Exception ex)
         {

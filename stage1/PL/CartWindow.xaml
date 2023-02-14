@@ -16,7 +16,7 @@
         <TextBox x:Name="CustomerEmailTXT" HorizontalAlignment="Left" Height="27" Margin="155,198,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="110"/>
         <Label Content="Customer Address" HorizontalAlignment="Left" Height="26" Margin="31,247,0,0" VerticalAlignment="Top" Width="102"/>
         <TextBox x:Name="CustomerAddressTXT" HorizontalAlignment="Left" Height="26" Margin="155,247,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="110"/>
-        <ListView x:Name="ProductsView" HorizontalAlignment="Left" Height="303" Margin="295,0,0,0" VerticalAlignment="Center" Width="495" d:ItemsSource="{d:SampleData ItemCount=5}" >
+        <ListView x:Name="ProductsView" HorizontalAlignment="Left" Height="303" Margin="295,0,0,0" VerticalAlignment="Center" Width="495" ItemsSource="{Binding RelativeSource=cl}" d:ItemsSource="{d:SampleData ItemCount=5}" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=ID, Mode=TwoWay}" Header="ID" Width="40"/>
