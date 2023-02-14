@@ -36,7 +36,7 @@ public partial class CartWindow : Window
         cart = cart_;
         window = window_;
         cl = cart?.Items == null ? new() : new(cart?.Items);
-        //ProductsView.ItemsSource = cl;
+        ProductsView.ItemsSource = cl;
     }
 
     private void SubmitOrderBTN_Click(object sender, RoutedEventArgs e)
@@ -83,10 +83,19 @@ public partial class CartWindow : Window
     {
         try
         {
+
             BO.OrderItem? orderItem = ((FrameworkElement)sender).DataContext as BO.OrderItem;
-            cl.Remove(orderItem);
-            cart = bl.iCart.UpdateOrderItem(cart, orderItem.ProductID, --orderItem.Amount);
-            cl.Add(orderItem);
+            if (--orderItem.Amount != 0)
+            {
+                int index = cl.IndexOf(orderItem);
+                cl.RemoveAt(index);
+                cart = bl.iCart.UpdateOrderItem(cart, orderItem.ProductID, orderItem.Amount);
+                cl.Insert(index, orderItem);
+            }
+            else
+            {
+                DeleteBTN_Click(sender, e);
+            }
 
         }
         catch (Exception ex)
@@ -105,9 +114,10 @@ public partial class CartWindow : Window
         try
         {
             BO.OrderItem orderItem = ((FrameworkElement)sender).DataContext as BO.OrderItem;
+            int index = cl.IndexOf(orderItem);
             cl.Remove(orderItem);
             cart = bl.iCart.UpdateOrderItem(cart, orderItem.ProductID, ++orderItem.Amount);
-            cl.Add(orderItem);
+            cl.Insert(index, orderItem);
         }
         catch (Exception ex)
         {

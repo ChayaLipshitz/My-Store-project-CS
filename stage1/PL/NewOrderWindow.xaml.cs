@@ -41,8 +41,12 @@ namespace PL
         /// <param name="e"></param>
         private void CatalogView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            new ProductWindow(bl, this, ((BO.ProductItem)CatalogView.SelectedItem).ID, cart).Show();
-            this.Hide();
+            try
+            {
+                new ProductWindow(bl, this, ((BO.ProductItem)CatalogView.SelectedItem).ID, cart).Show();
+                this.Hide();
+            }
+            catch (Exception ex) { String r= ex.Message; }
         }
 
         /// <summary>
