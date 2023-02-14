@@ -83,7 +83,6 @@ public partial class CartWindow : Window
     {
         try
         {
-
             BO.OrderItem? orderItem = ((FrameworkElement)sender).DataContext as BO.OrderItem;
             if (--orderItem.Amount != 0)
             {
@@ -116,7 +115,7 @@ public partial class CartWindow : Window
             BO.OrderItem orderItem = ((FrameworkElement)sender).DataContext as BO.OrderItem;
             int index = cl.IndexOf(orderItem);
             cl.Remove(orderItem);
-            cart = bl.iCart.UpdateOrderItem(cart, orderItem.ProductID, ++orderItem.Amount);
+            cart = bl.iCart.UpdateOrderItem(cart, orderItem.ProductID, (int)++orderItem.Amount);
             cl.Insert(index, orderItem);
         }
         catch (Exception ex)

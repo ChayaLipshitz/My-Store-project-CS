@@ -14,7 +14,7 @@
         <Label Content="Product price" HorizontalAlignment="Left" Margin="200,150,0,0" VerticalAlignment="Top" Width="137" Height="33"/>
         <Label Content="Product instock" HorizontalAlignment="Left" Margin="200,199,0,0" VerticalAlignment="Top" Width="144" Height="33"/>
         <Label Content="Product category" HorizontalAlignment="Left" Margin="192,255,0,0" VerticalAlignment="Top" Width="165"/>
-        <ComboBox  x:Name="categorySelector" SelectedValue="FRUITS"  Text="{Binding Path=Category}" HorizontalAlignment="Left" Margin="362,255,0,0" VerticalAlignment="Top" Width="120" Height="26" />
+        <ComboBox  x:Name="categorySelector" Text="{Binding Path=Category}" HorizontalAlignment="Left" Margin="362,255,0,0" VerticalAlignment="Top" Width="120" Height="26" SelectionChanged="categorySelector_SelectionChanged" />
         
         <TextBox  x:Name="NameTXT" Text="{Binding Path=Name}"  IsEnabled="True" HorizontalAlignment="Left" Margin="362,101,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="29" />
         <TextBox x:Name="PriceTXT" Text="{Binding Path=Price}" HorizontalAlignment="Left" Margin="362,153,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="29"/>

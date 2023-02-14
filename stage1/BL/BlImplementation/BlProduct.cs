@@ -228,7 +228,7 @@ internal class BlProduct : IProduct
                                                     Price = product.Price,
                                                     Category = (BO.eCategory)product.Category,
                                                     InStock = product.InStock > 0,
-                                                    Amount = product.InStock
+                                                    Amount = product.InStock??0
                                                 };
         return productItems;
     }

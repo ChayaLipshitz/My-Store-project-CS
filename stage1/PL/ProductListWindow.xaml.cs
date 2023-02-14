@@ -62,7 +62,8 @@ namespace PL
                 BO.eCategory category = (BO.eCategory)CategorySelector.SelectedItem;
                 var tmp = bl.iProduct.ReadByCategory(category);
                 ProductsListview.ItemsSource = tmp;
-            }catch(Exception err)
+            }
+            catch (Exception err)
             {
                 MessageBox.Show(err.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -108,6 +109,8 @@ namespace PL
         private void productsListBTN_Click(object sender, RoutedEventArgs e)
         {
             CategorySelector.Visibility = Visibility.Visible;
+            NonFilter.Visibility = Visibility.Visible;
+            CategoryLBL.Visibility = Visibility.Visible;
             CategoryLBL.Visibility = Visibility.Visible;
             OrdersListview.Visibility = Visibility.Collapsed;
             ProductsListview.Visibility = Visibility.Visible;
@@ -122,6 +125,8 @@ namespace PL
         {
             CategoryLBL.Visibility = Visibility.Collapsed;
             CategorySelector.Visibility = Visibility.Collapsed;
+            NonFilter.Visibility = Visibility.Collapsed;
+            CategoryLBL.Visibility = Visibility.Collapsed;
             OrdersListview.Visibility = Visibility.Visible;
             ProductsListview.Visibility = Visibility.Collapsed;
         }
@@ -135,6 +140,6 @@ namespace PL
         {
             new OrderWindow(bl, this, ((BO.OrderForList)OrdersListview.SelectedItem).ID).Show();
             this.Hide();
-        }        
+        }
     }
 }

@@ -183,7 +183,7 @@ internal class BlOrder : IOrder
     {
         if (order.Delivery_Date != DateTime.MinValue)
             throw new OrderAlreadyException("delivered");
-        double sum = order.Items.Sum(oi => oi.TotalPrice);
+        double? sum = order.Items.Sum(oi => oi.TotalPrice);
         if (order.TotalPrice != sum)
             throw new PropertyInValidException("total price");
 

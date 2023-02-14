@@ -66,7 +66,7 @@ internal class BlCart : ICart
         }
         else if (OItem.Amount > quantity || OItem.Amount < quantity)
         {
-            double lastTotalPrice = OItem.TotalPrice;
+            double? lastTotalPrice = OItem.TotalPrice;
             OItem.Amount = quantity;
             OItem.TotalPrice = quantity * OItem.Price;
             cart.TotalPrice = cart.TotalPrice - lastTotalPrice + OItem.TotalPrice;

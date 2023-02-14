@@ -15,7 +15,6 @@ public partial class ProductWindow : Window
     public Cart cart { get; set; }
 
     private IBl bl;
-    public int productID { get; set; }
     private bool ToUpdate { get; set; } = false;
     private bool ToAdd { get; set; } = false;
     public Window window { get; set; }
@@ -25,20 +24,16 @@ public partial class ProductWindow : Window
     /// </summary>
     /// <param name="Bl"></param>
     /// <param name="id">in case of update product</param>
-    public ProductWindow(IBl Bl, Window window_, int? id = null, BO.Cart cart_ = null)
+    public ProductWindow(IBl Bl, Window window_, int? id = null, BO.Cart? cart_ = null)
     {
         bl = Bl;
         cart = cart_;
         window = window_;
         InitializeComponent();
-        Array temp = Enum.GetValues(typeof(BO.eCategory));
-        categorySelector.ItemsSource = temp;
-        categorySelector.SelectedItem = temp.GetValue(0)?.ToString();
+        categorySelector.ItemsSource = Enum.GetValues(typeof(BO.eCategory));
         if (id != null)
         {
-            productID = (int)id;
             product = bl.iProduct.ProductDetails((int)id);
-            DataContext = product;
             if (cart == null)
             {
                 ToUpdate = true;
@@ -55,8 +50,10 @@ public partial class ProductWindow : Window
         {
             ToAdd = true;
             AddUpdateBTN.Content = "Add the product";
-            categorySelector.Text = "ghgh";// ((BO.eCategory)0).ToString();
+            product.Category = (BO.eCategory)0;
         }
+        DataContext = product;
+
     }
 
 
@@ -84,7 +81,7 @@ public partial class ProductWindow : Window
         {
             if (MessageBox.Show($"Are you sure you want to delete {product.Name}?", $"Deleting {product.Name}", MessageBoxButton.OKCancel, MessageBoxImage.Question) == MessageBoxResult.OK)
             {
-                bl.iProduct.Delete(productID);
+                bl.iProduct.Delete(product.ID);
                 MessageBox.Show("The product has been successfully deleted!", "", MessageBoxButton.OK, MessageBoxImage.Asterisk);
                 new ProductListWindow(bl).Show();
                 this.Hide();
@@ -139,7 +136,7 @@ public partial class ProductWindow : Window
     {
         try
         {
-            bl.iCart.addOrderItem(cart, productID);
+            bl.iCart.addOrderItem(cart, product.ID);
             new NewOrderWindow(bl, this, cart).Show();
             this.Hide();
         }
@@ -148,5 +145,19 @@ public partial class ProductWindow : Window
             MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
 
         }
-    }      
+    }
+
+    private void categorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        try
+        {
+            //String? x = categorySelector?.SelectedItem?.ToString();
+            //product.Category = (BO.eCategory)Enum.Parse(typeof(eCategory), x??"FRUITS");
+        }catch(Exception ex)
+        {
+           
+
+        }
+
+    }
 }
