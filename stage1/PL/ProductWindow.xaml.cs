@@ -36,18 +36,21 @@ public partial class ProductWindow : Window
             product = bl.iProduct.ProductDetails((int)id);
             if (cart == null)
             {
+                NameTXT.IsReadOnly = false;
                 ToUpdate = true;
                 deleteBTN.Visibility = Visibility.Visible;
                 AddUpdateBTN.Content = "Update the product";
             }
             else
             {
+                NameTXT.IsReadOnly = true;
                 AddToCartBTN.Visibility = Visibility.Visible;
                 AddUpdateBTN.Visibility = Visibility.Hidden;
             }
         }
         else
         {
+            NameTXT.IsReadOnly = false;
             ToAdd = true;
             AddUpdateBTN.Content = "Add the product";
             product.Category = (BO.eCategory)0;
@@ -107,9 +110,16 @@ public partial class ProductWindow : Window
             product.InStock = InStockTXT.Text == "" ? -1 : Convert.ToInt32(InStockTXT.Text);
             product.Category = (BO.eCategory)categorySelector.SelectedItem;
             if (ToUpdate)
+            {
                 bl.iProduct.Update(product);
+                MessageBox.Show("Product updated successfully!", "Update profuct", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
             else
+            {
                 bl.iProduct.Add(product);
+                MessageBox.Show("Product added successfully!", "Add profuct", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            }
             new ProductListWindow(bl).Show();
             this.Hide();
         }
@@ -153,9 +163,10 @@ public partial class ProductWindow : Window
         {
             //String? x = categorySelector?.SelectedItem?.ToString();
             //product.Category = (BO.eCategory)Enum.Parse(typeof(eCategory), x??"FRUITS");
-        }catch(Exception ex)
+        }
+        catch (Exception ex)
         {
-           
+
 
         }
 
