@@ -37,6 +37,10 @@ public partial class ProductWindow : Window
             if (cart == null)
             {
                 NameTXT.IsReadOnly = false;
+                PriceTXT.IsReadOnly = false;
+                InStockTXT.IsReadOnly=false;
+                categorySelector.IsReadOnly= false;
+
                 ToUpdate = true;
                 deleteBTN.Visibility = Visibility.Visible;
                 AddUpdateBTN.Content = "Update the product";
@@ -44,6 +48,11 @@ public partial class ProductWindow : Window
             else
             {
                 NameTXT.IsReadOnly = true;
+                PriceTXT.IsReadOnly= true;
+                InStockTXT.IsReadOnly = true;
+                categorySelector.IsReadOnly = true;
+
+
                 AddToCartBTN.Visibility = Visibility.Visible;
                 AddUpdateBTN.Visibility = Visibility.Hidden;
             }
