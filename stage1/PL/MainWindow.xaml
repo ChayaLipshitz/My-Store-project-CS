@@ -14,5 +14,6 @@
             <Label Content="order num:" HorizontalAlignment="Left" Height="28" Margin="9,39,0,0" VerticalAlignment="Top" Width="70"/>
         </Border>
         <Button x:Name="NewOrderBTN" Content="New order" HorizontalAlignment="Left" Height="74" Margin="150,89,0,0" VerticalAlignment="Top" Width="129" FontSize="20" Click="NewOrderBTN_Click"/>
+        <Button x:Name="SimulatorBTN" Content="Start Simulation" HorizontalAlignment="Left" Height="63" Margin="474,63,0,0" VerticalAlignment="Top" Width="214" Click="Simulator_Click"/>
     </Grid>
 </Window>

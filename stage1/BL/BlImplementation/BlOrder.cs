@@ -25,17 +25,17 @@ internal class BlOrder : IOrder
         BOorder.Ship_Date = DOorder.Ship_Date;
         BOorder.Status = calculateOrderStatus((DateTime)BOorder.Ship_Date, (DateTime)BOorder.Delivery_Date);
         IEnumerable<Dal.DO.OrderItem> orderItems = dal.iorder.ProductsInOrder(DOorder.ID);
-        BOorder.Items =(from DOorderitem in orderItems
-                                               select new BO.OrderItem
-                                               {
-                                                   ID = DOorderitem.OrderItem_ID,
-                                                   Name = dal.iproduct.ReadSingle(p => p.ID == DOorderitem.Product_ID).Name,
-                                                   ProductID = DOorderitem.Product_ID,
-                                                   Amount = DOorderitem.Product_Amount,
-                                                   Price = DOorderitem.Product_Price,
-                                                   TotalPrice = DOorderitem.Product_Amount * DOorderitem.Product_Price
+        BOorder.Items = (from DOorderitem in orderItems
+                         select new BO.OrderItem
+                         {
+                             ID = DOorderitem.OrderItem_ID,
+                             Name = dal.iproduct.ReadSingle(p => p.ID == DOorderitem.Product_ID).Name,
+                             ProductID = DOorderitem.Product_ID,
+                             Amount = DOorderitem.Product_Amount,
+                             Price = DOorderitem.Product_Price,
+                             TotalPrice = DOorderitem.Product_Amount * DOorderitem.Product_Price
 
-                                               }).ToList();
+                         }).ToList();
         BOorder.TotalPrice = BOorder.Items.Sum(item => item.TotalPrice);
         return BOorder;
     }
@@ -62,15 +62,15 @@ internal class BlOrder : IOrder
     {
         IEnumerable<Dal.DO.Order> allOrders = dal.iorder.ReadByFilter();
         IEnumerable<BO.OrderForList> ordersForList = from order in allOrders
-                                                let orderItems = dal.iorder.ProductsInOrder(order.ID)
-                                                select new BO.OrderForList
-                                                {
-                                                    ID = order.ID,
-                                                    CustomerName = order.Customer_Name,
-                                                    AmountOfItems = orderItems.Sum(oi => oi.Product_Amount),
-                                                    TotalPrice = orderItems.Sum(oi => oi.Product_Amount * oi.Product_Price),
-                                                    Status = calculateOrderStatus(order.Ship_Date, order.Delivery_Date),
-                                                };
+                                                     let orderItems = dal.iorder.ProductsInOrder(order.ID)
+                                                     select new BO.OrderForList
+                                                     {
+                                                         ID = order.ID,
+                                                         CustomerName = order.Customer_Name,
+                                                         AmountOfItems = orderItems.Sum(oi => oi.Product_Amount),
+                                                         TotalPrice = orderItems.Sum(oi => oi.Product_Amount * oi.Product_Price),
+                                                         Status = calculateOrderStatus(order.Ship_Date, order.Delivery_Date),
+                                                     };
         return ordersForList;
     }
     /// <summary>
@@ -166,8 +166,8 @@ internal class BlOrder : IOrder
             BO.OrderTracking orderTracking = new BO.OrderTracking();
             orderTracking.ID = order.ID;
             orderTracking.Status = calculateOrderStatus(order.Ship_Date, order.Delivery_Date);
-           // if (order.Order_Date != DateTime.MinValue)
-                orderTracking.dateAndStatus.Add(new Tuple<DateTime?,eOrderStatus?>( order.Order_Date, BO.eOrderStatus.ORDERED));
+            // if (order.Order_Date != DateTime.MinValue)
+            orderTracking.dateAndStatus.Add(new Tuple<DateTime?, eOrderStatus?>(order.Order_Date, BO.eOrderStatus.ORDERED));
             if (order.Ship_Date != DateTime.MinValue)
                 orderTracking.dateAndStatus.Add(new Tuple<DateTime?, eOrderStatus?>(order.Ship_Date, BO.eOrderStatus.SHIPPED));
             if (order.Delivery_Date != DateTime.MinValue)
@@ -215,9 +215,25 @@ internal class BlOrder : IOrder
             DOorder.Delivery_Date = order.Delivery_Date;
             dal.iorder.Update(DOorder);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             throw ex;
         }
     }
+
+
+    public int? TheNextOrderToCareFor()
+    {
+        var allOrders = dal.iorder.ReadByFilter().ToList();
+        if (allOrders == null) return null;
+        allOrders.Sort((o1, o2) =>
+        {
+            DateTime? lastof1 = o1.Delivery_Date != DateTime.MinValue ? o1.Delivery_Date : o1.Ship_Date != DateTime.MinValue ? o1.Ship_Date : o1.Order_Date;
+            DateTime? lastof2 = o2.Delivery_Date != DateTime.MinValue ? o2.Delivery_Date : o2.Ship_Date != DateTime.MinValue ? o2.Ship_Date : o2.Order_Date;
+            return lastof1 > lastof2 ? 1 : lastof1 < lastof2 ? -1 : 0;
+        });
+        return allOrders.FirstOrDefault().ID;
+    }
 }
+
+

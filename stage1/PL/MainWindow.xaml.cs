@@ -1,5 +1,6 @@
 ﻿using BlApi;
 using BO;
+using Simulator;
 using System;
 using System.Windows;
 
@@ -70,4 +71,8 @@ public partial class MainWindow : Window
         this.Hide();
     }
 
+    private void Simulator_Click(object sender, RoutedEventArgs e)
+    {
+        new SimulatorWindow(bl).Show();
+    }
 }
