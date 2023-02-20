@@ -9,7 +9,6 @@ namespace BlApi
         public BO.Order UpdateOrderDelivered(int OrderId);
         public BO.OrderTracking Tracking(int OrderId); 
         public void Update(BO.Order order);
-        public int? TheNextOrderToCareFor();
-
+        public BO.Order? TheNextOrderToCareFor();
     }
 }

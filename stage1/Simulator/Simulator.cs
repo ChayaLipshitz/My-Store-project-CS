@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using System.Diagnostics;
 namespace Simulator;
-
 public static class Simulator
 {
+
+
+    static BO.Order order;
     static Thread myThread { get; set; }
     static Stopwatch myStopWatch { get; set; }
 
@@ -19,12 +14,11 @@ public static class Simulator
     {
         myThread = new Thread(Simulation);
         myThread.Start();
-       // myThread.
     }
 
     public static  void StopSimulator()
     {
-        myThread.Abort();
+        //myThread.Join();
         
     }
 

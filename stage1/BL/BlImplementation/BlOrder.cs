@@ -222,9 +222,9 @@ internal class BlOrder : IOrder
     }
 
 
-    public int? TheNextOrderToCareFor()
+    public Order? TheNextOrderToCareFor()
     {
-        var allOrders = dal.iorder.ReadByFilter().ToList();
+        var allOrders = dal.iorder.ReadByFilter(oi => oi.Delivery_Date == DateTime.MinValue).ToList();
         if (allOrders == null) return null;
         allOrders.Sort((o1, o2) =>
         {
@@ -232,7 +232,7 @@ internal class BlOrder : IOrder
             DateTime? lastof2 = o2.Delivery_Date != DateTime.MinValue ? o2.Delivery_Date : o2.Ship_Date != DateTime.MinValue ? o2.Ship_Date : o2.Order_Date;
             return lastof1 > lastof2 ? 1 : lastof1 < lastof2 ? -1 : 0;
         });
-        return allOrders.FirstOrDefault().ID;
+        return convertToBOorder(allOrders.FirstOrDefault());
     }
 }
 
