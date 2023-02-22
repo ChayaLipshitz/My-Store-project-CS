@@ -7,7 +7,7 @@ using System.Linq;
 namespace BlImplementation;
 internal class BlOrder : IOrder
 {
-    IDal dal = DalApi.Factory.Get();
+    IDal dal = DalApi.Factory.Get()??null;
     /// <summary>
     /// converts a do order to a bo order
     /// </summary>
@@ -222,17 +222,17 @@ internal class BlOrder : IOrder
     }
 
 
-    public Order? TheNextOrderToCareFor()
+    public Order TheNextOrderToCareFor()
     {
         var allOrders = dal.iorder.ReadByFilter(oi => oi.Delivery_Date == DateTime.MinValue).ToList();
-        if (allOrders == null) return null;
+        if (allOrders.Count == 0) return null;
         allOrders.Sort((o1, o2) =>
         {
             DateTime? lastof1 = o1.Delivery_Date != DateTime.MinValue ? o1.Delivery_Date : o1.Ship_Date != DateTime.MinValue ? o1.Ship_Date : o1.Order_Date;
             DateTime? lastof2 = o2.Delivery_Date != DateTime.MinValue ? o2.Delivery_Date : o2.Ship_Date != DateTime.MinValue ? o2.Ship_Date : o2.Order_Date;
             return lastof1 > lastof2 ? 1 : lastof1 < lastof2 ? -1 : 0;
         });
-        return convertToBOorder(allOrders.FirstOrDefault());
+        return convertToBOorder(allOrders.FirstOrDefault()) ;
     }
 }
 
