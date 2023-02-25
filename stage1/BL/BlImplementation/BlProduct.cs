@@ -2,6 +2,7 @@
 using BO;
 using Dal.DO;
 using DalApi;
+using System.Runtime.CompilerServices;
 
 namespace BlImplementation;
 internal class BlProduct : IProduct
@@ -66,6 +67,8 @@ internal class BlProduct : IProduct
     /// all products as ProductForList
     /// </summary>
     /// <returns>IEnumerable of all the products as ProductForList</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public IEnumerable<BO.ProductForList> ReadAll()
     {
         IEnumerable<Dal.DO.Product> products = dal.iproduct.ReadByFilter();
@@ -86,6 +89,8 @@ internal class BlProduct : IProduct
     /// <returns>product</returns>
     /// <exception cref="BO.NotExistExceptions"></exception>
     /// <exception cref="BO.IDNotValidException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public BO.Product ProductDetails(int ProductId)
     {
         BO.Product BLproduct = new BO.Product();
@@ -110,6 +115,8 @@ internal class BlProduct : IProduct
     /// <param name="ProductId"></param>
     /// <param name="cart"></param>
     /// <returns></returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public BO.ProductItem ProductDetails(int ProductId, BO.Cart cart)
     {
         if (ProductId < 0)
@@ -143,6 +150,8 @@ internal class BlProduct : IProduct
     /// </summary>
     /// <param name="product">product to add</param>
     /// <exception cref="BO.DataError">error from the database</exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public void Add(BO.Product product)
     {
         try
@@ -164,6 +173,8 @@ internal class BlProduct : IProduct
     /// </summary>
     /// <param name="product">updated product</param>
     /// <exception cref="BO.DataError">error from the database</exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public void Update(BO.Product product)
     {
         try
@@ -186,6 +197,8 @@ internal class BlProduct : IProduct
     /// <param name="ProductID">product id to delete</param>
     /// <exception cref="BO.ProductExistsInOrderException"></exception>
     /// <exception cref="BO.DataError">error from the database</exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public void Delete(int ProductID)
     {
         IEnumerable<Dal.DO.OrderItem> oi = dal.iorderItem.ReadByFilter(oi => oi.Product_ID == ProductID);
@@ -201,6 +214,7 @@ internal class BlProduct : IProduct
             throw new BO.DataError(err);
         }
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     public IEnumerable<BO.ProductForList> ReadByCategory(BO.eCategory category)
     {
@@ -216,6 +230,7 @@ internal class BlProduct : IProduct
                                                         };
         return productForList;
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     public IEnumerable<ProductItem> ReadCatalog()
     {

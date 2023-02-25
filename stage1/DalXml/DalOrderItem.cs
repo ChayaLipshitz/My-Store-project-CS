@@ -1,5 +1,6 @@
 ﻿using Dal.DO;
 using DalApi;
+using System.Runtime.CompilerServices;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 
@@ -8,6 +9,8 @@ namespace Dal;
 internal class DalOrderItem : IorderItem
 {
     //  getting the id from the xml and updating it
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public int getIDAndUpdateXml()
     {
         XmlRootAttribute IDSRoot = new XmlRootAttribute();
@@ -30,6 +33,8 @@ internal class DalOrderItem : IorderItem
     /// </summary>
     /// <param name="orderItem"></param>
     /// <returns></returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public int Create(OrderItem orderItem)
     {
 
@@ -52,6 +57,8 @@ internal class DalOrderItem : IorderItem
     /// Deleting a certain orderItem
     /// </summary>
     /// <param name="id"></param>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public void Delete(int id)
     {
         XmlRootAttribute xRoot = new XmlRootAttribute();
@@ -72,6 +79,8 @@ internal class DalOrderItem : IorderItem
     /// </summary>
     /// <param name="f"></param>
     /// <returns></returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public IEnumerable<OrderItem> ReadByFilter(Func<OrderItem, bool> f = null)
     {
         XmlRootAttribute xRoot = new XmlRootAttribute();
@@ -88,6 +97,8 @@ internal class DalOrderItem : IorderItem
     /// </summary>
     /// <param name="f"></param>
     /// <returns></returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public OrderItem ReadSingle(Func<OrderItem, bool> f)
     {
         XmlRootAttribute xRoot = new XmlRootAttribute();
@@ -114,6 +125,8 @@ internal class DalOrderItem : IorderItem
     /// <param name="order_id"></param>
     /// <param name="product_id"></param>
     /// <returns></returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public OrderItem Read_item_by_product_order(int order_id, int product_id)
     {
         XmlRootAttribute xRoot = new XmlRootAttribute();
@@ -139,6 +152,7 @@ internal class DalOrderItem : IorderItem
     /// <param name="orderItem"></param>
     /// <returns></returns>
     /// <exception cref="NotExistExceptions"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     public bool Update(OrderItem orderItem)
     {   

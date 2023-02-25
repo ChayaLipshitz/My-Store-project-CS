@@ -1,10 +1,12 @@
 ﻿using Dal.DO;
 using DalApi;
+using System.Runtime.CompilerServices;
 
 namespace Dal;
 
 internal class DalOrder : Iorder
-{  
+{
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<OrderItem> ProductsInOrder(int ID)
     {
         IEnumerable<OrderItem> lst = from oi in DataSource.OrderItemsList

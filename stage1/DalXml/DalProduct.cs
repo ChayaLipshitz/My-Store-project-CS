@@ -1,4 +1,5 @@
 ﻿
+using System.Runtime.CompilerServices;
 using System.Xml.Linq;
 using Dal.DO;
 using DalApi;
@@ -10,6 +11,8 @@ internal class DalProduct : Iproduct
     /// </summary>
     /// <param name="product"></param>
     /// <returns>return the order id</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public int Create(Product product)
     {
         XElement? IDS = XDocument.Load("../../xml/ConfigData.xml").Root;
@@ -34,6 +37,8 @@ internal class DalProduct : Iproduct
     /// </summary>
     /// <param name="ID"></param>
     /// <exception cref="NotExistExceptions"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public void Delete(int id)
     {
         try
@@ -54,6 +59,8 @@ internal class DalProduct : Iproduct
     /// Reading  the product list by an optional given filter 
     /// </summary>
     /// <returns>the product list</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public IEnumerable<Product> ReadByFilter(Func<Product, bool> f = null)
     {
         XElement? productsXML = XDocument.Load(@"..\..\xml\Product.xml").Root;
@@ -76,6 +83,8 @@ internal class DalProduct : Iproduct
     /// </summary>
     /// <param name="f"></param>
     /// <returns></returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public Product ReadSingle(Func<Product, bool> f)
     {
         XElement? productsXML = XDocument.Load(@"..\..\xml\Product.xml").Root;
@@ -104,6 +113,8 @@ internal class DalProduct : Iproduct
     /// <param name="product"></param>
     /// <returns>1 in case of succeed</returns>
     /// <exception cref="NotExistExceptions"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public bool Update(Product updatedPro)
     {
         try

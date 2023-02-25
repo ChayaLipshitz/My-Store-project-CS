@@ -1,5 +1,6 @@
 ﻿using Dal.DO;
 using DalApi;
+using System.Runtime.CompilerServices;
 
 namespace Dal;
 
@@ -9,7 +10,10 @@ internal class DalProduct: Iproduct
     /// creating a new product
     /// </summary>
     /// <param name="product"></param>
-    /// <returns>return the order id</returns>
+    /// <returns>return the order id</returns>\
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public int Create(Product product)
     {
        
@@ -23,6 +27,9 @@ internal class DalProduct: Iproduct
     /// <param name="product"></param>
     /// <returns>1 in case of succeed</returns>
     /// <exception cref="NotExistExceptions"></exception>
+    /// 
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public bool Update(Product product)
     {
         int index = DataSource.ProductsList.FindIndex(p => p.ID == product.ID);
@@ -37,6 +44,9 @@ internal class DalProduct: Iproduct
     /// </summary>
     /// <param name="ID"></param>
     /// <exception cref="NotExistExceptions"></exception>
+    /// 
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public void Delete(int id)
     {
         try
@@ -49,11 +59,14 @@ internal class DalProduct: Iproduct
             throw new NotExistExceptions();
         }
     }
-    
+
     /// <summary>
     /// Reading  the product list by an optional given filter 
     /// </summary>
     /// <returns>the product list</returns>
+    /// 
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public IEnumerable<Product> ReadByFilter(Func<Product, bool>? f = null)
     {
         if (f == null)
@@ -69,6 +82,9 @@ internal class DalProduct: Iproduct
     /// <param name="f"></param>
     /// <returns></returns>
     /// <exception cref="NotExistExceptions"></exception>
+    /// 
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public Product ReadSingle(Func<Product, bool> f)
     {
         IEnumerable<Product> products = DataSource.ProductsList;

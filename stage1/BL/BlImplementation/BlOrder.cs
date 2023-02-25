@@ -3,6 +3,8 @@ using BlApi;
 using BO;
 using DalApi;
 using System.Linq;
+using System.Runtime.CompilerServices;
+
 
 namespace BlImplementation;
 internal class BlOrder : IOrder
@@ -58,6 +60,9 @@ internal class BlOrder : IOrder
     /// read all orders from the database
     /// </summary>
     /// <returns>returns all the orders</returns>
+    /// 
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public IEnumerable<BO.OrderForList> ReadAll()
     {
         IEnumerable<Dal.DO.Order> allOrders = dal.iorder.ReadByFilter();
@@ -80,6 +85,9 @@ internal class BlOrder : IOrder
     /// <returns>returns the order</returns>
     /// <exception cref="BO.DataError"></exception>
     /// <exception cref="BO.PropertyInValidException"></exception>
+    /// 
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public BO.Order Read(int OrderId)
     {
         if (OrderId >= 0)
@@ -104,6 +112,9 @@ internal class BlOrder : IOrder
     /// <exception cref="BO.PropertyInValidException"></exception>
     /// <exception cref="BO.OrderAlreadyException"></exception>
     /// <exception cref="BO.DataError"></exception>
+    /// 
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public BO.Order UpdateOrderShipped(int OrderId)
     {
         if (OrderId < 0)
@@ -132,6 +143,7 @@ internal class BlOrder : IOrder
     /// <exception cref="BO.OrderAlreadyException"></exception>
     /// <exception cref="BO.OrderWasNotShippedException"></exception>
     /// <exception cref="BO.DataError"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     public BO.Order UpdateOrderDelivered(int OrderId)
     {
@@ -158,6 +170,9 @@ internal class BlOrder : IOrder
     /// </summary>
     /// <param name="OrderId">order id</param>
     /// <returns>returns the order tracking</returns>
+    /// 
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public BO.OrderTracking Tracking(int OrderId)
     {
         try
@@ -199,6 +214,7 @@ internal class BlOrder : IOrder
         //    });
 
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     public void Update(BO.Order order)
     {
@@ -221,6 +237,7 @@ internal class BlOrder : IOrder
         }
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     public Order TheNextOrderToCareFor()
     {
