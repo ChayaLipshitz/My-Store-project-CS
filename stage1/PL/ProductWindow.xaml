@@ -19,14 +19,14 @@
         <Label Content="Product price" HorizontalAlignment="Left" Margin="200,150,0,0" VerticalAlignment="Top" Width="137" Height="33"/>
         <Label Content="Product instock" HorizontalAlignment="Left" Margin="200,199,0,0" VerticalAlignment="Top" Width="144" Height="33"/>
         <Label Content="Product category" HorizontalAlignment="Left" Margin="192,255,0,0" VerticalAlignment="Top" Width="165"/>
-        <ComboBox  x:Name="categorySelector" Text="{Binding Path=Item1.Category}" IsReadOnly="{Binding Path=Item2}" HorizontalAlignment="Left" Margin="362,255,0,0" VerticalAlignment="Top" Width="120" Height="26" SelectionChanged="categorySelector_SelectionChanged" />
-        
-        <TextBox x:Name="NameTXT" Text="{Binding Path=Item1.Name, Mode=TwoWay}"  IsReadOnly="{Binding Path=Item2}" HorizontalAlignment="Left" Margin="362,101,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="29"  />
-        <TextBox x:Name="PriceTXT" Text="{Binding Path=Item1.Price, Mode=TwoWay}" IsReadOnly="{Binding Path=Item2}" HorizontalAlignment="Left" Margin="362,153,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="29"/>
-        <TextBox x:Name="InStockTXT" Text="{Binding Path=Item1.InStock}" IsReadOnly="{Binding Path=Item2}" HorizontalAlignment="Left" Margin="362,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" Height="29"/>
-        <Button x:Name="deleteBTN"  Visibility="{Binding Path=Item3, Converter={StaticResource myVisible}}" Content="delete the product" HorizontalAlignment="Left" Margin="192,338,0,0" VerticalAlignment="Top" Height="35" Width="139" Click="deleteBTN_Click"/>
-        <Button x:Name="AddUpdateBTN" Content="{Binding Path=Item4}" Visibility="{Binding Path=Item3, Converter={StaticResource myVisible}}" HorizontalAlignment="Left" Margin="362,338,0,0" VerticalAlignment="Top" Height="35" Width="140" Click="AddToStore_Or_UpdateBTN_Click" FontSize="18"/>
-        <Button x:Name="AddToCartBTN" Visibility="{Binding Path=IsReadOnly,ElementName=NameTXT, Converter={StaticResource myVisible}}" Content="Add to cart" HorizontalAlignment="Left" Height="35" Margin="554,338,0,0" VerticalAlignment="Top" Width="136" Click="AddToCartBTN_Click_1"/>
+        <ComboBox  x:Name="categorySelector" Text="{Binding Path=Item1.Category}" IsEnabled="{Binding Path=Item2}" HorizontalAlignment="Left" Margin="362,255,0,0" VerticalAlignment="Top" Width="120" Height="26"  />
+
+        <TextBox x:Name="NameTXT" Text="{Binding Path=Item1.Name, Mode=TwoWay}" IsReadOnly="{Binding Path=Item3}" HorizontalAlignment="Left" Margin="362,101,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="29"  />
+        <TextBox x:Name="PriceTXT" Text="{Binding Path=Item1.Price, Mode=TwoWay}" IsReadOnly="{Binding Path=Item3}" HorizontalAlignment="Left" Margin="362,153,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="29"/>
+        <TextBox x:Name="InStockTXT" Text="{Binding Path=Item1.InStock}" IsReadOnly="{Binding Path=Item3}" HorizontalAlignment="Left" Margin="362,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" Height="29"/>
+        <Button x:Name="deleteBTN"  Visibility="{Binding Path=Item2, Converter={StaticResource myVisible}}" Content="delete the product" HorizontalAlignment="Left" Margin="192,338,0,0" VerticalAlignment="Top" Height="35" Width="139" Click="deleteBTN_Click"/>
+        <Button x:Name="AddUpdateBTN" Content="{Binding Path=Item4}" Visibility="{Binding Path=Item2, Converter={StaticResource myVisible}}" HorizontalAlignment="Left" Margin="362,338,0,0" VerticalAlignment="Top" Height="35" Width="140" Click="AddToStore_Or_UpdateBTN_Click" FontSize="18"/>
+        <Button x:Name="AddToCartBTN" Visibility="{Binding Path=Item3, Converter={StaticResource myVisible}}" Content="Add to cart" HorizontalAlignment="Left" Height="35" Margin="554,338,0,0" VerticalAlignment="Top" Width="136" Click="AddToCartBTN_Click_1"/>
 
     </Grid>
 </Window>

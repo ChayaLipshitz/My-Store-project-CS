@@ -247,7 +247,7 @@ internal class BlOrder : IOrder
         {
             DateTime? lastof1 = o1.Delivery_Date != DateTime.MinValue ? o1.Delivery_Date : o1.Ship_Date != DateTime.MinValue ? o1.Ship_Date : o1.Order_Date;
             DateTime? lastof2 = o2.Delivery_Date != DateTime.MinValue ? o2.Delivery_Date : o2.Ship_Date != DateTime.MinValue ? o2.Ship_Date : o2.Order_Date;
-            return lastof1 > lastof2 ? 1 : lastof1 < lastof2 ? -1 : 0;
+            return lastof1 < lastof2 ? 1 : lastof1 > lastof2 ? -1 : 0;
         });
         return convertToBOorder(allOrders.FirstOrDefault()) ;
     }

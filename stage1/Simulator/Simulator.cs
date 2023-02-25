@@ -1,11 +1,11 @@
 ﻿using BlApi;
 using System.Diagnostics;
-namespace Simulator;
+namespace simulator;
 public static class Simulator
 {
     static IBl bl;
     static int processTime;
-    static bool continueThread;
+    static volatile bool continueThread;
     static event Action InStopSimulator;
     static event Action<BO.Order, int> InUpdateChanged;
 
@@ -25,11 +25,11 @@ public static class Simulator
 
     public static void StopSimulator()
     {
+        continueThread = false;
         if (InStopSimulator != null)
         {
             InStopSimulator();
         }
-        continueThread = false;
     }
 
     private static void Simulation()
@@ -39,7 +39,6 @@ public static class Simulator
             while (continueThread != false)
             {
                 order = bl.iOrder.TheNextOrderToCareFor();
-                int u = 5;
                 if (order == null)
                 {
                     continueThread = false;
@@ -58,22 +57,21 @@ public static class Simulator
 
     private static void CareOrder()
     {
-        if (InUpdateChanged != null)
-        {
-            InUpdateChanged(order, processTime);
-        }
-        Thread.Sleep((int)processTime * 1000);
-        if (order.Ship_Date == DateTime.MinValue)
-        {
-            order = bl.iOrder.UpdateOrderShipped(order.OrderID);
-        }
-        else if (order.Delivery_Date == DateTime.MinValue)
-        {
-            order = bl.iOrder.UpdateOrderDelivered(order.OrderID);
-        }
         try
         {
-            bl.iOrder.Update(order);
+            if (InUpdateChanged != null)
+            {
+                InUpdateChanged(order, processTime);
+            }
+            Thread.Sleep(processTime * 1000);
+            if (order.Ship_Date == DateTime.MinValue)
+            {
+                order = bl.iOrder.UpdateOrderShipped(order.OrderID);
+            }
+            else if (order.Delivery_Date == DateTime.MinValue)
+            {
+                order = bl.iOrder.UpdateOrderDelivered(order.OrderID);
+            }
         }
         catch (Exception e)
         {
@@ -90,5 +88,4 @@ public static class Simulator
     {
         InUpdateChanged += func;
     }
-
 }
