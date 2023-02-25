@@ -27,7 +27,7 @@ namespace PL
         private object selectedItem;
         private BO.Order order;
         Window window;
-        public Tuple<BO.Order, bool, bool> ToData { get; set; }
+        public Tuple<BO.Order, bool> ToData { get; set; }
         public Cart? cart { get; set; }
         // public static readonly DependencyProperty IsManagerProperty = DependencyProperty.Register(
         //"IsSpinning", typeof(bool),
@@ -55,7 +55,7 @@ namespace PL
             order = bl.iOrder.Read(orderId);
             orderItemsview.ItemsSource = order.Items;
             IsManager =ismanager;
-            ToData = new(order, IsManager, !IsManager);
+            ToData = new(order, IsManager);
             DataContext = ToData;
         }
 
