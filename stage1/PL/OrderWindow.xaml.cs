@@ -1,5 +1,6 @@
 ﻿using BlApi;
 using BO;
+using Dal.DO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,29 +27,36 @@ namespace PL
         private object selectedItem;
         private BO.Order order;
         Window window;
+        public Tuple<BO.Order, bool, bool> ToData { get; set; }
+        public Cart? cart { get; set; }
+        // public static readonly DependencyProperty IsManagerProperty = DependencyProperty.Register(
+        //"IsSpinning", typeof(bool),
+        //typeof(ProductWindow)
+        //);
+
+        // public bool IsManager
+        // {
+        //     get => (bool)GetValue(IsManagerProperty);
+        //     set => SetValue(IsManagerProperty, value);
+        // }
+        public bool IsManager { get; set; }
         /// <summary>
         /// Window of a specific order
         /// </summary>
         /// <param name="BL"></param>
         /// <param name="window_"></param>
         /// <param name="orderId"></param>
-        public OrderWindow(IBl BL, Window window_, int orderId)
+        /// 
+        public OrderWindow(IBl BL, Window window_, int orderId,bool ismanager=false)
         {
             InitializeComponent();
-            bl = BL;
+            bl = BL;   
             window = window_;
             order = bl.iOrder.Read(orderId);
-            DataContext = order;
             orderItemsview.ItemsSource = order.Items;
-        }
-
-        //is it Unnecessary?////////////////////////////////////////
-        public OrderWindow(IBl bl, Window window_, object selectedItem)
-        {
-            InitializeComponent();
-            this.bl = bl;
-            this.window = window_;
-            this.selectedItem = selectedItem;
+            IsManager =ismanager;
+            ToData = new(order, IsManager, !IsManager);
+            DataContext = ToData;
         }
 
         /// <summary>
@@ -74,7 +82,7 @@ namespace PL
                 order = bl.iOrder.UpdateOrderShipped(order.OrderID);
                 DataContext = order;
                 orderItemsview.ItemsSource = order.Items;
-                MessageBox.Show("Shipping updated successfully!", "Update Shipping",MessageBoxButton.OK,MessageBoxImage.Information);
+                MessageBox.Show("Shipping updated successfully!", "Update Shipping", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {
@@ -94,7 +102,7 @@ namespace PL
                 order = bl.iOrder.UpdateOrderDelivered(order.OrderID);
                 DataContext = order;
                 orderItemsview.ItemsSource = order.Items;
-                MessageBox.Show("Delivering updated successfully!", "Update Delivering", MessageBoxButton.OK,MessageBoxImage.Information);
+                MessageBox.Show("Delivering updated successfully!", "Update Delivering", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {
@@ -112,7 +120,7 @@ namespace PL
         {
             try
             {
-                order.TotalPrice = TotalPriceTXT.Text == "" ? -1 : Convert.ToDouble(TotalPriceTXT.Text);
+                order.TotalPrice = TotalPriceTXT.Content == "" ? -1 : Convert.ToDouble(TotalPriceTXT.Content);
                 order.CustomerName = NameTXT.Text;
                 order.CustomerEmail = EmailTXT.Text;
                 order.CustomerAddress = AddressTXT.Text;

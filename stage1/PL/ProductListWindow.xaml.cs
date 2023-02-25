@@ -138,7 +138,7 @@ namespace PL
         /// <param name="e"></param>
         private void OrdesListview_MouseDoubleClick_1(object sender, MouseButtonEventArgs e)
         {
-            new OrderWindow(bl, this, ((BO.OrderForList)OrdersListview.SelectedItem).ID).Show();
+            new OrderWindow(bl, this, ((BO.OrderForList)OrdersListview.SelectedItem).ID,true).Show();
             this.Hide();
         }
     }

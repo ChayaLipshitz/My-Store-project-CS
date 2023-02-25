@@ -25,26 +25,26 @@
 
         <Button x:Name="Back" Content="Back" HorizontalAlignment="Left" Margin="726,7,0,0" VerticalAlignment="Top" Height="34" Width="64" Click="back_Click" Background="Black" Foreground="#FFF4F9F1" RenderTransformOrigin="0.845,0.576" />
         <Label Content="Customer Name" HorizontalAlignment="Left" Height="38" Margin="8,60,0,0" VerticalAlignment="Top" Width="97"/>
-        <TextBox x:Name="NameTXT" Text="{Binding Path=CustomerName}" HorizontalAlignment="Left" Height="19" Margin="130,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="117"/>
+        <TextBox x:Name="NameTXT" Text="{Binding Path=Item1.CustomerName}" HorizontalAlignment="Left" Height="19" Margin="130,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="117"/>
         <Label Content="Customer email" HorizontalAlignment="Left" Height="40" Margin="8,110,0,0" VerticalAlignment="Top" Width="97"/>
-        <TextBox x:Name="EmailTXT" Text="{Binding Path=CustomerEmail}" HorizontalAlignment="Left" Height="20" Margin="130,110,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="117"/>
+        <TextBox x:Name="EmailTXT" Text="{Binding Path=Item1.CustomerEmail}" HorizontalAlignment="Left" Height="20" Margin="130,110,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="117"/>
         <Label Content="Customer address" HorizontalAlignment="Left" Height="43" Margin="10,160,0,0" VerticalAlignment="Top" Width="109"/>
-        <TextBox x:Name="AddressTXT" Text="{Binding Path=CustomerAddress}" HorizontalAlignment="Left" Height="22" Margin="130,167,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="117"/>
+        <TextBox x:Name="AddressTXT" Text="{Binding Path=Item1.CustomerAddress}" HorizontalAlignment="Left" Height="22" Margin="130,167,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="117"/>
         <Label Content="order date" HorizontalAlignment="Left" Height="46" Margin="11,304,0,0" VerticalAlignment="Top" Width="109"/>
         <Label Content="status" HorizontalAlignment="Left" Height="33" Margin="11,254,0,0" VerticalAlignment="Top" Width="94"/>
         <Label Content="total price" HorizontalAlignment="Left" Height="23" Margin="9,217,0,0" VerticalAlignment="Top" Width="94"/>
-        <TextBox x:Name="TotalPriceTXT" Text="{Binding Path=TotalPrice}"  HorizontalAlignment="Left" Height="23" Margin="131,217,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108"/>
+        <Label x:Name="TotalPriceTXT" Content="{Binding Path=Item1.TotalPrice}"  HorizontalAlignment="Left" Height="23" Margin="131,217,0,0"  VerticalAlignment="Top" Width="108"/>
         <Label Content="Ship date" HorizontalAlignment="Left" Height="30" Margin="8,349,0,0" VerticalAlignment="Top" Width="111"/>
         <Label Content="Delivery date" HorizontalAlignment="Left" Height="33" Margin="11,384,0,0" VerticalAlignment="Top" Width="91"/>
-        <Button x:Name="updateShipping" Content="update order shipping" HorizontalAlignment="Left" Height="50" Margin="302,70,0,0" VerticalAlignment="Top" Width="135" Click="updateShipping_Click" Background="#FF80D776"/>
-        <Button x:Name="updateDelivery" Content="update order delivery" HorizontalAlignment="Left" Height="53" Margin="302,150,0,0" VerticalAlignment="Top" Width="135" Click="updateDelivery_Click" Background="#FFB6DC21"/>
+        <Button x:Name="updateShipping" IsEnabled="{Binding Path=Item2}" Content="update order shipping" HorizontalAlignment="Left" Height="50" Margin="302,70,0,0" VerticalAlignment="Top" Width="135" Click="updateShipping_Click" Background="#FF80D776"/>
+        <Button x:Name="updateDelivery" IsEnabled="{Binding Path=Item2}" Content="update order delivery" HorizontalAlignment="Left" Height="53" Margin="302,150,0,0" VerticalAlignment="Top" Width="135" Click="updateDelivery_Click" Background="#FFB6DC21"/>
         <Button x:Name="UpdateOrderBTN" Content="update" HorizontalAlignment="Left" Height="74" Margin="530,290,0,0" VerticalAlignment="Top" Width="158" Background="#FF06F4EB" FontSize="36" FontWeight="Bold" Click="UpdateOrderBTN_Click"/>
-        <Label x:Name="OrderIDLBL" Content="{Binding Path=OrderID}"   HorizontalAlignment="Left" Height="29" Margin="130,12,0,0" VerticalAlignment="Top" Width="117"/>
-        <Label x:Name="StatusLBL" Content="{Binding Path=Status}" HorizontalAlignment="Left" Height="33" Margin="131,254,0,0" VerticalAlignment="Top" Width="116"/>
+        <Label x:Name="OrderIDLBL" Content="{Binding Path=Item1.OrderID}"   HorizontalAlignment="Left" Height="29" Margin="130,12,0,0" VerticalAlignment="Top" Width="117"/>
+        <Label x:Name="StatusLBL" Content="{Binding Path=Item1.Status}" HorizontalAlignment="Left" Height="33" Margin="131,254,0,0" VerticalAlignment="Top" Width="116"/>
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="134" Margin="8,290,0,0" VerticalAlignment="Top" Width="269"/>
-        <Label x:Name="OrderDateLBL" Content="{Binding Path=Order_Date, Mode=TwoWay}"  HorizontalAlignment="Left" Height="33" Margin="131,304,0,0" VerticalAlignment="Top" Width="146"/>
-        <Label x:Name="ShipDateLBL" Content="{Binding Path=Ship_Date, Mode=TwoWay}" HorizontalAlignment="Left" Height="29" Margin="124,350,0,0" VerticalAlignment="Top" Width="153"/>
-        <Label x:Name="DeliveryDateLBL"  Content="{Binding Path=Delivery_Date, Mode=TwoWay}" HorizontalAlignment="Left" Height="24" Margin="126,388,0,0" VerticalAlignment="Top" Width="118"/>
+        <Label x:Name="OrderDateLBL" Content="{Binding Path=Item1.Order_Date, Mode=TwoWay}"  HorizontalAlignment="Left" Height="33" Margin="131,304,0,0" VerticalAlignment="Top" Width="146"/>
+        <Label x:Name="ShipDateLBL" Content="{Binding Path=Item1.Ship_Date, Mode=TwoWay}" HorizontalAlignment="Left" Height="29" Margin="124,350,0,0" VerticalAlignment="Top" Width="153"/>
+        <Label x:Name="DeliveryDateLBL"  Content="{Binding Path=Item1.Delivery_Date, Mode=TwoWay}" HorizontalAlignment="Left" Height="24" Margin="126,388,0,0" VerticalAlignment="Top" Width="118"/>
 
     </Grid>
 </Window>
