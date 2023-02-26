@@ -104,34 +104,37 @@ internal class BlCart : ICart
         newOrder.Order_Date = DateTime.Now;
         newOrder.Ship_Date = DateTime.MinValue;
         newOrder.Delivery_Date = DateTime.MinValue;
-        int id = dal.iorder.Create(newOrder);
-        try
+        lock (dal)
         {
 
-            cart.Items.ForEach(BOoi =>
+            try
             {
-                Dal.DO.OrderItem DOoi = new Dal.DO.OrderItem();
-                DOoi.Order_ID = id;
-                DOoi.Product_Price = BOoi.Price;
-                DOoi.Product_ID = BOoi.ProductID;
-                DOoi.Product_Amount = BOoi.Amount;
-                dal.iorderItem.Create(DOoi);
-                Dal.DO.Product product = dal.iproduct.ReadSingle(p => p.ID == DOoi.Product_ID);
-                product.InStock -= DOoi.Product_Amount;
-                dal.iproduct.Update(product);
-            });
-        }
-        catch (Dal.DO.NotExistExceptions ex)
-        {
-            throw new BO.DataError(ex);
-        }
-        catch (BO.NotInStockException ex)
-        {
-            throw ex;
-        }
-        catch (BO.PropertyInValidException ex)
-        {
-            throw ex;
+                int id = dal.iorder.Create(newOrder);
+                cart.Items.ForEach(BOoi =>
+                {
+                    Dal.DO.OrderItem DOoi = new Dal.DO.OrderItem();
+                    DOoi.Order_ID = id;
+                    DOoi.Product_Price = BOoi.Price;
+                    DOoi.Product_ID = BOoi.ProductID;
+                    DOoi.Product_Amount = BOoi.Amount;
+                    dal.iorderItem.Create(DOoi);
+                    Dal.DO.Product product = dal.iproduct.ReadSingle(p => p.ID == DOoi.Product_ID);
+                    product.InStock -= DOoi.Product_Amount;
+                    dal.iproduct.Update(product);
+                });
+            }
+            catch (Dal.DO.NotExistExceptions ex)
+            {
+                throw new BO.DataError(ex);
+            }
+            catch (BO.NotInStockException ex)
+            {
+                throw ex;
+            }
+            catch (BO.PropertyInValidException ex)
+            {
+                throw ex;
+            }
         }
 
     }

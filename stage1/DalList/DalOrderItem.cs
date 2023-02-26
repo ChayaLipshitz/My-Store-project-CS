@@ -12,6 +12,11 @@ namespace Dal
 {
     internal class DalOrderItem : IorderItem
     {
+        /// <summary>
+        /// create a new order item
+        /// </summary>
+        /// <param name="order_item"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public int Create(OrderItem order_item)
         {
@@ -19,6 +24,13 @@ namespace Dal
             DataSource.OrderItemsList.Add(order_item);
             return order_item.OrderItem_ID;
         }
+
+
+        /// <summary>
+        /// delete an order item from data source
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <exception cref="NotExistExceptions"></exception>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void Delete(int ID)
         {
@@ -32,6 +44,13 @@ namespace Dal
                 throw new NotExistExceptions();
             }
         }
+
+        /// <summary>
+        /// Update an exist order item
+        /// </summary>
+        /// <param name="order_item"></param>
+        /// <returns></returns>
+        /// <exception cref="NotExistExceptions"></exception>
         [MethodImpl(MethodImplOptions.Synchronized)]
 
         public bool Update(OrderItem order_item)
@@ -56,6 +75,11 @@ namespace Dal
             }
         }
 
+
+        /// <summary>
+        /// return all the order items with optional filter 
+        /// </summary>
+        /// <returns></returns>
         private IEnumerable<OrderItem> all_order_items()
         {
             return DataSource.OrderItemsList;
@@ -72,8 +96,15 @@ namespace Dal
             IEnumerable<OrderItem> OrderItems = all_order_items();
             return OrderItems.Where(f);
         }
-        [MethodImpl(MethodImplOptions.Synchronized)]
 
+
+        /// <summary>
+        /// return a single order item by a method of condition
+        /// </summary>
+        /// <param name="f"></param>
+        /// <returns></returns>
+        /// <exception cref="NotExistExceptions"></exception>
+        [MethodImpl(MethodImplOptions.Synchronized)]        
         public OrderItem ReadSingle(Func<OrderItem, bool> f)
         {
 

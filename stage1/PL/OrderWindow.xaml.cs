@@ -29,16 +29,6 @@ namespace PL
         Window window;
         public Tuple<BO.Order, bool> ToData { get; set; }
         public Cart? cart { get; set; }
-        // public static readonly DependencyProperty IsManagerProperty = DependencyProperty.Register(
-        //"IsSpinning", typeof(bool),
-        //typeof(ProductWindow)
-        //);
-
-        // public bool IsManager
-        // {
-        //     get => (bool)GetValue(IsManagerProperty);
-        //     set => SetValue(IsManagerProperty, value);
-        // }
         public bool IsManager { get; set; }
         /// <summary>
         /// Window of a specific order
@@ -53,8 +43,16 @@ namespace PL
             bl = BL;   
             window = window_;
             order = bl.iOrder.Read(orderId);
+            bl.iOrder.inUpdate += inUpdatingOrder;
             orderItemsview.ItemsSource = order.Items;
             IsManager =ismanager;
+            ToData = new(order, IsManager);
+            DataContext = ToData;
+        }
+
+        void inUpdatingOrder(int id)
+        {
+            order = bl.iOrder.Read(id);
             ToData = new(order, IsManager);
             DataContext = ToData;
         }

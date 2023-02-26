@@ -9,7 +9,8 @@ using System.Runtime.CompilerServices;
 namespace BlImplementation;
 internal class BlOrder : IOrder
 {
-    IDal dal = DalApi.Factory.Get()??null;
+    IDal dal = DalApi.Factory.Get() ?? null;
+    public event Action<int> inUpdate;
     /// <summary>
     /// converts a do order to a bo order
     /// </summary>
@@ -47,6 +48,8 @@ internal class BlOrder : IOrder
     /// <param name="Ship_Date">the order shipping date</param>
     /// <param name="Delivery_Date">the order delivery date</param>
     /// <returns>the order status</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     private BO.eOrderStatus calculateOrderStatus(DateTime? Ship_Date, DateTime? Delivery_Date)
     {
         if (Ship_Date == DateTime.MinValue)
@@ -126,7 +129,9 @@ internal class BlOrder : IOrder
                 throw new BO.OrderAlreadyException("shipped");
             order.Ship_Date = DateTime.Now;
             dal.iorder.Update(order);
-            return convertToBOorder(order);
+            BO.Order BOorder = convertToBOorder(order);
+            if (inUpdate != null) inUpdate(BOorder.OrderID);
+            return BOorder;
         }
         catch (Dal.DO.NotExistExceptions ex)
         {
@@ -158,7 +163,9 @@ internal class BlOrder : IOrder
                 throw new BO.OrderWasNotShippedException();
             order.Delivery_Date = DateTime.Now;
             dal.iorder.Update(order);
-            return convertToBOorder(order);
+            BO.Order BOorder = convertToBOorder(order);
+            if (inUpdate != null) inUpdate(BOorder.OrderID);
+            return BOorder;
         }
         catch (Dal.DO.NotExistExceptions ex)
         {
@@ -202,20 +209,14 @@ internal class BlOrder : IOrder
         if (order.TotalPrice != sum)
             throw new PropertyInValidException("total price");
 
-        //order.Items.ForEach(oi =>
-        //{
-        //    if (oi.Amount < 0)
-        //        throw new PropertyInValidException("amount");
-        //    if (oi.Price < 0)
-        //        throw new PropertyInValidException("price");
-        //    if (oi.Amount > dal.iproduct.ReadSingle(p => p.ID == oi.ProductID).InStock)
-        //        throw new NotInStockException(oi.Name);
-        //    sum += oi.TotalPrice;
-        //    });
-
     }
-    [MethodImpl(MethodImplOptions.Synchronized)]
 
+
+    /// <summary>
+    /// Updating an exist order. 
+    /// </summary>
+    /// <param name="order"></param>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(BO.Order order)
     {
         try
@@ -237,6 +238,11 @@ internal class BlOrder : IOrder
         }
     }
 
+
+    /// <summary>
+    /// Returns the order whose latest status change is the oldest
+    /// </summary>
+    /// <returns></returns>
     [MethodImpl(MethodImplOptions.Synchronized)]
 
     public Order TheNextOrderToCareFor()
@@ -249,7 +255,7 @@ internal class BlOrder : IOrder
             DateTime? lastof2 = o2.Delivery_Date != DateTime.MinValue ? o2.Delivery_Date : o2.Ship_Date != DateTime.MinValue ? o2.Ship_Date : o2.Order_Date;
             return lastof1 < lastof2 ? 1 : lastof1 > lastof2 ? -1 : 0;
         });
-        return convertToBOorder(allOrders.FirstOrDefault()) ;
+        return convertToBOorder(allOrders.FirstOrDefault());
     }
 }
 

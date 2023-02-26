@@ -206,14 +206,24 @@ internal class BlProduct : IProduct
             throw new BO.ProductExistsInOrderException();
         try
         {
-            dal.iproduct.Delete(ProductID);
-            return;
+            lock (dal)
+            {
+                dal.iproduct.Delete(ProductID);
+                return;
+            }
         }
         catch (Dal.DO.NotExistExceptions err)
         {
             throw new BO.DataError(err);
         }
     }
+
+
+    /// <summary>
+    /// return all the pruducts which in a specific category
+    /// </summary>
+    /// <param name="category"></param>
+    /// <returns></returns>
     [MethodImpl(MethodImplOptions.Synchronized)]
 
     public IEnumerable<BO.ProductForList> ReadByCategory(BO.eCategory category)
@@ -230,6 +240,11 @@ internal class BlProduct : IProduct
                                                         };
         return productForList;
     }
+
+    /// <summary>
+    /// read all the products
+    /// </summary>
+    /// <returns></returns>
     [MethodImpl(MethodImplOptions.Synchronized)]
 
     public IEnumerable<ProductItem> ReadCatalog()
