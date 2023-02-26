@@ -1,0 +1,28 @@
+﻿<Window x:Class="PL.NewOrderWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="NewOrderWindow" Height="450" Width="800">
+    <Grid>
+        <ListView x:Name="CatalogView" HorizontalAlignment="Center" Height="261" Margin="0,58,0,0" VerticalAlignment="Top" Width="800" d:ItemsSource="{d:SampleData ItemCount=5}" MouseDoubleClick="CatalogView_MouseDoubleClick">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ID}" Header="ID" Width="120"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="Name" Width="120"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Price}" Header="Price" Width="120"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Category}" Header="Category" Width="120"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Amount}" Header="Amount" Width="120"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=InStock}" Header="InStock" Width="200"/>
+
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Label Content="Products catalog:" HorizontalAlignment="Left" Height="35" Margin="70,18,0,0" VerticalAlignment="Top" Width="211" FontSize="18"/>
+        <Button x:Name="CartBTN" Content="view cart" HorizontalAlignment="Left" Height="63" Margin="284,342,0,0" VerticalAlignment="Top" Width="187" FontSize="24" FontWeight="Bold" Click="CartBTN_Click"/>
+        <Button x:Name="Back" Content="Back" HorizontalAlignment="Left" Margin="636,18,0,0" VerticalAlignment="Top" Height="34" Width="136" Click="back_Click" Background="Black" Foreground="#FFF4F9F1"/>
+
+    </Grid>
+</Window>

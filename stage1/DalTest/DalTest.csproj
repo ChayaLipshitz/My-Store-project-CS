@@ -1,17 +1,23 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <UseWPF>true</UseWPF>
 	  <BaseOutputPath>$(SolutionDir)\bin\</BaseOutputPath>
 	  <OutputPath>$(SolutionDir)\bin\</OutputPath>
 	  <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 	  <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
 	  <UseCommonOutputDirectory>true</UseCommonOutputDirectory>
+	  <RootNamespace>Dal</RootNamespace>
+
   </PropertyGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\BL\BL.csproj" />
-    <ProjectReference Include="..\Simulator\Simulator.csproj" />
+    <ProjectReference Include="..\DalList\DalList.csproj" />
+    <ProjectReference Include="..\DalXml\DalXml.csproj" />
+    <ProjectReference Include="..\Dal\DalFacade.csproj" />
   </ItemGroup>
+
 </Project>

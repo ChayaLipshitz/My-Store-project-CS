@@ -7,6 +7,7 @@ namespace Dal
         
     {
         private static DalList instance = new DalList();
+
         public static DalList Instance { get { return GetInstence(); } }
         public static DalList GetInstence()
         {

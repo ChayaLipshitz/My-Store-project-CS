@@ -12,7 +12,7 @@ namespace BO
         public string? CustomerName { get; set; }
         public int AmountOfItems { get; set; }
         public eOrderStatus? Status { get; set; }
-        public double TotalPrice { get; set; }
+        public double? TotalPrice { get; set; }
         public override string ToString()
         {
             return $"ID: {ID}\n" +

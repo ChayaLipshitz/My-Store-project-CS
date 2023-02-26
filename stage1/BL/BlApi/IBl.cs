@@ -11,5 +11,7 @@ namespace BlApi
         public IOrder iOrder { get;  }
         public IProduct iProduct { get; }
         public ICart iCart { get;  }
+        //public static event Action<int> inUpdate;
+
     }
 }

@@ -17,7 +17,7 @@ public class Order
     public DateTime? Ship_Date { get; set; }
     public DateTime? Delivery_Date { get; set; }
     public List<OrderItem?>? Items { get; set; } = new();
-    public double TotalPrice { get; set; }
+    public double? TotalPrice { get; set; }
 
     public override string ToString()
     {

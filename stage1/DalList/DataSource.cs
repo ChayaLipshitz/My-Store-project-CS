@@ -25,7 +25,7 @@ public class DataSource
     static private void CreateProductsList()
     {
         string[] productsName = { "apples", "doritos", "potatos" };
-        for (int i = 0; i < 20;i++)
+        for (int i = 0; i < 50;i++)
         {
             Product product = new Product();
             int nameIndex = (int)rand.NextInt64(productsName.Length);
@@ -45,7 +45,7 @@ public class DataSource
         string[] Customer_Email = { "d", "e", "f" };
         string[] Customer_Address = { "h", "i", "j" };
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 100; i++)
         {
             Order order = new Order();
             int nameIndex = (int)rand.NextInt64(customers_Name.Length);
@@ -55,18 +55,28 @@ public class DataSource
             order.Customer_Email = Customer_Email[emailIndex];
             order.Customer_Address = Customer_Address[addressIndex];
             order.ID = Config.Order_ID;
-            order.Order_Date = DateTime.MinValue;
-            TimeSpan shipDelay = TimeSpan.FromDays(2);
-            TimeSpan deliveryDelay = TimeSpan.FromDays(2);
-            order.Ship_Date =  order.Order_Date + shipDelay;
-            order.Delivery_Date = order.Ship_Date + deliveryDelay;
+            order.Order_Date = DateTime.Now;
+            order.Ship_Date = DateTime.MinValue;
+            order.Delivery_Date = DateTime.MinValue;
+            int randShipped = (int)rand.NextInt64(0, 4);
+            if (randShipped > 0)
+            {
+                TimeSpan shipDelay = TimeSpan.FromDays(randShipped * 2);
+                order.Ship_Date = order.Order_Date + shipDelay;
+                int randDelivered = (int)rand.NextInt64(0, 3);
+                if (randDelivered > 0)
+                {
+                    TimeSpan deliveryDelay = TimeSpan.FromDays(randDelivered * (randShipped * 2) * 4);
+                    order.Delivery_Date = order.Order_Date + deliveryDelay;
+                }
+            }
             OrdersList.Add(order);
         }
     }
 
     static private void CreateOrderItemsList()
     {
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 200; i++)
         {
             OrderItem orderItem = new OrderItem();
             orderItem.Product_Price = (int)rand.NextInt64(1, 100);

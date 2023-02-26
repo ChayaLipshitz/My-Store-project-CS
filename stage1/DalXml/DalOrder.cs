@@ -3,6 +3,7 @@ using DalApi;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -30,10 +31,12 @@ namespace Dal
             return orderID;
         }
         /// <summary>
-         /// creatnig a new order
-         /// </summary>
-         /// <param name="order"></param>
-         /// <returns></returns>
+        /// creatnig a new order
+        /// </summary>
+        /// <param name="order"></param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public int Create(Order order)
         {
 
@@ -55,6 +58,8 @@ namespace Dal
         /// Deleting a certain order
         /// </summary>
         /// <param name="id"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public void Delete(int id)
         {
             XmlRootAttribute xRoot = new XmlRootAttribute();
@@ -75,6 +80,8 @@ namespace Dal
         /// </summary>
         /// <param name="f"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public IEnumerable<OrderItem> ProductsInOrder(int ID)
         {
             XmlRootAttribute xRoot = new XmlRootAttribute();
@@ -86,6 +93,8 @@ namespace Dal
             sread.Close();
             return orderItemsList.Where(oi => oi.Order_ID == ID);
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public IEnumerable<Order> ReadByFilter(Func<Order, bool> f = null)
         {
             XmlRootAttribute xRoot = new XmlRootAttribute();
@@ -104,6 +113,8 @@ namespace Dal
         /// </summary>
         /// <param name="f">filter function</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public Order ReadSingle(Func<Order, bool> f)
         {
             XmlRootAttribute xRoot = new XmlRootAttribute();
@@ -113,7 +124,16 @@ namespace Dal
             XmlSerializer ser = new XmlSerializer(typeof(List<Order>), xRoot);
             List<Order> OrdersList = (List<Order>)ser.Deserialize(sread);
             sread.Close();
-            return OrdersList.Where(f).First();
+            try
+            {
+              Order  order = OrdersList.Where(f).First();
+                return order;
+            }
+            catch (Exception ex)
+            {
+                throw new NotExistExceptions();
+            }
+           
 
         }
         /// <summary>
@@ -122,6 +142,7 @@ namespace Dal
         /// <param name="orderItem"></param>
         /// <returns></returns>
         /// <exception cref="NotExistExceptions"></exception>
+        [MethodImpl(MethodImplOptions.Synchronized)]
 
         public bool Update(Order obj)
         {

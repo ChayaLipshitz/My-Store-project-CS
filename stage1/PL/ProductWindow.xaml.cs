@@ -1,59 +1,68 @@
 ﻿using BlApi;
+using BO;
 using System;
+using System.Collections;
 using System.Windows;
 using System.Windows.Controls;
-namespace PL
-{
+namespace PL {
+
     /// <summary>
     /// Interaction logic for ProductWindow.xaml
     /// </summary>
     public partial class ProductWindow : Window
     {
-        BO.Product product = new();
+        public BO.Product product { get; set; } = new();
+        public Cart? cart { get; set; }
+
+        public Tuple<Product, bool,bool,string?> ToData { get; set; } 
         private IBl bl;
-        public int productID { get; set; } 
         private bool ToUpdate { get; set; } = false;
-        
+        private bool ToAdd { get; set; } = false;
+        public Window window { get; set; }
+        //////////////----------dependency object!!-----------////////////////////
+        public static readonly DependencyProperty IsManagerProperty = DependencyProperty.Register(
+        "IsManager", typeof(bool),
+        typeof(ProductWindow)
+        );
+
+        public bool IsManager
+        {
+            get => (bool)GetValue(IsManagerProperty);
+            set => SetValue(IsManagerProperty, value);
+        }
 
         /// <summary>
         /// conctructor of this page
         /// </summary>
         /// <param name="Bl"></param>
         /// <param name="id">in case of update product</param>
-        public ProductWindow(IBl Bl, int? id=null)
+        public ProductWindow(IBl Bl, Window window_, int? id = null, BO.Cart? cart_ = null)
         {
-            bl = Bl;
+            if (Bl == null) MessageBox.Show("there is a problem!!!!!");
             InitializeComponent();
+            bl = Bl;
+            cart = cart_ ?? null;
+            window = window_;
             categorySelector.ItemsSource = Enum.GetValues(typeof(BO.eCategory));
             if (id != null)
             {
-                productID=(int)id;
-                ToUpdate = true;
-                deleteBTN.Visibility = Visibility.Visible;    
                 product = bl.iProduct.ProductDetails((int)id);
-                NameTXT.Text = product.Name;
-                PriceTXT.Text = product.Price.ToString();
-                InStockTXT.Text = product.InStock.ToString();
-                categorySelector.Text = product.Category.ToString();
-                AddUpdateBTN.Content = "update the product";
+                if (cart == null)
+                {
+                    ToUpdate = true;
+                }                
             }
             else
             {
-                AddUpdateBTN.Content = "add the product";
-                categorySelector.Text =((BO.eCategory)0).ToString();
+                ToAdd = true;
+                product.Category = (BO.eCategory)0;
             }
+            IsManager = (cart == null);
+            ToData = new(product, IsManager, !IsManager, ToAdd ? "Add the product" : ToUpdate ? "Update the product" : "");
+            DataContext = ToData;
         }
 
 
-        /// <summary>
-        /// gets the values of the category enums
-        /// </summary>
-        private void categorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            product.Category = (BO.eCategory)categorySelector.SelectedItem;
-
-        }
-       
         /// <summary>
         /// go back to the products list window
         /// </summary>
@@ -61,76 +70,89 @@ namespace PL
         /// <param name="e"></param>
         private void back_Click(object sender, RoutedEventArgs e)
         {
-            new ProductListWindow(bl).Show();
+            window.Show();
             this.Hide();
         }
-        private void NameTXT_TextChanged(object sender, TextChangedEventArgs e)
-        {
 
-        }
-
-        private void PriceTXT_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void InStockTXT_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
+        /// <summary>
+        /// Deleting the product
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void deleteBTN_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-             if(   MessageBox.Show($"are you sure you want to delete {product.Name}", "", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (MessageBox.Show($"Are you sure you want to delete {product.Name}?", $"Deleting {product.Name}", MessageBoxButton.OKCancel, MessageBoxImage.Question) == MessageBoxResult.OK)
                 {
-                    bl.iProduct.Delete(productID);
-                    MessageBox.Show("the product was deleted!");
+                    bl.iProduct.Delete(product.ID);
+                    MessageBox.Show("The product has been successfully deleted!", "", MessageBoxButton.OK, MessageBoxImage.Asterisk);
                     new ProductListWindow(bl).Show();
                     this.Hide();
                 }
-               
             }
-            catch(Exception err)
+            catch (Exception err)
             {
-                MessageBox.Show(err.Message);
+                MessageBox.Show(err.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
         /// <summary>
         /// the function takes the properties from the user and update/create the product
         /// </summary>
-
-        private void AddUpdateBTN_Click(object sender, RoutedEventArgs e)
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AddToStore_Or_UpdateBTN_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                product.Name = NameTXT.Text;
-                product.Price = PriceTXT.Text == "" ? -1 : Convert.ToDouble(PriceTXT.Text);
-                product.InStock = InStockTXT.Text == "" ? -1 : Convert.ToInt32(InStockTXT.Text);
-                product.Category = (BO.eCategory)categorySelector.SelectedItem;
                 if (ToUpdate)
+                {
                     bl.iProduct.Update(product);
+                    MessageBox.Show("Product updated successfully!", "Update profuct", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
                 else
+                {
                     bl.iProduct.Add(product);
+                    MessageBox.Show("Product added successfully!", "Add profuct", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                }
                 new ProductListWindow(bl).Show();
                 this.Hide();
             }
             catch (Dal.DO.DuplicateIdExceptions err)
             {
-                MessageBox.Show(err.Message);
+                MessageBox.Show(err.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (BO.PropertyInValidException err)
             {
-                MessageBox.Show(err.Message);
-
+                MessageBox.Show(err.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.Message);
+                MessageBox.Show(err.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
-
         }
-    }
+
+        /// <summary>
+        /// The function add the product to the cart.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AddToCartBTN_Click_1(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                bl.iCart.addOrderItem(cart, product.ID);
+                new NewOrderWindow(bl, this, cart).Show();
+                this.Hide();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            }
+        }
+
+    }    
 }

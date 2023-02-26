@@ -1,10 +1,16 @@
 ﻿
 using BlApi;
+using BO;
 using DalApi;
+using System.Linq;
+using System.Runtime.CompilerServices;
+
+
 namespace BlImplementation;
-internal class BlOrder:IOrder
+internal class BlOrder : IOrder
 {
-    IDal dal = DalApi.Factory.Get();
+    IDal dal = DalApi.Factory.Get() ?? null;
+    public event Action<int> inUpdate;
     /// <summary>
     /// converts a do order to a bo order
     /// </summary>
@@ -21,20 +27,19 @@ internal class BlOrder:IOrder
         BOorder.Delivery_Date = DOorder.Delivery_Date;
         BOorder.Ship_Date = DOorder.Ship_Date;
         BOorder.Status = calculateOrderStatus((DateTime)BOorder.Ship_Date, (DateTime)BOorder.Delivery_Date);
-        BOorder.TotalPrice = 0;
         IEnumerable<Dal.DO.OrderItem> orderItems = dal.iorder.ProductsInOrder(DOorder.ID);
-        foreach (Dal.DO.OrderItem DOorderitem in orderItems)
-        {
-            BO.OrderItem BOorderItem = new BO.OrderItem();
-            BOorderItem.ID = DOorderitem.Order_ID;
-            BOorderItem.Name = dal.iproduct.ReadSingle(p=>p.ID== DOorderitem.Product_ID).Name;
-            BOorderItem.ProductID = DOorderitem.Product_ID;
-            BOorderItem.Amount = DOorderitem.Product_Amount;
-            BOorderItem.Price = DOorderitem.Product_Price;
-            BOorderItem.TotalPrice = BOorderItem.Amount * BOorderItem.Price;
-            BOorder.TotalPrice += BOorderItem.TotalPrice;
-            BOorder.Items.Add(BOorderItem);
-        }
+        BOorder.Items = (from DOorderitem in orderItems
+                         select new BO.OrderItem
+                         {
+                             ID = DOorderitem.OrderItem_ID,
+                             Name = dal.iproduct.ReadSingle(p => p.ID == DOorderitem.Product_ID).Name,
+                             ProductID = DOorderitem.Product_ID,
+                             Amount = DOorderitem.Product_Amount,
+                             Price = DOorderitem.Product_Price,
+                             TotalPrice = DOorderitem.Product_Amount * DOorderitem.Product_Price
+
+                         }).ToList();
+        BOorder.TotalPrice = BOorder.Items.Sum(item => item.TotalPrice);
         return BOorder;
     }
     /// <summary>
@@ -43,10 +48,12 @@ internal class BlOrder:IOrder
     /// <param name="Ship_Date">the order shipping date</param>
     /// <param name="Delivery_Date">the order delivery date</param>
     /// <returns>the order status</returns>
-    private BO.eOrderStatus calculateOrderStatus( DateTime? Ship_Date, DateTime? Delivery_Date)
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
+    private BO.eOrderStatus calculateOrderStatus(DateTime? Ship_Date, DateTime? Delivery_Date)
     {
         if (Ship_Date == DateTime.MinValue)
-           return BO.eOrderStatus.ORDERED;
+            return BO.eOrderStatus.ORDERED;
         else if (Delivery_Date == DateTime.MinValue)
             return BO.eOrderStatus.SHIPPED;
         else
@@ -56,42 +63,41 @@ internal class BlOrder:IOrder
     /// read all orders from the database
     /// </summary>
     /// <returns>returns all the orders</returns>
+    /// 
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public IEnumerable<BO.OrderForList> ReadAll()
     {
-        List<BO.OrderForList> ordersForList = new List<BO.OrderForList>();
         IEnumerable<Dal.DO.Order> allOrders = dal.iorder.ReadByFilter();
-        foreach (Dal.DO.Order order in allOrders)
-        {
-            BO.OrderForList orderForList = new BO.OrderForList();
-            orderForList.ID = order.ID;
-            orderForList.CustomerName = order.Customer_Name;
-            orderForList.AmountOfItems = 0;
-            orderForList.TotalPrice = 0;
-            IEnumerable<Dal.DO.OrderItem> orderItems = dal.iorder.ProductsInOrder(order.ID);
-            foreach (Dal.DO.OrderItem oi in orderItems)
-            {
-                orderForList.AmountOfItems += oi.Product_Amount;
-                orderForList.TotalPrice += oi.Product_Price * oi.Product_Amount;
-            }
-            orderForList.Status = calculateOrderStatus(order.Ship_Date, order.Delivery_Date);
-            ordersForList.Add(orderForList);
-        }
+        IEnumerable<BO.OrderForList> ordersForList = from order in allOrders
+                                                     let orderItems = dal.iorder.ProductsInOrder(order.ID)
+                                                     select new BO.OrderForList
+                                                     {
+                                                         ID = order.ID,
+                                                         CustomerName = order.Customer_Name,
+                                                         AmountOfItems = orderItems.Sum(oi => oi.Product_Amount),
+                                                         TotalPrice = orderItems.Sum(oi => oi.Product_Amount * oi.Product_Price),
+                                                         Status = calculateOrderStatus(order.Ship_Date, order.Delivery_Date),
+                                                     };
         return ordersForList;
     }
-   /// <summary>
-   /// reading a certain order by order id
-   /// </summary>
-   /// <param name="OrderId">order id</param>
-   /// <returns>returns the order</returns>
-   /// <exception cref="BO.DataError"></exception>
-   /// <exception cref="BO.PropertyInValidException"></exception>
+    /// <summary>
+    /// reading a certain order by order id
+    /// </summary>
+    /// <param name="OrderId">order id</param>
+    /// <returns>returns the order</returns>
+    /// <exception cref="BO.DataError"></exception>
+    /// <exception cref="BO.PropertyInValidException"></exception>
+    /// 
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public BO.Order Read(int OrderId)
     {
         if (OrderId >= 0)
         {
             try
             {
-                Dal.DO.Order DOorder = dal.iorder.ReadSingle(p=>p.ID==OrderId);                
+                Dal.DO.Order DOorder = dal.iorder.ReadSingle(p => p.ID == OrderId);
                 return convertToBOorder(DOorder);
             }
             catch (Dal.DO.NotExistExceptions err)
@@ -109,18 +115,23 @@ internal class BlOrder:IOrder
     /// <exception cref="BO.PropertyInValidException"></exception>
     /// <exception cref="BO.OrderAlreadyException"></exception>
     /// <exception cref="BO.DataError"></exception>
+    /// 
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public BO.Order UpdateOrderShipped(int OrderId)
     {
         if (OrderId < 0)
             throw new BO.PropertyInValidException("ID");
         try
         {
-            Dal.DO.Order order = dal.iorder.ReadSingle(p=>p.ID==OrderId);
+            Dal.DO.Order order = dal.iorder.ReadSingle(p => p.ID == OrderId);
             if (order.Ship_Date != DateTime.MinValue)
                 throw new BO.OrderAlreadyException("shipped");
             order.Ship_Date = DateTime.Now;
             dal.iorder.Update(order);
-            return convertToBOorder(order);
+            BO.Order BOorder = convertToBOorder(order);
+            if (inUpdate != null) inUpdate(BOorder.OrderID);
+            return BOorder;
         }
         catch (Dal.DO.NotExistExceptions ex)
         {
@@ -137,6 +148,7 @@ internal class BlOrder:IOrder
     /// <exception cref="BO.OrderAlreadyException"></exception>
     /// <exception cref="BO.OrderWasNotShippedException"></exception>
     /// <exception cref="BO.DataError"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     public BO.Order UpdateOrderDelivered(int OrderId)
     {
@@ -144,14 +156,16 @@ internal class BlOrder:IOrder
             throw new BO.PropertyInValidException("ID");
         try
         {
-            Dal.DO.Order order = dal.iorder.ReadSingle(o=>o.ID==OrderId);
+            Dal.DO.Order order = dal.iorder.ReadSingle(o => o.ID == OrderId);
             if (order.Delivery_Date != DateTime.MinValue)
                 throw new BO.OrderAlreadyException("delivered");
-            if(order.Ship_Date == DateTime.MinValue)
-               throw new BO.OrderWasNotShippedException();
+            if (order.Ship_Date == DateTime.MinValue)
+                throw new BO.OrderWasNotShippedException();
             order.Delivery_Date = DateTime.Now;
             dal.iorder.Update(order);
-            return convertToBOorder(order);
+            BO.Order BOorder = convertToBOorder(order);
+            if (inUpdate != null) inUpdate(BOorder.OrderID);
+            return BOorder;
         }
         catch (Dal.DO.NotExistExceptions ex)
         {
@@ -163,27 +177,86 @@ internal class BlOrder:IOrder
     /// </summary>
     /// <param name="OrderId">order id</param>
     /// <returns>returns the order tracking</returns>
+    /// 
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public BO.OrderTracking Tracking(int OrderId)
     {
         try
         {
-            Dal.DO.Order order = dal.iorder.ReadSingle(o=>o.ID==OrderId);
+            Dal.DO.Order order = dal.iorder.ReadSingle(o => o.ID == OrderId);
             BO.OrderTracking orderTracking = new BO.OrderTracking();
             orderTracking.ID = order.ID;
             orderTracking.Status = calculateOrderStatus(order.Ship_Date, order.Delivery_Date);
-            if (order.Order_Date != DateTime.MinValue)
-                orderTracking.dateAndStatus.Add((order.Order_Date, BO.eOrderStatus.ORDERED));
-            if(order.Ship_Date != DateTime.MinValue)    
-            orderTracking.dateAndStatus.Add((order.Ship_Date, BO.eOrderStatus.SHIPPED));
-            if (order.Delivery_Date != DateTime.MinValue)    
-            orderTracking.dateAndStatus.Add((order.Delivery_Date, BO.eOrderStatus.DELIVERED));
+            // if (order.Order_Date != DateTime.MinValue)
+            orderTracking.dateAndStatus.Add(new Tuple<DateTime?, eOrderStatus?>(order.Order_Date, BO.eOrderStatus.ORDERED));
+            if (order.Ship_Date != DateTime.MinValue)
+                orderTracking.dateAndStatus.Add(new Tuple<DateTime?, eOrderStatus?>(order.Ship_Date, BO.eOrderStatus.SHIPPED));
+            if (order.Delivery_Date != DateTime.MinValue)
+                orderTracking.dateAndStatus.Add(new Tuple<DateTime?, eOrderStatus?>(order.Delivery_Date, BO.eOrderStatus.DELIVERED));
             return orderTracking;
         }
-        catch(Dal.DO.NotExistExceptions ex)
+        catch (Dal.DO.NotExistExceptions ex)
         {
-            throw(new BO.DataError(ex));
+            throw (new BO.DataError(ex));
+        }
+    }
+    private void checkObjValidation(BO.Order order)
+    {
+        if (order.Delivery_Date != DateTime.MinValue)
+            throw new OrderAlreadyException("delivered");
+        double? sum = order.Items.Sum(oi => oi.TotalPrice);
+        if (order.TotalPrice != sum)
+            throw new PropertyInValidException("total price");
+
+    }
+
+
+    /// <summary>
+    /// Updating an exist order. 
+    /// </summary>
+    /// <param name="order"></param>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+    public void Update(BO.Order order)
+    {
+        try
+        {
+            checkObjValidation(order);
+            Dal.DO.Order DOorder = new();
+            DOorder.ID = order.OrderID;
+            DOorder.Order_Date = order.Order_Date;
+            DOorder.Ship_Date = order.Ship_Date;
+            DOorder.Customer_Email = order.CustomerEmail;
+            DOorder.Customer_Address = order.CustomerAddress;
+            DOorder.Customer_Name = order.CustomerName;
+            DOorder.Delivery_Date = order.Delivery_Date;
+            dal.iorder.Update(DOorder);
+        }
+        catch (Exception ex)
+        {
+            throw ex;
         }
     }
 
 
+    /// <summary>
+    /// Returns the order whose latest status change is the oldest
+    /// </summary>
+    /// <returns></returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
+    public Order TheNextOrderToCareFor()
+    {
+        var allOrders = dal.iorder.ReadByFilter(oi => oi.Delivery_Date == DateTime.MinValue).ToList();
+        if (allOrders.Count == 0) return null;
+        allOrders.Sort((o1, o2) =>
+        {
+            DateTime? lastof1 = o1.Delivery_Date != DateTime.MinValue ? o1.Delivery_Date : o1.Ship_Date != DateTime.MinValue ? o1.Ship_Date : o1.Order_Date;
+            DateTime? lastof2 = o2.Delivery_Date != DateTime.MinValue ? o2.Delivery_Date : o2.Ship_Date != DateTime.MinValue ? o2.Ship_Date : o2.Order_Date;
+            return lastof1 < lastof2 ? 1 : lastof1 > lastof2 ? -1 : 0;
+        });
+        return convertToBOorder(allOrders.FirstOrDefault());
+    }
 }
+
+

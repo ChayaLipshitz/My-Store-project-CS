@@ -1,0 +1,53 @@
+﻿<Window x:Class="PL.CartWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="CartWindow" Height="450" Width="800">
+    <Grid>
+        <Button x:Name="Back" Content="Back" HorizontalAlignment="Left" Margin="638,14,0,0" VerticalAlignment="Top" Height="34" Width="136" Click="back_Click" Background="Black" Foreground="#FFF4F9F1" FontSize="20" />
+
+        <Label Content="Customer name:" HorizontalAlignment="Left" Height="30" Margin="31,154,0,0" VerticalAlignment="Top" Width="119"/>
+        <Label Content="Please enter your details" HorizontalAlignment="Left" Height="28" Margin="31,113,0,0" VerticalAlignment="Top" Width="203" FontWeight="Bold" FontSize="16"/>
+        <TextBox x:Name="CustomerNameTXT" HorizontalAlignment="Left" Height="28" Margin="155,156,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="110"/>
+        <Label Content="Customer email:" HorizontalAlignment="Left" Height="27" Margin="31,198,0,0" VerticalAlignment="Top" Width="94"/>
+        <TextBox x:Name="CustomerEmailTXT" HorizontalAlignment="Left" Height="27" Margin="155,198,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="110"/>
+        <Label Content="Customer Address" HorizontalAlignment="Left" Height="26" Margin="31,247,0,0" VerticalAlignment="Top" Width="102"/>
+        <TextBox x:Name="CustomerAddressTXT" HorizontalAlignment="Left" Height="26" Margin="155,247,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="110"/>
+        <ListView x:Name="ProductsView" HorizontalAlignment="Left" Height="303" Margin="295,0,0,0" VerticalAlignment="Center" Width="495" ItemsSource="{Binding}" d:ItemsSource="{d:SampleData ItemCount=5}" >
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ID, Mode=TwoWay}" Header="ID" Width="40"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name, Mode=TwoWay}" Header="Name" Width="80"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ProductID, Mode=TwoWay}" Header="ProductID" Width="80"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Price, Mode=TwoWay}" Header="Price" Width="80"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=TotalPrice, Mode=TwoWay}" Header="TotalPrice" Width="80"/>
+                    <GridViewColumn Header = "Amount" Width="80" >
+                        <GridViewColumn.CellTemplate >
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button x:Name="MinusBTN" Content="-" Height="17" Width="17" Click="MinusBTN_Click" />
+                                    <TextBox Text = "{Binding Path=Amount, Mode=TwoWay}" Height="17" x:Name="newAmountTxt" Width="30"/>
+                                    <Button x:Name="PlusBTN" Content="+" Height="17" Width="17" Click="PlusBTN_Click" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header = "delete" Width="50" >
+                        <GridViewColumn.CellTemplate >
+                            <DataTemplate>
+                                <Button Content = "❌" x:Name="DeleteBTN" Width="35" Click="DeleteBTN_Click"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Label Content="Products in cart" HorizontalAlignment="Left" Height="31" Margin="402,15,0,0" VerticalAlignment="Top" Width="196" FontWeight="Bold" FontSize="16"/>
+        <Button x:Name="SubmitOrderBTN" Content="Submit order" HorizontalAlignment="Left" Height="51" Margin="50,355,0,0" VerticalAlignment="Top" Width="179" FontWeight="Bold" FontSize="18" Background="#FF4AEA12" Click="SubmitOrderBTN_Click"/>
+
+    </Grid>
+</Window>

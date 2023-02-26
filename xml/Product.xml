@@ -14,11 +14,4 @@
     <Category>FRUITS</Category>
     <InStock>80</InStock>
   </Product>
-  <Product>
-    <ID>111114</ID>
-    <Name>dddd</Name>
-    <Price>5.5</Price>
-    <Category>FRUITS</Category>
-    <InStock>50</InStock>
-  </Product>
 </Products>

@@ -1,5 +1,6 @@
 ﻿using Dal.DO;
 using DalApi;
+using System.Runtime.CompilerServices;
 
 namespace Dal;
 
@@ -9,7 +10,10 @@ internal class DalProduct: Iproduct
     /// creating a new product
     /// </summary>
     /// <param name="product"></param>
-    /// <returns>return the order id</returns>
+    /// <returns>return the order id</returns>\
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public int Create(Product product)
     {
        
@@ -23,40 +27,46 @@ internal class DalProduct: Iproduct
     /// <param name="product"></param>
     /// <returns>1 in case of succeed</returns>
     /// <exception cref="NotExistExceptions"></exception>
+    /// 
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public bool Update(Product product)
     {
-        for (int i = 0; i < DataSource.ProductsList.Count(); i++)
-        {
-            if (DataSource.ProductsList[i].ID == product.ID)
-            {
-                DataSource.ProductsList[i] = product;
-                return true;
-            }
-        }
-            throw new NotExistExceptions();
+        int index = DataSource.ProductsList.FindIndex(p => p.ID == product.ID);
+        if (index == -1) throw new NotExistExceptions();
+        DataSource.ProductsList[index] = product;
+        return true;
+        
     }
+
     /// <summary>
     /// Deleting a certain product
     /// </summary>
     /// <param name="ID"></param>
     /// <exception cref="NotExistExceptions"></exception>
-    public void Delete(int ID)
+    /// 
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
+    public void Delete(int id)
     {
-        foreach(Product p in DataSource.ProductsList)
+        try
         {
-            if (p.ID == ID)
-            {
-                DataSource.ProductsList.Remove(p);
-                return;
-            }
+            Product p = DataSource.ProductsList.Where(p => p.ID == id).First();
+            DataSource.ProductsList.Remove(p);
         }
-        throw new NotExistExceptions();
+        catch (InvalidOperationException e)
+        {
+            throw new NotExistExceptions();
+        }
     }
-    
+
     /// <summary>
     /// Reading  the product list by an optional given filter 
     /// </summary>
     /// <returns>the product list</returns>
+    /// 
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public IEnumerable<Product> ReadByFilter(Func<Product, bool>? f = null)
     {
         if (f == null)
@@ -72,6 +82,9 @@ internal class DalProduct: Iproduct
     /// <param name="f"></param>
     /// <returns></returns>
     /// <exception cref="NotExistExceptions"></exception>
+    /// 
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public Product ReadSingle(Func<Product, bool> f)
     {
         IEnumerable<Product> products = DataSource.ProductsList;
