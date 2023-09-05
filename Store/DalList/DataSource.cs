@@ -1,4 +1,7 @@
 ﻿using Dal.DO;
+using System.Net;
+using System.Threading;
+
 namespace Dal;
 public class DataSource
 {
@@ -24,8 +27,12 @@ public class DataSource
     }
     static private void CreateProductsList()
     {
-        string[] productsName = { "apples", "doritos", "potatos" };
-        for (int i = 0; i < 50;i++)
+        string[] productsName = { "Apples", "Doritos", "Potatos",
+        "Grain", "wheat", "rye", "oats", "corn", "rice", "bakery goods", "bread", "rolls", "cakes", "cookies", "pies",
+         "white bread", "whole-wheat bread", "rye bread","buns.sesame roll", "cinnamon roll", "hamburger bun", "hot dog bun",
+        "Cookies and crackers" };
+
+        for (int i = 0; i < 50; i++)
         {
             Product product = new Product();
             int nameIndex = (int)rand.NextInt64(productsName.Length);
@@ -37,7 +44,7 @@ public class DataSource
             product.Category = (eCategory)x;
             product.ID = Config.Product_ID;
             ProductsList.Add(product);
-        } 
+        }
     }
     static private void CreateOrdersList()
     {
