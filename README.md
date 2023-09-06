@@ -35,7 +35,7 @@ The Store App is an application that allows customers and managers to manage an 
 * Usage instructions  
 
 ### Manager:  
-- To log in to your manager account, click the "Login" button and enter your username and password.  
+- To log in to your manager account, click the "Admin" button and enter your username and password.  
 - To add a product, click the "Add Product" button.  
 - To update a product, click the product you want to update.  
 - To delete a product, click the product you want to delete.  
@@ -44,12 +44,12 @@ The Store App is an application that allows customers and managers to manage an 
    
 ### Customer:  
  
--- To view your orders, click the "Orders" button, and enter your order ID.
--- To create a new order, click the "Add Order" button.
--- To add a product to an order, click the product you want to add.
--- To update the quantity of a product in an order, click the product you want to update.
--- To remove a product from an order, click the product you want to remove.
--- To submit an order, click the "Submit Order" button.
+- To view your orders, click the "Orders" button, and enter your order ID.
+- To create a new order, click the "New Order" button.
+- To add a product to an order, click the product you want to add.
+- To update the quantity of a product in an order, click the product you want to update.
+- To remove a product from an order, click the product you want to remove.
+- To submit an order, click the "Submit Order" button.
 
 ***
   
