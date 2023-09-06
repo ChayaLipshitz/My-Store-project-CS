@@ -14,7 +14,15 @@ The Store App is an application that allows customers and managers to manage an 
 ### Customer:
 * Can view their orders.
 * Can create new orders.
-  
+  *****
+### Simulation
+
+The Store App includes a simulation feature that simulates the order processing system.   
+Every random interval of seconds, the system takes the order that has been waiting the longest and processes it, advancing its status from ORDERED to SHIPPED or from SHIPPED to DELIVERED.
+
+The simulation is a helpful tool for testing the performance of the order processing system. It can also be used to evaluate different order processing strategies.
+
+
 ****
 ## Technologies
 
@@ -50,6 +58,11 @@ The Store App is an application that allows customers and managers to manage an 
 - To update the quantity of a product in an order, click the product you want to update.
 - To remove a product from an order, click the product you want to remove.
 - To submit an order, click the "Submit Order" button.
+
+### Simulation:
+- To start the simulation, click the "Start Simulation" button in the landing page.
+- To stop The simulation, click the "Stop Simulation" button in the simulation page.
+- If the simulation system finish to pocess the all orders, this page sill closed by default.
 
 ***
   
