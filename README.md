@@ -14,7 +14,7 @@ The Store App is an application that allows customers and managers to manage an 
 ### Customer:
 * Can view their orders.
 * Can create new orders.
-  *****
+
 ### Simulation
 
 The Store App includes a simulation feature that simulates the order processing system.   
