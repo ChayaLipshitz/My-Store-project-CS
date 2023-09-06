@@ -43,14 +43,15 @@ The Store App is an application that allows customers and managers to manage an 
 - To update the status of an order, click the order you want to update.
    
 ### Customer:  
+ 
+-- To view your orders, click the "Orders" button, and enter your order ID.
+-- To create a new order, click the "Add Order" button.
+-- To add a product to an order, click the product you want to add.
+-- To update the quantity of a product in an order, click the product you want to update.
+-- To remove a product from an order, click the product you want to remove.
+-- To submit an order, click the "Submit Order" button.
 
-- To log in to your customer account, click the "Login" button and enter your username and password.  
-- To view your orders, click the "Orders" button.
-- To create a new order, click the "Add Order" button.
-- To add a product to an order, click the product you want to add.
-- To update the quantity of a product in an order, click the product you want to update.
-- To remove a product from an order, click the product you want to remove.
-- To submit an order, click the "Submit Order" button.
+***
   
 
 Thank you for using our Store App!
