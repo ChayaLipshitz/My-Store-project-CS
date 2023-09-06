@@ -63,7 +63,7 @@ The simulation is a helpful tool for testing the performance of the order proces
 ### Simulation:
 - To start the simulation, click the "Start Simulation" button in the landing page.
 - To stop The simulation, click the "Stop Simulation" button in the simulation page.
-- If the simulation system finish to pocess the all orders, this page sill closed by default.
+- If the simulation system finish to process all the orders, this page will closed by default.
       
 ***
   
