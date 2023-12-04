@@ -83,4 +83,8 @@ The simulation is a helpful tool for testing the performance of the order proces
 #### Order window
 ![image](https://github.com/ChayaLipshitz/My-Store-project-CS/assets/113462696/a2fc72f9-1c5c-43e8-b0f0-8ce6bc19efad)
 
+#### Simulation
+![image](https://github.com/ChayaLipshitz/My-Store-project-CS/assets/113462696/cc32c98d-7752-4091-952f-cb3d270356e4)
+
+
 Thank you for using our Store App!
