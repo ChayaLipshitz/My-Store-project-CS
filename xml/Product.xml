@@ -2,14 +2,14 @@
 <Products>
   <Product>
     <ID>111111</ID>
-    <Name>shalgon</Name>
+    <Name>Shalgon</Name>
     <Price>9</Price>
     <Category>FROZEN</Category>
     <InStock>2</InStock>
   </Product>
   <Product>
     <ID>111113</ID>
-    <Name>kiwi</Name>
+    <Name>Kiwi</Name>
     <Price>4</Price>
     <Category>FRUITS</Category>
     <InStock>80</InStock>

@@ -28,9 +28,8 @@ public class DataSource
     static private void CreateProductsList()
     {
         string[] productsName = { "Apples", "Doritos", "Potatos",
-        "Grain", "wheat", "rye", "oats", "corn", "rice", "bakery goods", "bread", "rolls", "cakes", "cookies", "pies",
-         "white bread", "whole-wheat bread", "rye bread","buns.sesame roll", "cinnamon roll", "hamburger bun", "hot dog bun",
-        "Cookies and crackers" };
+        "Grain", "Wheat", "Rye", "Oats", "Corn", "Rice", "Bakery goods", "Bread", "Rolls", "Cakes", "Oookies", "Pies",
+         "White bread", "Whole-wheat bread", "Rye bread","buns","Sesame roll", "Cinnamon roll", "Hamburger bun", "Cookies and crackers" };
 
         for (int i = 0; i < 50; i++)
         {
@@ -48,9 +47,9 @@ public class DataSource
     }
     static private void CreateOrdersList()
     {
-        string[] customers_Name = { "aaa", "bbb", "ccc" };
-        string[] Customer_Email = { "d", "e", "f" };
-        string[] Customer_Address = { "h", "i", "j" };
+        string[] customers_Name = { "Reuven", "Shimon", "Levi" };
+        string[] Customer_Email = { "Reuven@Reuven", "Shimon@Shimon", "Levi@Levi" };
+        string[] Customer_Address = { "Reuven st.", "Shimon st.", "Levi st." };
 
         for (int i = 0; i < 100; i++)
         {
@@ -96,6 +95,7 @@ public class DataSource
             OrderItemsList.Add(orderItem);
         }
     }
+
     static private void s_Initialize()
     {
         CreateProductsList();
