@@ -35,7 +35,7 @@ The simulation is a helpful tool for testing the performance of the order proces
      
 ****
 
-## Installation instructions  
+## Installation and usage instructions  
 
 * Download the code from the archive.  
 * Install Visual Studio 2022 or later.  
